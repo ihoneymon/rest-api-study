@@ -1,2 +1,5 @@
 ##ignore list
 .gradle
+.settings
+.classpath
+.project

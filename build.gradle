@@ -27,7 +27,8 @@ def hibernate = [
     "org.hibernate:hibernate-validator:4.3.0.Final",
     "org.hibernate:hibernate-entitymanager:${versions.hibernate}",
     "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final"]
-        
+
+//의존성 라이브러리 목록
 dependencies {
 	providedCompile("javax.servlet:javax.servlet-api:3.0.1")
 	
@@ -99,7 +100,7 @@ task initProject << {
 		it.mkdirs();
 	}
 	
-	sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources-dev", "src/main/resources-real"] 
+	sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources/dev", "src/main/resources/deploy"] 
 	sourceSets*.java.srcDirs*.each createDir
 	sourceSets*.resources.srcDirs*.each createDir
 	createDir webAppDir
