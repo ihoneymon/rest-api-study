@@ -2,10 +2,10 @@ REST API 스터디 계획
 ===================
 
 ### 프로젝트 구성
-* gradle 을 이용한 프로젝트 구성
+* [gradle 을 이용한 프로젝트 구성](https://github.com/ihoneymon/rest-api-study/blob/master/build.gradle)
 * web.xml -> Java config 이용
-* ORM : Hibernate + Spring Data JPA + QueryDSL
-* Thymeleaf 템플릿 엔진 적용 : JSP -> HTML 
+* ORM : [Hibernate](http://www.hibernate.org/) + [Spring Data JPA](http://www.springsource.org/spring-data/jpa) + [QueryDSL](http://www.querydsl.com/)
+* [Thymeleaf](http://www.thymeleaf.org/) 템플릿 엔진 적용 : JSP -> HTML 
 
 ### REST API 설계
 * 모델
@@ -47,13 +47,14 @@ REST API 스터디 계획
 		- ajax를 이용한 처리
 
 ### OAuth2
-	* OAuth란 무엇인가?
-	* OAuth2 프로세스
-	* OAuth2 예제
+* OAuth란 무엇인가?
+* OAuth2 프로세스
+* OAuth2 예제
 
 ### 참고사항
-	* Thymeleaf : [http://www.thymeleaf.org/]*(http://www.thymeleaf.org/)
-	* Gradle : []()
-	* Java Config : []()
-	* REST API : []()
+* Thymeleaf : [http://www.thymeleaf.org/](http://www.thymeleaf.org/)
+* Gradle : [http://www.gradle.org/](http://www.gradle.org/)
+* Java Config : [http://www.springsource.org/javaconfig](http://www.springsource.org/javaconfig)
+* REST API
+		
 	
