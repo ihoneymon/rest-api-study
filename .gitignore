@@ -1,2 +1,4 @@
 ##ignore list
 .gradle
+.idea
+*.iml
