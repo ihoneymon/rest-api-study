@@ -1,35 +1,70 @@
 package net.slipp.rest.domain;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
+ * 사용자 도메인
  *
  * @author: ihoneymon
  * Date: 13. 7. 22
  */
 @Entity
+@ToString
+@EqualsAndHashCode
 public class User implements UserDetails, Serializable {
+    private static final long serialVersionUID = -1830782295321224536L;
+
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private String name;
+
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private String password;
+
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private String email;
+    /**
+     * 사용자와 직원 정보는 1:1 매핑!
+     */
     @OneToOne
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
     private Employee employee;
 
-    private Date createDate;
-    private Date modifiedDate;
+    /**
+     * 사용자의 권한
+     */
+    @ManyToMany
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private Set<RoleAuthority> authorities;
+
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private Date createDate = Calendar.getInstance().getTime();
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private Date modifiedDate = Calendar.getInstance().getTime();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return authorities;
     }
 
     @Override

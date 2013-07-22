@@ -4,7 +4,7 @@ import net.slipp.rest.service.CompanyService;
 import org.springframework.stereotype.Service;
 
 /**
- * Created with IntelliJ IDEA.
+ * Company Service
  *
  * @author: ihoneymon
  * Date: 13. 7. 22

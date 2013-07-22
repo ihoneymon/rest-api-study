@@ -1,10 +1,15 @@
 package net.slipp.rest.repository;
 
+import net.slipp.rest.domain.Department;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 /**
- * Created with IntelliJ IDEA.
+ * Department Repository
  *
  * @author: ihoneymon
  * Date: 13. 7. 22
  */
-public interface DepartmentRepository {
+@Repository
+public interface DepartmentRepository extends CrudRepository<Long, Department>{
 }

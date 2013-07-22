@@ -110,14 +110,14 @@ dependencies {
    	runtime "javax.servlet:jstl:1.1.2"
 }
 
-sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources/local", "src/main/resources/dev", "src/main/resources/deploy"]
+sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources/base", "src/main/resources/local", "src/main/resources/dev"]
 
 task initProject << {
 	createDir = {
 		it.mkdirs();
 	}
 	
-	sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources/local", "src/main/resources/dev", "src/main/resources/deploy"]
+	sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources/base", "src/main/resources/local", "src/main/resources/dev"]
 	sourceSets*.java.srcDirs*.each createDir
 	sourceSets*.resources.srcDirs*.each createDir
 	createDir webAppDir
