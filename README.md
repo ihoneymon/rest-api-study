@@ -30,14 +30,33 @@ REST API 스터디 계획
 		- createdDate
 	* 사용자User
 	    - id
+	    - email
+	    - password
 	    - employee
+	    - authorities
+	* 권한RoleAuthority
+	    - role
+	    - description
+	    - createdDate
 * REST API
 	* 기업
 		- GET /companies : 목록
-		- POST /companies : 등록
 		- GET /companies/{company} : 기업상세
+		- POST /companies : 등록
 		- PUT /companies/{company} : 수정
 		- DEL /companies/{company} : 삭제
+    * 부서
+        - GET /departments
+        - GET /departments/{department}
+        - POST /departments
+        - PUT /departments/{department}
+        - DEL /departments/{department}
+    * 직원
+        - GET /employees
+        - GET /employees/{employee}
+        - POST /employees
+        - PUT /employees/{employee}
+        - DEL /employees/{employee}
 	* 사용자
 		- GET /companies/{company}/users : 사용자 목록
 		- POST /companies/{company}/users : 사용자 추가
