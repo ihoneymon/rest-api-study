@@ -4,7 +4,7 @@ REST API 스터디 계획
 ### 프로젝트 구성
 * [gradle 을 이용한 프로젝트 구성](https://github.com/ihoneymon/rest-api-study/blob/master/build.gradle)
 * web.xml -> Java config 이용
-* ORM : [Hibernate](http://www.hibernate.org/) + [Spring Data JPA](http://www.springsource.org/spring-data/jpa) + [QueryDSL](http://www.querydsl.com/)
+* ORM(DDD!) : [Hibernate](http://www.hibernate.org/) + [Spring Data JPA](http://www.springsource.org/spring-data/jpa) + [QueryDSL](http://www.querydsl.com/)
 * [Thymeleaf](http://www.thymeleaf.org/) 템플릿 엔진 적용 : JSP -> HTML 
 
 ### REST API 설계
@@ -14,7 +14,13 @@ REST API 스터디 계획
 		- name
 		- address
 		- tel
+		- departments
 		- users
+    * 부서Department
+        - id
+        - name
+        - description
+        - users
 	* 직원Employee
 		- id
 		- email
@@ -22,6 +28,9 @@ REST API 스터디 계획
 		- nickname
 		- departName
 		- createdDate
+	* 사용자User
+	    - id
+	    - employee
 * REST API
 	* 기업
 		- GET /companies : 목록
@@ -50,6 +59,10 @@ REST API 스터디 계획
 * OAuth란 무엇인가?
 * OAuth2 프로세스
 * OAuth2 예제
+
+### 사용모듈
+
+*****
 
 ### 참고사항
 * Thymeleaf : [http://www.thymeleaf.org/](http://www.thymeleaf.org/)
