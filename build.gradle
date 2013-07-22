@@ -1,11 +1,11 @@
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'jetty'
-apply plugin: 'eclipse'
-apply plugin: 'eclipse-wtp'
+apply plugin: "java"
+apply plugin: "war"
+apply plugin: "jetty"
+apply plugin: "eclipse"
+apply plugin: "eclipse-wtp"
 
 sourceCompatibility = 1.7
-compileJava.options.encoding = 'UTF-8'
+compileJava.options.encoding = "UTF-8"
 
 //repository
 repositories {
@@ -16,10 +16,15 @@ repositories {
 def versions = [
     spring: "3.2.2.RELEASE",
     springDataJpa: "1.2.0.RELEASE",
+    springSecurity: "3.1.4.RELEASE",
     slf4j: "1.6.6",
     hibernate: "4.1.7.Final",
     logback: "1.0.6",
-    thymeleaf: "2.0.16"
+    thymeleaf: "2.0.16",
+    lombok: "0.12.0",
+    boneCP: "0.7.1.RELEASE",
+    googleGuava: "13.0.1",
+    modelmapper: "0.5.6"
 ]
 
 def hibernate = [
@@ -27,7 +32,8 @@ def hibernate = [
     "org.hibernate:hibernate-validator:4.3.0.Final",
     "org.hibernate:hibernate-entitymanager:${versions.hibernate}",
     "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final"]
-        
+
+//의존성 라이브러리 목록
 dependencies {
 	providedCompile("javax.servlet:javax.servlet-api:3.0.1")
 	
@@ -43,12 +49,18 @@ dependencies {
     compile "org.springframework:spring-webmvc:${versions.spring}"
     compile "org.springframework:spring-context-support:${versions.spring}"
     compile "org.springframework:spring-test:${versions.spring}"
-    
+
+    //spring-security
+    compile "org.springframework.security:spring-security-core:${versions.springSecurity}"
+    compile "org.springframework.security:spring-security-web:${versions.springSecurity}"
+    compile "org.springframework.security:spring-security-config:${versions.springSecurity}"
+
+    //spring-data-jpa
     compile("org.springframework.data:spring-data-jpa:${versions.springDataJpa}") {
         exclude group: "org.aspectj"
     }
     
-	//compile "opensymphony:sitemesh:2.4.2"
+	//compile  : http://www.thymeleaf.org/
     compile "org.thymeleaf:thymeleaf:${versions.thymeleaf}"
     compile "org.thymeleaf:thymeleaf-spring3:${versions.thymeleaf}"
     
@@ -56,9 +68,10 @@ dependencies {
     compile "commons-digester:commons-digester:2.1"
     compile "commons-lang:commons-lang:2.6"
     compile "commons-codec:commons-codec:1.6"
-    compile "commons-dbcp:commons-dbcp:1.4"
-    
-    compile "com.jolbox:bonecp:0.7.1.RELEASE"
+    //compile "commons-dbcp:commons-dbcp:1.4"
+
+    //BoneCP : http://jolbox.com/
+    compile "com.jolbox:bonecp:${versions.boneCP}"
 
     compile "org.slf4j:slf4j-api:${versions.slf4j}"
     runtime "org.slf4j:jcl-over-slf4j:${versions.slf4j}"
@@ -67,7 +80,9 @@ dependencies {
     compile "ch.qos.logback:logback-core:${versions.logback}"
     compile "ch.qos.logback:logback-classic:${versions.logback}"
 
-    compile "com.google.guava:guava:13.0.1"
+    // Google Guava(Collection Utils) : http://code.google.com/p/guava-libraries/
+    compile "com.google.guava:guava:${versions.googleGuava}"
+    // Joda Time(Java date and time API) : http://joda-time.sourceforge.net/
     compile "joda-time:joda-time:2.1"
     
     compile "org.codehaus.jackson:jackson-mapper-asl:1.9.9"
@@ -78,8 +93,11 @@ dependencies {
 
     compile "javax.servlet:jstl:1.2"
 
-   	compile 'cglib:cglib-nodep:2.2.2'
-   	compile 'net.sf.ehcache:ehcache-core:2.4.6'
+   	compile "cglib:cglib-nodep:2.2.2"
+   	compile "net.sf.ehcache:ehcache-core:2.4.6"
+    compile "org.projectlombok:lombok:${versions.lombok}"
+    //ModelMapper : http://modelmapper.org/
+    compile "org.modelmapper:modelmapper:${versions.modelmapper}"
    
    	hibernate.collect {
         compile(it) {
@@ -87,23 +105,23 @@ dependencies {
         }
     }
     
-	testCompile group : 'junit', name : 'junit', version : '4.+'
+	testCompile group : "junit", name : "junit", version : "4.+"
 
-   	runtime 'javax.servlet:jstl:1.1.2'
+   	runtime "javax.servlet:jstl:1.1.2"
 }
 
-sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources/dev", "src/main/resources/deploy"] 
+sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources/local", "src/main/resources/dev", "src/main/resources/deploy"]
 
 task initProject << {
 	createDir = {
 		it.mkdirs();
 	}
 	
-	sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources-dev", "src/main/resources-real"] 
+	sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources/local", "src/main/resources/dev", "src/main/resources/deploy"]
 	sourceSets*.java.srcDirs*.each createDir
 	sourceSets*.resources.srcDirs*.each createDir
 	createDir webAppDir
-	createDir new File(webAppDir, '/WEB-INF/views');
+	createDir new File(webAppDir, "/WEB-INF/views");
 	
 	processResources {
 		from(sourceSets.main.resources.srcDirs) {
@@ -114,7 +132,7 @@ task initProject << {
 tasks.eclipse.dependsOn cleanEclipse
 tasks.eclipse.dependsOn initProject
 
-jettyRunWar.contextPath = ''
+jettyRunWar.contextPath = ""
 
 eclipse {
 	classpath {

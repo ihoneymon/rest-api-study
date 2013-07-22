@@ -1,4 +1,10 @@
 ##ignore list
 .gradle
+<<<<<<< HEAD
 .idea
 *.iml
+=======
+.settings
+.classpath
+.project
+>>>>>>> 23343642cc4e2b3825001612a8c508dfb9174e76
