@@ -30,15 +30,12 @@ public class User implements UserDetails, Serializable {
 
     @Getter
     @Setter(AccessLevel.PRIVATE)
-    private String name;
+    private String username;
 
     @Getter
     @Setter(AccessLevel.PRIVATE)
     private String password;
 
-    @Getter
-    @Setter(AccessLevel.PRIVATE)
-    private String email;
     /**
      * 사용자와 직원 정보는 1:1 매핑!
      */

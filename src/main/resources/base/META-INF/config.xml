@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties version="1.0">
+    <comment>애플리케이션 설정 정보</comment>
+
+    <!-- 정기 비밀번호 변경 주기일 -->
+    <entry key="user.password.change.period">90</entry>
+    <!-- 계정만료 주기일 -->
+    <entry key="user.account.expired.period">365</entry>
+
+    <!-- dataSource properties -->
+    <entry key="database.class">com.mysql.jdbc.Driver</entry>
+    <entry key="database.url"></entry>
+    <entry key="database.username"></entry>
+    <entry key="database.password"></entry>
+
+    <!-- jpa properties -->
+    <entry key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</entry>
+    <entry key="hibernate.hbm2ddl.auto">update</entry>
+    <entry key="hibernate.show_sql">false</entry>
+    <entry key="hibernate.format_sql">false</entry>
+
+</properties>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <bean name="appProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:/META-INF/config.xml</value> <!-- 기본 설정값 -->
+                <value>classpath:/META-INF/dev-config.xml</value> <!-- 빌드 환경에 따른 설정값 -->
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true"/>    <!-- 찾을 수 없는 자원 무시 -->
+        <property name="localOverride" value="true"/>    <!-- 설정 덮어쓰기 -->
+    </bean>
+</beans>
