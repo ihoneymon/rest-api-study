@@ -15,10 +15,10 @@ repositories {
 //version
 def versions = [
         spring: "3.2.2.RELEASE",
+        hibernate: "4.1.7.Final",
         springDataJpa: "1.2.0.RELEASE",
         springSecurity: "3.1.4.RELEASE",
         slf4j: "1.6.6",
-        hibernate: "4.1.7.Final",
         logback: "1.0.6",
         thymeleaf: "2.0.16",
         lombok: "0.12.0",
@@ -74,7 +74,7 @@ dependencies {
     compile "org.thymeleaf:thymeleaf:${versions.thymeleaf}"
     compile "org.thymeleaf:thymeleaf-spring3:${versions.thymeleaf}"
 
-    compile "commons-lang:commons-lang3:3.1"
+    compile "org.apache.commons:commons-lang3:3.1"
 
     //BoneCP : http://jolbox.com/
     compile "com.jolbox:bonecp:${versions.boneCP}"
@@ -130,11 +130,6 @@ sourceSets.generated.java.srcDirs = ['src/main/generated']
 
 configurations {
     querydslapt
-}
-
-dependencies {
-    compile 'mine go here'
-    querydslapt 'com.mysema.querydsl:querydsl-apt:2.7.1'
 }
 
 task generateQueryDSL(type: Compile, group: 'build', description: 'Generates the QueryDSL query types') {
