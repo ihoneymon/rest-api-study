@@ -20,7 +20,7 @@
         </mvc:argument-resolvers>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-                <property name="objectMapper" ref="jsonMapper"/>
+                <property name="objectMapper" ref="objectMapper"/>
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
@@ -50,7 +50,7 @@
 
     <mvc:view-controller path="/login" view-name="login"/>
 
-    <bean id="jsonMapper" class="net.slipp.rest.support.mapper.HibernateAwareObjectMapper">
+    <bean id="objectMapper" class="net.slipp.rest.support.mapper.HibernateAwareObjectMapper">
         <constructor-arg name="conversionService" ref="conversionService"/>
     </bean>
 
@@ -64,7 +64,7 @@
         <property name="suffix" value=".jsp"/>
         <property name="attributesMap">
             <map>
-                <entry key="jsonMapper" value-ref="jsonMapper"/>
+                <entry key="jsonMapper" value-ref="objectMapper"/>
             </map>
         </property>
         <property name="order" value="2"/>
