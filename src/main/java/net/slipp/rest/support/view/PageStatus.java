@@ -44,12 +44,27 @@ public class PageStatus implements Pageable, Serializable {
         this.jsonString = jsonString;
         this.pageableJsonString = pageableJsonString;
     }
-    
+
+    @Override
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    @Override
+    public int getPageSize() {
+        return pageSize;
+    }
+
     @Override
     public int getOffset() {
         return pageNumber * pageSize;
     }
-    
+
+    @Override
+    public Sort getSort() {
+        return sort;
+    }
+
     public PageStatus addSort(Sort sort) {
         return new PageStatus(pageNumber, pageSize, sort, attributes, 
                 queryString, pageableQueryString, jsonString, pageableJsonString);

@@ -3,6 +3,7 @@ apply plugin: "war"
 apply plugin: "jetty"
 apply plugin: "eclipse"
 apply plugin: "eclipse-wtp"
+apply plugin: "idea"
 
 sourceCompatibility = 1.7
 compileJava.options.encoding = "UTF-8"
@@ -10,6 +11,30 @@ compileJava.options.encoding = "UTF-8"
 //repository
 repositories {
     mavenCentral()
+}
+
+sourceSets {
+    querydsl
+}
+
+configurations {
+    querydslapt
+}
+
+eclipse {
+    classpath {
+        downloadSources = true
+    }
+}
+
+idea {
+    module {
+        sourceDirs += file('src/main/querydsl')
+    }
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
 }
 
 //version
@@ -36,7 +61,10 @@ def hibernate = [
         "org.hibernate:hibernate-core:${versions.hibernate}",
         "org.hibernate:hibernate-validator:4.3.0.Final",
         "org.hibernate:hibernate-entitymanager:${versions.hibernate}",
-        "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final"]
+        "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final"
+]
+
+sourceSets.querydsl.java.srcDirs = ["${paths.querydsl}"]
 
 //의존성 라이브러리 목록
 dependencies {
@@ -69,6 +97,8 @@ dependencies {
 
     //QueryDsl : http://www.querydsl.com/
     compile "com.mysema.querydsl:querydsl-apt:${versions.querydsl}"
+    compile "com.mysema.querydsl:querydsl-jpa:${versions.querydsl}"
+    querydslapt "com.mysema.querydsl:querydsl-apt:${versions.querydsl}"
 
     //compile  : http://www.thymeleaf.org/
     compile "org.thymeleaf:thymeleaf:${versions.thymeleaf}"
@@ -103,8 +133,6 @@ dependencies {
 
     compile "javax.servlet:jstl:1.2"
 
-    compile "cglib:cglib-nodep:2.2.2"
-    compile "net.sf.ehcache:ehcache-core:2.4.6"
     compile "org.projectlombok:lombok:${versions.lombok}"
     //ModelMapper : http://modelmapper.org/
     compile "org.modelmapper:modelmapper:${versions.modelmapper}"
@@ -122,16 +150,6 @@ dependencies {
 
 
 //-- QueryDSL
-sourceSets {
-    generated
-}
-
-sourceSets.generated.java.srcDirs = ['src/main/generated']
-
-configurations {
-    querydslapt
-}
-
 task generateQueryDSL(type: Compile, group: 'build', description: 'Generates the QueryDSL query types') {
     source = sourceSets.main.java
     classpath = configurations.compile + configurations.querydslapt
@@ -139,12 +157,13 @@ task generateQueryDSL(type: Compile, group: 'build', description: 'Generates the
             "-proc:only",
             "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
     ]
-    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+    destinationDir = sourceSets.querydsl.java.srcDirs.iterator().next()
+    dependencyCacheDir = compileJava.dependencyCacheDir
 }
 compileJava.dependsOn generateQueryDSL
 //-- QueryDSL
 
-sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources/base", "src/main/resources/local", "src/main/resources/dev", "src/main/querydsl"]
+//sourceSets.main.resources.srcDirs = ["src/main/resources", "src/main/resources/base", "src/main/resources/local", "src/main/resources/dev", "src/main/querydsl"]
 
 task initProject << {
     createDir = {
@@ -168,8 +187,17 @@ tasks.eclipse.dependsOn initProject
 
 jettyRunWar.contextPath = ""
 
-eclipse {
-    classpath {
-        downloadSources = true
-    }
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+//compileGeneratedJava {
+//    dependsOn generateQueryDSL
+//    options.warnings = false
+//    classpath += sourceSets.main.runtimeClasspath
+//}
+
+clean {
+    delete sourceSets.querydsl.java.srcDirs
 }

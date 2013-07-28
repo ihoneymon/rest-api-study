@@ -17,7 +17,7 @@ import java.util.Set;
  * Date: 13. 7. 22
  */
 @Entity
-@ToString(exclude = {"employees"})
+@ToString(exclude = {"parent"})
 @EqualsAndHashCode
 public class Department implements Serializable {
     private static final long serialVersionUID = 1091151988674342774L;
@@ -26,10 +26,12 @@ public class Department implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Getter @Setter(AccessLevel.PRIVATE)
+    @Getter
     private String name;
     @Getter @Setter(AccessLevel.PRIVATE)
     private String description;
+    @Getter
+    @Setter
     @OneToOne(fetch = FetchType.LAZY)
     private Department parent;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)

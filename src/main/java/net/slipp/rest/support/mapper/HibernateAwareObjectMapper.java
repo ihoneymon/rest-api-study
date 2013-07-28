@@ -12,6 +12,8 @@ import org.springframework.core.convert.ConversionService;
  * Date: 13. 7. 26
  */
 public class HibernateAwareObjectMapper extends ObjectMapper {
+    private static final long serialVersionUID = -8599747631645197523L;
+    
     ConversionService conversionService;
 
     public HibernateAwareObjectMapper(ConversionService conversionService) {

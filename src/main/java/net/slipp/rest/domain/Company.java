@@ -15,7 +15,7 @@ import java.io.Serializable;
  * Date: 13. 7. 22
  */
 @Entity
-@ToString(exclude = {"departments", "employees"})
+@ToString(exclude = {"department"})
 public class Company implements Serializable {
     private static final long serialVersionUID = 2555196948716599267L;
     @Id

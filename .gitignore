@@ -2,7 +2,14 @@
 .gradle
 .idea
 *.iml
+*.ipr
+*.iws
+
 .settings
 .classpath
 .project
 bin
+out
+
+## ignoreQueryDSL
+src/main/querydsl

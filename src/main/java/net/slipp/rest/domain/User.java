@@ -1,15 +1,24 @@
 package net.slipp.rest.domain;
 
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * 사용자 도메인
@@ -58,21 +67,6 @@ public class User implements UserDetails, Serializable {
     @Getter
     @Setter(AccessLevel.PRIVATE)
     private Date modifiedDate = Calendar.getInstance().getTime();
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public String getUsername() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
 
     @Override
     public boolean isAccountNonExpired() {

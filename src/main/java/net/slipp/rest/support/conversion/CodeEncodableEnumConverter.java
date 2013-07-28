@@ -1,11 +1,13 @@
 package net.slipp.rest.support.conversion;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Set;
+
 import net.slipp.rest.support.common.CodeEncodableEnum;
+
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
 
-import java.util.Set;
+import com.google.common.collect.ImmutableSet;
 
 /**
  * {@link net.slipp.rest.support.common.CodeEncodableEnum} 인터페이스를 상속한 enum 타입의 code를 이용한 Converter
@@ -15,7 +17,7 @@ import java.util.Set;
  */
 public class CodeEncodableEnumConverter implements GenericConverter {
 
-    private final Set<ConvertiblePair> convertiblePairs;
+    private Set<ConvertiblePair> convertiblePairs = null;
 
     public CodeEncodableEnumConverter(Set<ConvertiblePair> convertiblePairs) {
         this.convertiblePairs = ImmutableSet.<ConvertiblePair> builder().add(new ConvertiblePair(String.class, Object.class)).build();
@@ -24,9 +26,6 @@ public class CodeEncodableEnumConverter implements GenericConverter {
                 throw new IllegalArgumentException(convertiblePair.getTargetType().getName() + "did not implement the CodeEncodableEnum interface." );
             }
         }
-    }
-
-    public CodeEncodableEnumConverter() {
     }
 
     @Override
@@ -38,6 +37,7 @@ public class CodeEncodableEnumConverter implements GenericConverter {
     public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType) {
         String code = (String) source;
 
+        @SuppressWarnings("unchecked")
         Class<? extends CodeEncodableEnum> targetClass = (Class<? extends CodeEncodableEnum>) targetType.getType();
         for(CodeEncodableEnum codeEncodableEnum : targetClass.getEnumConstants())
             if(codeEncodableEnum.getCode().equals(code)) return codeEncodableEnum;

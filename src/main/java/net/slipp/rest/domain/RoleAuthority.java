@@ -15,6 +15,7 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 public class RoleAuthority implements GrantedAuthority {
+    private static final long serialVersionUID = 4882929396458778017L;
 
     @Id
     @Getter
