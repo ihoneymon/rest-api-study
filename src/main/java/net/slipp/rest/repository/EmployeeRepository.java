@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * Date: 13. 7. 22
  */
 @Repository
-public interface EmployeeRepository extends CrudRepository<Long, Employee> {
+public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
 }

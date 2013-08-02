@@ -27,7 +27,7 @@ public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver
     private final static Logger logger = LoggerFactory.getLogger(UserMethodArgumentResolver.class);
     
     @Inject
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     
     @Override
@@ -43,7 +43,7 @@ public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver
         if(authentication != null && User.class.isAssignableFrom(authentication.getPrincipal().getClass())) {
             
             User user = (User) authentication.getPrincipal();
-            user = userRepository.findByEmail(user.getUsername());
+            user = userRepository.findUserByUsername(user.getUsername());
             
             logger.debug("found securityContextHolder-bound authentication: {}", user);
             

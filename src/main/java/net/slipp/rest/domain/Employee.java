@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * 직원 도메인
@@ -32,9 +33,9 @@ public class Employee implements Serializable {
     @Getter @Setter(AccessLevel.PRIVATE)
     private String nickName;
 
-    @ManyToMany
+    @OneToMany
     @Getter @Setter(AccessLevel.PRIVATE)
-    private Department department;
+    private Set<Department> departments;
 
     @Getter @Setter(AccessLevel.PRIVATE)
     private Date createdDate;

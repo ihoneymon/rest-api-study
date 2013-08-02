@@ -1,11 +1,11 @@
 apply plugin: "java"
 apply plugin: "war"
-apply plugin: "jetty"
 apply plugin: "eclipse"
 apply plugin: "eclipse-wtp"
 apply plugin: "idea"
 
-sourceCompatibility = 1.7
+version = '0.1.0'
+sourceCompatibility = '1.7'
 compileJava.options.encoding = "UTF-8"
 
 /**
@@ -23,6 +23,7 @@ repositories {
 
 configurations {
     querydslapt
+    moreLibs
 }
 
 eclipse {
@@ -34,9 +35,6 @@ eclipse {
 // Plugin idea(IntelliJ)용 모듈설정
 idea {
     module {
-        sourceDirs += file('src/querydsl')
-    }
-    module {
         downloadJavadoc = true
         downloadSources = true
     }
@@ -45,7 +43,7 @@ idea {
 //version
 def versions = [
         spring: "3.2.2.RELEASE",
-        hibernate: "4.1.7.Final",
+        hibernate: "4.3.0.Final",
         springDataJpa: "1.2.0.RELEASE",
         springSecurity: "3.1.4.RELEASE",
         slf4j: "1.6.6",
@@ -63,7 +61,6 @@ def versions = [
 
 def paths = [
         querydsl: "src/querydsl",
-        mainSourceRoot: "src/main/resources",
         mainSourceBase: "src/main/resources/base",
         mainSourceLocal: "src/main/resources/local",
         mainSourceDev: "src/main/resources/dev"
@@ -71,12 +68,16 @@ def paths = [
 
 def hibernate = [
         "org.hibernate:hibernate-core:${versions.hibernate}",
-        "org.hibernate:hibernate-validator:4.3.0.Final",
+        "org.hibernate:hibernate-validator:${versions.hibernate}",
         "org.hibernate:hibernate-entitymanager:${versions.hibernate}",
-        "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final"
+        "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.1.Final"
 ]
 
-//gradle -Pprofile= 사용
+/**
+ * Maven의 Profiles 를 Gradle 에서 사용하기!
+ * ex) gradle -Pprofile=local or dev
+ * 참고 : http://wiki.kwonnam.pe.kr/gradle/from_maven?s[]=gradle&s[]=profile
+ */
 final String DEFAULT_PROFILE = 'local'
 allprojects {
     if (!project.hasProperty('profile') || !profile) {
@@ -94,7 +95,7 @@ allprojects {
         }
         querydsl {
             java {
-                srcDir = ["${paths.querydsl}"]
+                srcDir "/src/querydsl"
             }
         }
     }
@@ -103,13 +104,13 @@ allprojects {
 
 //의존성 라이브러리 목록
 dependencies {
+    //annotation
     compile "javax.inject:javax.inject:1"
 
-    providedCompile("javax.servlet:javax.servlet-api:3.0.1")
-
-    compile "org.springframework:spring-webmvc:${versions.spring}"
     compile "org.springframework:spring-core:${versions.spring}"
     compile "org.springframework:spring-context:${versions.spring}"
+    compile "org.springframework:spring-context-support:${versions.spring}"
+    compile "org.springframework:spring-webmvc:${versions.spring}"
     compile "org.springframework:spring-aop:${versions.spring}"
     compile "org.springframework:spring-tx:${versions.spring}"
     compile "org.springframework:spring-aspects:${versions.spring}"
@@ -117,18 +118,15 @@ dependencies {
     compile "org.springframework:spring-orm:${versions.spring}"
     compile "org.springframework:spring-web:${versions.spring}"
     compile "org.springframework:spring-webmvc:${versions.spring}"
-    compile "org.springframework:spring-context-support:${versions.spring}"
     compile "org.springframework:spring-test:${versions.spring}"
-
-    //spring-security
-    compile "org.springframework.security:spring-security-core:${versions.springSecurity}"
-    compile "org.springframework.security:spring-security-web:${versions.springSecurity}"
-    compile "org.springframework.security:spring-security-config:${versions.springSecurity}"
 
     //spring-data-jpa
     compile("org.springframework.data:spring-data-jpa:${versions.springDataJpa}") {
         exclude group: "org.aspectj"
     }
+
+    //Spring Security
+    compile "org.springframework.security:spring-security-core:${versions.springSecurity}"
 
     //QueryDsl : http://www.querydsl.com/
     compile "com.mysema.querydsl:querydsl-apt:${versions.querydsl}"
@@ -176,14 +174,22 @@ dependencies {
         }
     }
 
+    // logback(slf4j)를 사용하기 때문에 모든 의존성에서 commons-logging는 제외
+    [configurations.runtime, configurations.default]*.exclude(module: 'commons-logging')
+
+    // JAVA 컴파일시 인코딩 설정
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
     testCompile group: "junit", name: "junit", version: "4.+"
+
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
 
     runtime "javax.servlet:jstl:1.2"
 }
 
 
 //-- QueryDSL
-task generateQueryDSL(type: Compile, group: 'build', description: 'Generates the QueryDSL query types') {
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
     source = sourceSets.main.java
     classpath = configurations.compile + configurations.querydslapt
     options.compilerArgs = [
@@ -196,16 +202,18 @@ task generateQueryDSL(type: Compile, group: 'build', description: 'Generates the
 compileJava.dependsOn generateQueryDSL
 //-- QueryDSL
 
-task initProject << {
+task initProject(description: "Initialization Project") << {
     createDir = {
+        println "Create Dir : $it"
         it.mkdirs();
     }
 
-    sourceSets.main.resources.srcDirs = ["${paths.mainSourceRoot}", "${paths.mainSourceBase}", "${paths.mainSourceLocal}", "${paths.mainSourceDev}", "${paths.querydsl}"]
+    sourceSets.main.resources.srcDirs = ["${paths.mainSourceBase}", "${paths.mainSourceLocal}", "${paths.mainSourceDev}"]
     sourceSets*.java.srcDirs*.each createDir
     sourceSets*.resources.srcDirs*.each createDir
+    sourceSets.querydsl.java.srcDir createDir
     createDir webAppDir
-    createDir new File(webAppDir, "/WEB-INF/views");
+    createDir new File(webAppDir, "/WEB-INF");
 
     processResources {
         from(sourceSets.main.resources.srcDirs) {
@@ -215,8 +223,6 @@ task initProject << {
 
 tasks.eclipse.dependsOn cleanEclipse
 tasks.eclipse.dependsOn initProject
-
-jettyRunWar.contextPath = ""
 
 compileJava {
     dependsOn generateQueryDSL

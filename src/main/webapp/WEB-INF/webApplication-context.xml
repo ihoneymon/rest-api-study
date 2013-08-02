@@ -14,14 +14,10 @@
         <mvc:argument-resolvers>
             <bean class="net.slipp.rest.support.method.UserMethodArgumentResolver"/>
             <bean class="net.slipp.rest.support.method.PageStatusMethodArgumentResolver"/>
-            <bean class="net.slipp.rest.support.method.PageStatusModelAttributeMethodProcessor"/>
             <bean class="net.slipp.rest.support.method.PageStatusMethodArgumentResolver"/>
-            <bean class="net.slipp.rest.support.method.POIExcelImportMethodArgumentResolver"/>
         </mvc:argument-resolvers>
         <mvc:message-converters>
-            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-                <property name="objectMapper" ref="objectMapper"/>
-            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
         </mvc:message-converters>
     </mvc:annotation-driven>
 
@@ -62,18 +58,12 @@
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
-        <property name="attributesMap">
-            <map>
-                <entry key="jsonMapper" value-ref="objectMapper"/>
-            </map>
-        </property>
-        <property name="order" value="2"/>
+        <property name="order" value="10"/>
     </bean>
 
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
             <list>
-                <bean class="net.slipp.rest.support.conversion.CodeEncodableEnumConverter"/>
                 <bean class="net.slipp.rest.support.conversion.LongIdTypeToEntityConverter"/>
                 <bean class="net.slipp.rest.support.conversion.StringIdTypeToEntityConverter"/>
             </list>

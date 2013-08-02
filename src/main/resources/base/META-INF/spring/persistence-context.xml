@@ -17,7 +17,6 @@
         <property name="maxConnectionsPerPartition" value="30" />
         <property name="minConnectionsPerPartition" value="10" />
         <property name="partitionCount" value="5" />
-        <property name="loginTimeout" value="300" />
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

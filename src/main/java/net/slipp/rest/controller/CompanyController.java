@@ -29,19 +29,6 @@ public class CompanyController {
     @Inject
     private CompanyService companyService;
 
-
-    @RequestMapping(value="/{company}", method= RequestMethod.GET)
-    public String getCompany2(@PathVariable("company") Long companyId, ModelMap map) {
-        Company company = companyService.findCompanyById(companyId);
-        map.put("company", company);
-
-        map.put("code", "200");
-        map.put("message", "");
-        map.put("data", company);
-
-        return "jsonView";
-    }
-
     @RequestMapping(value="/{company}", method= RequestMethod.GET)
     public String getCompany(@PathVariable("company") Company company, ModelMap map) {
         map.put("company", company);

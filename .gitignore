@@ -14,3 +14,4 @@ out
 
 ## ignoreQueryDSL
 src/querydsl
+/build
