@@ -8,7 +8,7 @@
             <list>
                 <value>classpath:/META-INF/config.xml</value> <!-- 기본 설정값 -->
                 <value>classpath:/META-INF/local-config.xml</value> <!-- 빌드 환경에 따른 설정값 -->
-                <value>classpath:/META-INF/private-config.xml</value> <!-- 개인 설정값 -->
+                <value>classpath:/META-INF/private-config.xml</value> <!-- 개인 설정값 : 개인에게 필요하다면... 주로 다른 운영체제의 경우 필요함 -->
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true"/>    <!-- 찾을 수 없는 자원 무시 -->

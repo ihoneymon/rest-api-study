@@ -8,13 +8,17 @@ apply plugin: "idea"
 sourceCompatibility = 1.7
 compileJava.options.encoding = "UTF-8"
 
-//repository
+/**
+ * 기본실행 테스크
+ */
+defaultTasks 'initProject'
+
+/**
+ *  repository Configuration
+ *  ref : http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+ */
 repositories {
     mavenCentral()
-}
-
-sourceSets {
-    querydsl
 }
 
 configurations {
@@ -27,9 +31,10 @@ eclipse {
     }
 }
 
+// Plugin idea(IntelliJ)용 모듈설정
 idea {
     module {
-        sourceDirs += file('src/main/querydsl')
+        sourceDirs += file('src/querydsl')
     }
     module {
         downloadJavadoc = true
@@ -54,7 +59,7 @@ def versions = [
 ]
 
 def paths = [
-        querydsl: "src/main/querydsl"
+        querydsl: "src/querydsl"
 ]
 
 def hibernate = [
@@ -64,7 +69,30 @@ def hibernate = [
         "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final"
 ]
 
-sourceSets.querydsl.java.srcDirs = ["${paths.querydsl}"]
+//gradle -Pprofile= 사용
+final String DEFAULT_PROFILE = 'local'
+allprojects {
+    if (!project.hasProperty('profile') || !profile) {
+        ext.profile = DEFAULT_PROFILE
+    }
+    println ">> Use profile : ${profile}"
+
+    // 리소스에 각 프로필별 리소스 디렉토리 추가
+    sourceSets {
+        main {
+            resources {
+                //기본설정값과 개발환경에 대한 설정값을 가진 디렉토리 이용
+                srcDirs = ["src/main/resource/base","src/main/resources/${profile}"]
+            }
+        }
+        querydsl {
+            java {
+                srcDir = ["${paths.querydsl}"]
+            }
+        }
+    }
+}
+
 
 //의존성 라이브러리 목록
 dependencies {
@@ -200,4 +228,12 @@ compileJava {
 
 clean {
     delete sourceSets.querydsl.java.srcDirs
+}
+
+gradle.afterProject {project, projectState ->
+    if (projectState.failure) {
+        println "Evaluation of $project FAILED"
+    } else {
+        println "Evaluation of $project succeeded"
+    }
 }

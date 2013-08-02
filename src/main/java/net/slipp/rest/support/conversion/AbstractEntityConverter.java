@@ -1,12 +1,12 @@
 package net.slipp.rest.support.conversion;
 
-import com.sun.istack.internal.Nullable;
 import net.slipp.rest.support.common.exception.EntityConverterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
 
+import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Set;

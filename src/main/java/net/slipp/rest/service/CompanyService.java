@@ -1,5 +1,7 @@
 package net.slipp.rest.service;
 
+import net.slipp.rest.domain.Company;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -7,4 +9,5 @@ package net.slipp.rest.service;
  * Date: 13. 7. 22
  */
 public interface CompanyService {
+    Company findCompanyById(Long companyId);
 }

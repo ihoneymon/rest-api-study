@@ -4,6 +4,7 @@
 *.iml
 *.ipr
 *.iws
+*.swp
 
 .settings
 .classpath
@@ -12,4 +13,4 @@ bin
 out
 
 ## ignoreQueryDSL
-src/main/querydsl
+src/querydsl
