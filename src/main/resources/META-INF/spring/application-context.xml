@@ -12,6 +12,14 @@
     <context:component-scan base-package="net.slipp.rest">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
+
+    <bean name="appProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:/META-INF/config.xml</value>
+            </list>
+        </property>
+    </bean>
     
     <bean id="passwordEncoder"
           class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"

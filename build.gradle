@@ -44,6 +44,7 @@ idea {
 def versions = [
         spring: "3.2.2.RELEASE",
         hibernate: "4.2.3.Final",
+        hibernateValidator: "5.0.1.Final",
         springDataJpa: "1.2.0.RELEASE",
         springSecurity: "3.1.4.RELEASE",
         slf4j: "1.6.6",
@@ -68,8 +69,8 @@ def paths = [
 
 def hibernate = [
         "org.hibernate:hibernate-core:${versions.hibernate}",
-        "org.hibernate:hibernate-validator:${versions.hibernate}",
         "org.hibernate:hibernate-entitymanager:${versions.hibernate}",
+        "org.hibernate:hibernate-validator:${versions.hibernateValidator}",
         "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final"
 ]
 
@@ -88,6 +89,9 @@ allprojects {
     // 리소스에 각 프로필별 리소스 디렉토리 추가
     sourceSets {
         main {
+            java {
+                srcDir "src/main/java"
+            }
             resources {
                 //기본설정값과 개발환경에 대한 설정값을 가진 디렉토리 이용
                 srcDirs = ["src/main/resource/base","src/main/resources/${profile}"]
@@ -95,7 +99,12 @@ allprojects {
         }
         querydsl {
             java {
-                srcDir "/src/querydsl"
+                srcDir "src/querydsl"
+            }
+            resources {
+                exclude {
+                    srcDir "src/querydsl/resources"
+                }
             }
         }
     }
@@ -127,6 +136,7 @@ dependencies {
 
     //Spring Security
     compile "org.springframework.security:spring-security-core:${versions.springSecurity}"
+    compile "org.springframework.security:spring-security-web:${versions.springSecurity}"
 
     //QueryDsl : http://www.querydsl.com/
     compile "com.mysema.querydsl:querydsl-apt:${versions.querydsl}"
@@ -187,6 +197,28 @@ dependencies {
     runtime "javax.servlet:jstl:1.2"
 }
 
+//-------------------------  Gradle tasks  --------------------------//
+task initProject(description: "Initialization Project") << {
+    createDir = {
+        println "Create Dir : $it"
+        it.mkdirs();
+    }
+
+    sourceSets.main.resources.srcDirs = ["${paths.mainSourceBase}", "${paths.mainSourceLocal}", "${paths.mainSourceDev}"]
+    sourceSets*.java.srcDirs*.each createDir
+    sourceSets*.resources.srcDirs*.each createDir
+    sourceSets.querydsl.java.srcDir createDir
+    createDir webAppDir
+    createDir new File(webAppDir, "/WEB-INF");
+    createDir new File(webAppDir, "/resources");
+
+    processResources {
+        from(sourceSets.main.resources.srcDirs) {
+        }
+    }
+}
+tasks.eclipse.dependsOn cleanEclipse
+tasks.eclipse.dependsOn initProject
 
 //-- QueryDSL
 task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
@@ -201,28 +233,6 @@ task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates
 }
 compileJava.dependsOn generateQueryDSL
 //-- QueryDSL
-
-task initProject(description: "Initialization Project") << {
-    createDir = {
-        println "Create Dir : $it"
-        it.mkdirs();
-    }
-
-    sourceSets.main.resources.srcDirs = ["${paths.mainSourceBase}", "${paths.mainSourceLocal}", "${paths.mainSourceDev}"]
-    sourceSets*.java.srcDirs*.each createDir
-    sourceSets*.resources.srcDirs*.each createDir
-    sourceSets.querydsl.java.srcDir createDir
-    createDir webAppDir
-    createDir new File(webAppDir, "/WEB-INF");
-
-    processResources {
-        from(sourceSets.main.resources.srcDirs) {
-        }
-    }
-}
-
-tasks.eclipse.dependsOn cleanEclipse
-tasks.eclipse.dependsOn initProject
 
 compileJava {
     dependsOn generateQueryDSL

@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
     <context:component-scan base-package="net.slipp.rest.controller"/>
-    <mvc:resources location="/resources/" mapping="/resources/**" cache-period="0"/>
+    <mvc:resources mapping="/resources/**" location="/resources/" cache-period="0"/>
 
     <mvc:annotation-driven conversion-service="conversionService">
         <mvc:argument-resolvers>
