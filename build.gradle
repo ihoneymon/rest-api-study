@@ -118,15 +118,14 @@ dependencies {
 
     compile "org.springframework:spring-core:${versions.spring}"
     compile "org.springframework:spring-context:${versions.spring}"
-    compile "org.springframework:spring-context-support:${versions.spring}"
+    compile "org.springframework:spring-web:${versions.spring}"
     compile "org.springframework:spring-webmvc:${versions.spring}"
     compile "org.springframework:spring-aop:${versions.spring}"
     compile "org.springframework:spring-tx:${versions.spring}"
     compile "org.springframework:spring-aspects:${versions.spring}"
     compile "org.springframework:spring-jdbc:${versions.spring}"
+    compile "org.springframework:spring-oxm:${versions.spring}"
     compile "org.springframework:spring-orm:${versions.spring}"
-    compile "org.springframework:spring-web:${versions.spring}"
-    compile "org.springframework:spring-webmvc:${versions.spring}"
     compile "org.springframework:spring-test:${versions.spring}"
 
     //spring-data-jpa
@@ -210,7 +209,6 @@ task initProject(description: "Initialization Project") << {
     sourceSets.querydsl.java.srcDir createDir
     createDir webAppDir
     createDir new File(webAppDir, "/WEB-INF");
-    createDir new File(webAppDir, "/resources");
 
     processResources {
         from(sourceSets.main.resources.srcDirs) {

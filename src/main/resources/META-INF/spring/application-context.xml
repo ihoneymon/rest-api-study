@@ -12,6 +12,8 @@
     <context:component-scan base-package="net.slipp.rest">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
+    
+    <import resource="classpath:/META-INF/spring/aop-logger.xml"/>
 
     <bean name="appProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
@@ -36,5 +38,5 @@
           p:basenames-ref="messageSourceList"
           p:cacheSeconds="60"/>
     
-    <bean class="org.springframework.context.support.MessageSourceAccessor" c:messageSource-ref="messageSource"/>
+    <bean class="org.springframework.context.support.MessageSourceAccessor" c:messageSource-ref="messageSource"/>      
 </beans>

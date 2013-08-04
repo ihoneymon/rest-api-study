@@ -1,73 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
-    <context:component-scan base-package="net.slipp.rest.controller"/>
-    <mvc:resources mapping="/resources/**" location="/resources/" cache-period="0"/>
+	<context:component-scan base-package="net.slipp.rest.controller" />
+	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="0" />
 
-    <mvc:annotation-driven conversion-service="conversionService">
-        <mvc:argument-resolvers>
-            <bean class="net.slipp.rest.support.method.UserMethodArgumentResolver"/>
-            <bean class="net.slipp.rest.support.method.PageStatusMethodArgumentResolver"/>
-            <bean class="net.slipp.rest.support.method.PageStatusMethodArgumentResolver"/>
-        </mvc:argument-resolvers>
-        <mvc:message-converters>
-            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
-        </mvc:message-converters>
-    </mvc:annotation-driven>
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="1" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+			</map>
+		</property>
 
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/companies/**"/>
-            <mvc:mapping path="/departments/**"/>
-            <mvc:mapping path="/employees/**"/>
-            <mvc:mapping path="/users/**"/>
-            <bean class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
-                <property name="entityManagerFactory" ref="entityManagerFactory"/>
-            </bean>
-        </mvc:interceptor>
-        <mvc:interceptor>
-            <mvc:mapping path="/companies/**"/>
-            <mvc:mapping path="/departments/**"/>
-            <mvc:mapping path="/employees/**"/>
-            <mvc:mapping path="/users/**"/>
-            <bean class="net.slipp.rest.support.interceptor.PageStatusAutoPersistenceInterceptor"/>
-        </mvc:interceptor>
-        <bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
-            <property name="cacheSeconds" value="0"/>
-        </bean>
-    </mvc:interceptors>
+		<property name="defaultViews">
+			<list>
+				<!-- JSON View -->
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
 
+				<!-- JAXB XML View -->
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<constructor-arg>
+						<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+							<property name="packagesToScan" value="net.slipp.rest.*" />
+						</bean>
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+	</bean>
 
-    <mvc:view-controller path="/login" view-name="login"/>
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:argument-resolvers>
+			<bean class="net.slipp.rest.support.method.UserMethodArgumentResolver" />
+			<bean class="net.slipp.rest.support.method.PageStatusMethodArgumentResolver" />
+			<bean class="net.slipp.rest.support.method.PageStatusMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+		<mvc:message-converters>
+			<bean class="net.slipp.rest.support.conversion.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper" ref="objectMapper"/>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
-    <bean id="objectMapper" class="net.slipp.rest.support.mapper.HibernateAwareObjectMapper">
-        <constructor-arg name="conversionService" ref="conversionService"/>
-    </bean>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/companies/**" />
+			<mvc:mapping path="/departments/**" />
+			<mvc:mapping path="/employees/**" />
+			<mvc:mapping path="/users/**" />
+			<bean class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
+				<property name="entityManagerFactory" ref="entityManagerFactory" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/companies/**" />
+			<mvc:mapping path="/departments/**" />
+			<mvc:mapping path="/employees/**" />
+			<mvc:mapping path="/users/**" />
+			<bean
+				class="net.slipp.rest.support.interceptor.PageStatusAutoPersistenceInterceptor" />
+		</mvc:interceptor>
+		<bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<property name="cacheSeconds" value="0" />
+		</bean>
+	</mvc:interceptors>
+	<mvc:view-controller path="/login" view-name="login" />
+	
+	<bean id="objectMapper" class="net.slipp.rest.support.mapper.HibernateAwareObjectMapper"/>
 
-    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-        <property name="order" value="1"/>
-    </bean>
+	<!-- <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="1" />
+	</bean> -->
 
-    <!-- Thymeleaf 설정 -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/"/>
-        <property name="suffix" value=".jsp"/>
-        <property name="order" value="10"/>
-    </bean>
+	<!-- Thymeleaf 설정 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="10" />
+	</bean>
 
-    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-        <property name="converters">
-            <list>
-                <bean class="net.slipp.rest.support.conversion.LongIdTypeToEntityConverter"/>
-                <bean class="net.slipp.rest.support.conversion.StringIdTypeToEntityConverter"/>
-            </list>
-        </property>
-    </bean>
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="net.slipp.rest.support.conversion.LongIdTypeToEntityConverter" />
+				<bean class="net.slipp.rest.support.conversion.StringIdTypeToEntityConverter" />
+			</list>
+		</property>
+	</bean>
 
 </beans>

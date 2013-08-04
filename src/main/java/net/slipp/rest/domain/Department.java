@@ -34,7 +34,8 @@ public class Department implements Serializable {
     @Setter
     @OneToOne(fetch = FetchType.LAZY)
     private Department parent;
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
+    @Getter
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private Set<Department> subDepartment = Sets.newHashSet();
 
     @Getter
@@ -46,6 +47,8 @@ public class Department implements Serializable {
 
     public Department(Department parent, String name, String description) {
         this.parent = parent;
+        this.name = name;
+        this.description = description;
     }
 
     public Department setName(String name) {
