@@ -12,6 +12,7 @@
 bin
 out
 target
+classes
 
 ## ignoreQueryDSL
 src/querydsl
