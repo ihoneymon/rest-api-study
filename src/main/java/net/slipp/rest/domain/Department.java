@@ -28,7 +28,8 @@ public class Department implements Serializable {
     private Long id;
     @Getter
     private String name;
-    @Getter @Setter(AccessLevel.PRIVATE)
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
     private String description;
     @Getter
     @Setter

@@ -33,7 +33,7 @@ idea {
     }
 }
 
-gradle.afterProject {project, projectState ->
+gradle.afterProject { project, projectState ->
     if (projectState.failure) {
         println "Evaluation of $project FAILED"
     } else {

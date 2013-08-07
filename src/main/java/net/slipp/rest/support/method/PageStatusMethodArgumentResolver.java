@@ -14,7 +14,7 @@ public class PageStatusMethodArgumentResolver implements HandlerMethodArgumentRe
 
     @Inject
     PageStatusFactory factory;
-    
+
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return PageStatus.class.isAssignableFrom(parameter.getParameterType());
@@ -22,8 +22,8 @@ public class PageStatusMethodArgumentResolver implements HandlerMethodArgumentRe
 
     @Override
     public Object resolveArgument(MethodParameter parameter,
-            ModelAndViewContainer mavContainer, NativeWebRequest webRequest,
-            WebDataBinderFactory binderFactory) throws Exception {
+                                  ModelAndViewContainer mavContainer, NativeWebRequest webRequest,
+                                  WebDataBinderFactory binderFactory) throws Exception {
         return factory.create(webRequest);
     }
 

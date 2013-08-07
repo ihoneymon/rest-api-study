@@ -3,10 +3,6 @@
  */
 defaultTasks 'initProject'
 
-def paths = [
-        querydsl: "src/querydsl"
-]
-
 sourceSets {
     main {
         java {
@@ -30,12 +26,13 @@ task initProject(description: "Initialization Project") << {
         it.mkdirs();
     }
 
-    sourceSets.main.java.srcDirs.each createDir
-    sourceSets.main.resources.srcDirs.each createDir
-    sourceSets.test.java.srcDirs.each createDir
-    sourceSets.test.resources.srcDirs.each createDir
-    sourceSets.querydsl.java.srcDirs.each createDir
-    //createDir webAppDir
+    createDir sourceSets.main.java.srcDirs.each
+    createDir sourceSets.main.resources.srcDirs.each
+    createDir sourceSets.test.java.srcDirs.each
+    createDir sourceSets.test.resources.srcDirs.each
+    createDir sourceSets.querydsl.java.srcDirs.each
+
+    createDir webAppDir
     createDir new File(webAppDir, "/WEB-INF");
     createDir new File(webAppDir, "/resources");
 }

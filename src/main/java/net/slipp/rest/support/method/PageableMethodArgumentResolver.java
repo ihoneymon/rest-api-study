@@ -23,30 +23,33 @@ import javax.servlet.http.HttpServletRequest;
 import java.beans.PropertyEditorSupport;
 
 public class PageableMethodArgumentResolver implements HandlerMethodArgumentResolver {
-    
+
     private final static Logger logger = LoggerFactory.getLogger(PageableMethodArgumentResolver.class);
-    
-public static final String PAGEABL_VARIABLE = "pageRequest";
-    
+
+    public static final String PAGEABL_VARIABLE = "pageRequest";
+
     private static final String DEFAULT_PREFIX = "page";
     private static final String DEFAULT_SEPARATOR = ".";
     private static final int DEFAULT_PAGE_NUMBER = 0;
     private static final int DEFAULT_SIZE_NUMBER = 10;
-    
+
     private String prefix = DEFAULT_PREFIX;
     private String separator = DEFAULT_SEPARATOR;
     private int defaultPageNumber = DEFAULT_PAGE_NUMBER;
     private int defaultSizeNumber = DEFAULT_SIZE_NUMBER;
-    
+
     public void setDefaultPageNumber(int defaultPageNumber) {
         this.defaultPageNumber = defaultPageNumber <= 0 ? DEFAULT_PAGE_NUMBER : defaultPageNumber;
     }
+
     public void setDefaultSizeNumber(int defaultSizeNumber) {
         this.defaultSizeNumber = defaultSizeNumber <= 0 ? DEFAULT_SIZE_NUMBER : defaultSizeNumber;
     }
+
     public void setPrefix(String prefix) {
         this.prefix = null == prefix ? DEFAULT_PREFIX : prefix;
     }
+
     public void setSeparator(String separator) {
         this.separator = null == separator ? DEFAULT_SEPARATOR : separator;
     }
@@ -58,34 +61,34 @@ public static final String PAGEABL_VARIABLE = "pageRequest";
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-            NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        
+                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+
         Pageable pageable = createFromDefaultConfig();
-        
+
         ServletRequest servletRequest = (ServletRequest) webRequest.getNativeRequest();
         PropertyValues propertyValues = new ServletRequestParameterPropertyValues(servletRequest, prefix, separator);
-        
+
         DataBinder binder = new ServletRequestDataBinder(pageable);
-        
+
         binder.initDirectFieldAccess();
         binder.registerCustomEditor(Sort.class, new SortPropertyEditor("sort.dir", propertyValues));
         binder.bind(propertyValues);
-        
-        if(pageable.getPageNumber() > 0)
+
+        if (pageable.getPageNumber() > 0)
             pageable = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort());
-        
+
         HttpServletRequest httpServletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
         RequestContextUtils.getOutputFlashMap(httpServletRequest).put(PAGEABL_VARIABLE, pageable);
-        
+
         logger.debug("pageable instantiated: {}-{}.{}", new Object[]{pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()});
 
         return pageable;
     }
-    
+
     private Pageable createFromDefaultConfig() {
         return new PageRequest(defaultPageNumber, defaultSizeNumber);
     }
-    
+
     /**
      * {@link org.springframework.data.web.PageableArgumentResolver.SortPropertyEditor} 코드를 가져옴.
      */
@@ -106,6 +109,6 @@ public static final String PAGEABL_VARIABLE = "pageRequest";
 
             setValue(new Sort(order, text));
         }
-    }    
+    }
 
 }

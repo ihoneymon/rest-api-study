@@ -29,17 +29,17 @@ def hibernate = [
 ]
 
 def springframework = [
-    "org.springframework:spring-core:${versions.spring}",
-    "org.springframework:spring-context:${versions.spring}",
-    "org.springframework:spring-web:${versions.spring}",
-    "org.springframework:spring-webmvc:${versions.spring}",
-    "org.springframework:spring-aop:${versions.spring}",
-    "org.springframework:spring-tx:${versions.spring}",
-    "org.springframework:spring-aspects:${versions.spring}",
-    "org.springframework:spring-jdbc:${versions.spring}",
-    "org.springframework:spring-oxm:${versions.spring}",
-    "org.springframework:spring-orm:${versions.spring}",
-    "org.springframework:spring-test:${versions.spring}"
+        "org.springframework:spring-core:${versions.spring}",
+        "org.springframework:spring-context:${versions.spring}",
+        "org.springframework:spring-web:${versions.spring}",
+        "org.springframework:spring-webmvc:${versions.spring}",
+        "org.springframework:spring-aop:${versions.spring}",
+        "org.springframework:spring-tx:${versions.spring}",
+        "org.springframework:spring-aspects:${versions.spring}",
+        "org.springframework:spring-jdbc:${versions.spring}",
+        "org.springframework:spring-oxm:${versions.spring}",
+        "org.springframework:spring-orm:${versions.spring}",
+        "org.springframework:spring-test:${versions.spring}"
 ]
 
 dependencies {

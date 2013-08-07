@@ -10,9 +10,9 @@ import java.util.Map;
 
 @Getter
 public class PageStatus implements Pageable, Serializable {
-    
+
     private static final long serialVersionUID = 1584712873980436690L;
-    
+
     private final int pageNumber;
     private final int pageSize;
     private final Sort sort;
@@ -27,7 +27,7 @@ public class PageStatus implements Pageable, Serializable {
             Map<String, Object> attributes,
             String queryString, String pageableQueryString,
             String jsonString, String pageableJsonString) {
-        
+
         if (0 > pageNumber) {
             throw new IllegalArgumentException("Page index must not be less than zero!");
         }
@@ -66,14 +66,14 @@ public class PageStatus implements Pageable, Serializable {
     }
 
     public PageStatus addSort(Sort sort) {
-        return new PageStatus(pageNumber, pageSize, sort, attributes, 
+        return new PageStatus(pageNumber, pageSize, sort, attributes,
                 queryString, pageableQueryString, jsonString, pageableJsonString);
     }
-    
+
     @Override
     public String toString() {
         return "PageStatus [pageNumber=" + pageNumber + ", pageSize="
                 + pageSize + ", sort=" + sort + ", attributes=" + attributes + "]";
-    }    
+    }
 
 }

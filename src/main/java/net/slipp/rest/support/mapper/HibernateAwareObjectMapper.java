@@ -3,7 +3,6 @@ package net.slipp.rest.support.mapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
-import org.springframework.core.convert.ConversionService;
 
 /**
  * Jackson JSON processor which handles Hibernate
