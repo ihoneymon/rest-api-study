@@ -1,0 +1,63 @@
+/**
+ * 기본실행 테스크
+ */
+defaultTasks 'initProject'
+
+sourceSets {
+    main {
+        java {
+            srcDir "src/main/java"
+        }
+        resources {
+            //기본설정값과 개발환경에 대한 설정값을 가진 디렉토리 이용
+            srcDir "src/main/resources"
+        }
+    }
+    querydsl {
+        java {
+            srcDir "src/querydsl/java"
+        }
+    }
+}
+
+task initProject(description: "Initialization Project") << {
+    createDir = {
+        println "Create Dir : $it"
+        it.mkdirs();
+    }
+
+    sourceSets.main.java.srcDirs.each createDir
+    sourceSets.main.resources.srcDirs.each createDir
+    sourceSets.test.java.srcDirs.each createDir
+    sourceSets.test.resources.srcDirs.each createDir
+    sourceSets.querydsl.java.srcDirs.each createDir
+
+    createDir webAppDir
+    createDir new File(webAppDir, "/WEB-INF");
+    createDir new File(webAppDir, "/resources");
+}
+tasks.eclipse.dependsOn cleanEclipse
+tasks.eclipse.dependsOn initProject
+
+//-- QueryDSL
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+    ]
+    destinationDir = sourceSets.querydsl.java.srcDirs.iterator().next()
+    dependencyCacheDir = compileJava.dependencyCacheDir
+}
+compileJava.dependsOn generateQueryDSL
+//-- QueryDSL
+
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+clean {
+    delete sourceSets.querydsl.java.srcDirs
+}
