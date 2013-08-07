@@ -21,11 +21,6 @@ sourceSets {
         java {
             srcDir "src/querydsl/java"
         }
-//        resources {
-//            exclude {
-//                srcDir "src/querydsl/resources"
-//            }
-//        }
     }
 }
 
