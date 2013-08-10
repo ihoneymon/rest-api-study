@@ -3,6 +3,7 @@ REST API
 
 *****
 
+* SLiPP.net Wiki : 8주차 REST API 설계 및 구현 
 * 발표관련 문서 : [REST API 설계 및 구현](https://docs.google.com/file/d/0Bz1yn-FO3HI7VXdtQ3k2NmZMU0E/edit?usp=sharing)
 
 *****
@@ -11,8 +12,41 @@ REST API
 * API(**A**pplication **P**rogramming **I**nterface)란 무엇인가?
 	* API 어렵지 않아요.
 		- 우리는 이미 API를 사용하고 있다.
-* RESTful 정의
+		- Java 다른 클래스의 메소드를 사용하는 것도 API를 이용하는 것이다.
+		```
+		public class Calculator {
+			public int add(int a, int b) {
+				return a + b;
+			}
+		}
+
+		public class TestCalculator {
+
+			private Calculator calculator;
+
+			@Befor
+			public void setUp() {
+				calculator = new Calculator();
+			}
+
+			@Test
+			public voic testAdd() {
+				int a = 5;
+				int b = 10;
+				assertThat(calculator.add(a, b), is(5));
+			}
+		}
+		```
+	> 데이터와 기능의 집합을 제공하여 컴퓨터 프로그램간 상호작용을 촉진하며, 서로 정보를 교환가능 하도록 한다.
+
+* REST
+	* REST(Representational State Transfer) 웹의 구조적 스타일에 대한 설명
 	* 관련 자료조사 : 박상도(2013/08/10, 토요일)
+* REST API
+	* REST 구조 스타일에 적합한 Web API를 REST API라고 한다.
+	* 'REST API'를 제공하는 웹 서비스를 'RESTful'하다고 할 수 있다.
+		- RESTful 한게 뭔디?
+
 * RESTful API 구현 사례
 	* 참조할만한 API 구현사례
 		- 네이버
@@ -96,19 +130,39 @@ REST API
 *****
 
 ### 논의
-* REST API 설계시 고려사항
-	- ??? : XML vs JSON : 선호하는 형태?!
-	- Resource
+* REST API 설계
+	* URI 경로path는 언제 복수로 써야하는가?
+	* 리소스의 상태를 업데이트하려면, 어떤 메소드를 사용해야 하는가?
+	* CRUD 가 아닌 연산을 어떻게 URL에 매핑하는가?
+	* 특정한 시나니로에 가장 적합한 HTTP응답은 무엇인가?
+	* 리소스 상태 표현의 버전은 어떻게 관리할 수 있는가?
+	* JSON에 포함된 하이퍼링크는 어떻게 구조화 하는가?
 
-* REST API 작명법
-	* 복수형 vs 단수형
-	* CRUD 유사 작명법
-		- 기존 사용방식(/add, /remove, /edit(or modify), /list)
-			- GET, POST(화면단에서 폼에 입력된 값을 submit으로 처리하는 경우)
+### URI(Uniform Resource Identifier) 식별자 설계
+> 식발져라고 할 수 있는 유일한 일은 대상을 나타내는 것이다. 역참조를 할 때가 아니라면 다른 정보를 얻기 위해서 URI의 내용을 들여다보지 말아야 한다.
+* URI를 만들때부터 REST API 리소스 모델을 클라이언트 모델에 전달할 수 있어야 한다.
 
-* REST API Method별 고려사항
-	- Form 으로 처리
-	- ajax를 이용한 처리
+* URI 형태
+	* 규칙 : 슬러시 구분자(/)는 계층관계를 나타내는 데 사용한다.
+	* 규칙 : URI 마지막 문자로 슬래시(/)를 포함하지 않는다.
+	* 규칙 : 하이픈(-)은 URI 가독성을 높이는 데 사용한다.
+	* 규칙 : 밑줄(_)은 URI에 사용하지 않는다.
+	* 규칙 : URI 경로는 소문자가 적합하다.
+	* 규칙 : 파일 확장자(ex: .json, .xml)는 URI에 포함시키지 않는다.
+* 리소스 모델링
+> 웹서비스의 기반이 되는 URI는 REST API의 자원(리소스, Resource)가 된다.
+* 리소스 원형	
+	* 도큐먼트 : 객체 인스턴스나 데이터베이스 레코드와 유사한 개념
+	* 컬렉션 : 서버에서 관리하는 디렉터리라는 리소스
+	* 스토어 : 클라이언트에서 관리하는 리소스 저장소
+* URI 경로 디자인
+	* 규칙 : 도큐먼트 이름으로는 단수 명사를 사용해야 한다.
+	* 규칙 : 컬렉션 이름으로는 복수 명사를 사용해야 한다.
+	* 규칙 : 스토어 이름으로는 복수 명사를 사용해야 한다.
+	* 규칙 : 경로 부분 중 변하는 부분은 유일한 값으로 대체한다.
+	* 규칙 : CRUD 기능을 나타내는 것은 URI에 사용하지 않는다.
+
+### 요청메서드(GET/POST/PUT/DELETE)
 
 ***** 
 
