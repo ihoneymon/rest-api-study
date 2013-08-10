@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * Date: 13. 7. 22
  */
 @Repository
-public interface CompanyRepository extends CrudRepository<Company, Long>{
+public interface CompanyRepository extends CrudRepository<Company, Long> {
     Company findCompanyById(Long companyId);
 }

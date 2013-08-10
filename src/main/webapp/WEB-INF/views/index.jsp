@@ -10,18 +10,18 @@
     <!-- stylesheet -->
     <link href="<spring:url value="/resources/libs/bootstrap/css/bootstrap.min.css" />" rel="stylesheet">
 
-	<!-- javascript -->    
+    <!-- javascript -->
     <script src="<spring:url value="/resources/libs/jquery/jquery-2.0.3.min.js" />"></script>
     <script src="<spring:url value="/resources/libs/bootstrap/js/bootstrap.min.js" />"></script>
 </head>
 <body>
 <div>
-	<h3>Hello!</h3>
+    <h3>Hello!</h3>
 </div>
-    <script type="text/javascript">
-	$(function() {
-		console.log("234");
-	});
-    </script>
+<script type="text/javascript">
+    $(function () {
+        console.log("234");
+    });
+</script>
 </body>
 </html>

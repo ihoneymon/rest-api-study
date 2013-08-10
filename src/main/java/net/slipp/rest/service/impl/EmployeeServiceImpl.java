@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
  * Date: 13. 7. 22
  */
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 }

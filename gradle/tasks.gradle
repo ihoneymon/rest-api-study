@@ -3,10 +3,6 @@
  */
 defaultTasks 'initProject'
 
-def paths = [
-        querydsl: "src/querydsl"
-]
-
 sourceSets {
     main {
         java {
@@ -35,7 +31,8 @@ task initProject(description: "Initialization Project") << {
     sourceSets.test.java.srcDirs.each createDir
     sourceSets.test.resources.srcDirs.each createDir
     sourceSets.querydsl.java.srcDirs.each createDir
-    //createDir webAppDir
+
+    createDir webAppDir
     createDir new File(webAppDir, "/WEB-INF");
     createDir new File(webAppDir, "/resources");
 }

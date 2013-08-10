@@ -3,9 +3,9 @@ apply plugin: "war"
 apply plugin: "eclipse-wtp"
 apply plugin: "idea"
 //의존성 라이브러리 구성
-apply from: "dependencies.gradle"
+apply from: "gradle/dependencies.gradle"
 //프로젝트 사용 태스크 정리
-apply from: "tasks.gradle"
+apply from: "gradle/tasks.gradle"
 
 version = '0.1.0'
 sourceCompatibility = '1.7'
@@ -33,7 +33,7 @@ idea {
     }
 }
 
-gradle.afterProject {project, projectState ->
+gradle.afterProject { project, projectState ->
     if (projectState.failure) {
         println "Evaluation of $project FAILED"
     } else {

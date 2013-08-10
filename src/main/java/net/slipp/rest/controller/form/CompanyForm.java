@@ -1,9 +1,8 @@
 package net.slipp.rest.controller.form;
 
-import org.springframework.beans.BeanUtils;
-
-import net.slipp.rest.domain.Company;
 import lombok.Data;
+import net.slipp.rest.domain.Company;
+import org.springframework.beans.BeanUtils;
 
 @Data
 public class CompanyForm {
@@ -12,12 +11,13 @@ public class CompanyForm {
     private String name;
     private String tel;
     private String address;
-    
-    CompanyForm() {}
-    
+
+    CompanyForm() {
+    }
+
     public Company createCompany() {
         Company target = new Company(getName());
-        BeanUtils.copyProperties(this, target, new String[] {"id"});
+        BeanUtils.copyProperties(this, target, new String[]{"id"});
         return target;
     }
 }

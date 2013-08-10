@@ -24,20 +24,25 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Getter @Setter(AccessLevel.PRIVATE)
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
     private String name;
 
-    @Getter @Setter(AccessLevel.PRIVATE)
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
     private String email;
 
-    @Getter @Setter(AccessLevel.PRIVATE)
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
     private String nickName;
 
     @OneToMany
-    @Getter @Setter(AccessLevel.PRIVATE)
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
     private Set<Department> departments;
 
-    @Getter @Setter(AccessLevel.PRIVATE)
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
     private Date createdDate;
 
 }
