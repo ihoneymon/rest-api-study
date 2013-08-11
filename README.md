@@ -62,7 +62,9 @@ REST API
 * [gradle 을 이용한 프로젝트 구성](https://github.com/ihoneymon/rest-api-study/blob/master/build.gradle)  -> 완료
 * ORM(DDD!) : [Hibernate](http://www.hibernate.org/) + [Spring Data JPA](http://www.springsource.org/spring-data/jpa) + [QueryDSL](http://www.querydsl.com/) -> 완료
 * web.xml -> Java config 이용 -> 미진행
-* [Thymeleaf](http://www.thymeleaf.org/) 템플릿 엔진 적용 : JSP -> HTML -> 미진행(2013/08/10, 토요일까지 완료예정)
+* ~~[Thymeleaf](http://www.thymeleaf.org/) 템플릿 엔진 적용 : JSP -> HTML -> 미진행(2013/08/10, 토요일까지 완료예정)~~
+	* TAGLIB를 사용할 수 없는 불편함이 있어서 JSP로 변경함
+	* SITE-MESH로 변경
 
 ### 도메인Domain 설계
 * 모델

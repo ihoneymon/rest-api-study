@@ -1,4 +1,4 @@
-package net.slipp.rest.controller;
+package net.slipp.rest.controller.api;
 
 import net.slipp.rest.controller.form.CompanyForm;
 import net.slipp.rest.domain.Company;

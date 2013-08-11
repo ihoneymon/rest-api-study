@@ -1,4 +1,4 @@
-package net.slipp.rest.controller;
+package net.slipp.rest.controller.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

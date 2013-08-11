@@ -8,20 +8,32 @@
     <title>RestAPI Test page</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- stylesheet -->
+    <link href="<spring:url value="/resources/libs/jquery-ui/css/redmond/jquery-ui-1.10.3.custom.min.css" />" rel="stylesheet">
     <link href="<spring:url value="/resources/libs/bootstrap/css/bootstrap.min.css" />" rel="stylesheet">
 
     <!-- javascript -->
-    <script src="<spring:url value="/resources/libs/jquery/jquery-2.0.3.min.js" />"></script>
+    <script src="<spring:url value="/resources/libs/jquery/jquery-1.10.2.min.js" />"></script>
+    <script src="<spring:url value="/resources/libs/jquery-ui/js/jquery-ui-1.10.3.custom.min.js" />"></script>
     <script src="<spring:url value="/resources/libs/bootstrap/js/bootstrap.min.js" />"></script>
 </head>
 <body>
-<div>
-    <h3>Hello!</h3>
-</div>
-<script type="text/javascript">
-    $(function () {
-        console.log("234");
-    });
-</script>
+<header>
+    <h3>REST API example</h3>
+</header>
+
+<section>
+    <nav>
+        <div class="col-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="<spring:url value="/companies"/>">Company 관련 API</a></li>
+                <li><a href="<spring:url value="/departments" />">Department 관련 API</a></li>
+                <li><a href="<spring:url value="/employees" />">Employee 관련 API</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section>
+
+    </section>
+</section>
 </body>
 </html>
