@@ -1,12 +1,13 @@
 package net.slipp.rest.support.view;
 
-import lombok.Getter;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
+import lombok.Getter;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Getter
 public class PageStatus implements Pageable, Serializable {

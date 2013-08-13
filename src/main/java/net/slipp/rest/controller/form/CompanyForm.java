@@ -2,6 +2,7 @@ package net.slipp.rest.controller.form;
 
 import lombok.Data;
 import net.slipp.rest.domain.Company;
+
 import org.springframework.beans.BeanUtils;
 
 @Data

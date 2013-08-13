@@ -1,6 +1,7 @@
 package net.slipp.rest.service.impl;
 
 import net.slipp.rest.service.DepartmentService;
+
 import org.springframework.stereotype.Service;
 
 /**

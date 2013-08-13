@@ -1,16 +1,18 @@
 package net.slipp.rest.support.interceptor;
 
+import java.util.Collection;
+
+import javax.inject.Inject;
+
 import net.slipp.rest.support.view.PageStatus;
 import net.slipp.rest.support.view.PageStatusFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.request.WebRequestInterceptor;
-
-import javax.inject.Inject;
-import java.util.Collection;
 
 public class PageStatusAutoPersistenceInterceptor implements WebRequestInterceptor {
 

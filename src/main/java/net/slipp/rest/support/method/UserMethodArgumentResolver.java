@@ -1,7 +1,10 @@
 package net.slipp.rest.support.method;
 
+import javax.inject.Inject;
+
 import net.slipp.rest.domain.User;
 import net.slipp.rest.repository.UserRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -11,8 +14,6 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-
-import javax.inject.Inject;
 
 /**
  * @author 박용권

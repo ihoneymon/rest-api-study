@@ -1,7 +1,10 @@
 package net.slipp.rest.repository;
 
 import net.slipp.rest.domain.User;
-import org.springframework.data.repository.CrudRepository;
+import net.slipp.rest.repository.querypredicate.JPQLQueryPredicateExecutor;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * Date: 13. 7. 22
  */
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, QueryDslPredicateExecutor<User>, JPQLQueryPredicateExecutor<User> {
     User findUserByUsername(String username);
 }

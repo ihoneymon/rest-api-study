@@ -1,12 +1,18 @@
 package net.slipp.rest.domain;
 
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Calendar;
-import java.util.Date;
+
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  * 사용자 권한 도메인

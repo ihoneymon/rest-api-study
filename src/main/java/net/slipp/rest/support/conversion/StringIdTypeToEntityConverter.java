@@ -1,10 +1,12 @@
 package net.slipp.rest.support.conversion;
 
-import com.google.common.collect.Sets;
+import java.util.Set;
+
 import net.slipp.rest.domain.security.RoleGrantedAuthority;
+
 import org.springframework.core.convert.TypeDescriptor;
 
-import java.util.Set;
+import com.google.common.collect.Sets;
 
 /**
  * Entity(Id : String type) Converter

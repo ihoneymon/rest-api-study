@@ -1,11 +1,12 @@
 package net.slipp.rest.service.impl;
 
+import javax.inject.Inject;
+
 import net.slipp.rest.domain.Company;
 import net.slipp.rest.repository.CompanyRepository;
 import net.slipp.rest.service.CompanyService;
-import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
+import org.springframework.stereotype.Service;
 
 /**
  * Company Service

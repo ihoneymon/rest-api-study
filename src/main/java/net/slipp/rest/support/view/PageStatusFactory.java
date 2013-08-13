@@ -1,7 +1,12 @@
 package net.slipp.rest.support.view;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Maps;
+import java.beans.PropertyEditorSupport;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +27,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.util.WebUtils;
 import org.thymeleaf.util.ArrayUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import java.beans.PropertyEditorSupport;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Maps;
 
 @Component
 public class PageStatusFactory {

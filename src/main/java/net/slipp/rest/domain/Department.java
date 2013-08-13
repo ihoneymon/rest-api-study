@@ -1,14 +1,29 @@
 package net.slipp.rest.domain;
 
-import com.google.common.collect.Sets;
-import lombok.*;
-import org.springframework.util.Assert;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import org.springframework.util.Assert;
+
+import com.google.common.collect.Sets;
 
 /**
  * 부서 도메인

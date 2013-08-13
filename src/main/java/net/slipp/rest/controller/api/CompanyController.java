@@ -1,9 +1,12 @@
 package net.slipp.rest.controller.api;
 
+import javax.inject.Inject;
+
 import net.slipp.rest.controller.form.CompanyForm;
 import net.slipp.rest.domain.Company;
 import net.slipp.rest.repository.CompanyRepository;
 import net.slipp.rest.service.CompanyService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.inject.Inject;
 
 /**
  * Created with IntelliJ IDEA.
