@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import net.slipp.rest.controller.form.CompanyForm;
 import net.slipp.rest.domain.Company;
-import net.slipp.rest.repository.CompanyRepository;
 import net.slipp.rest.service.CompanyService;
 
 import org.slf4j.Logger;
@@ -26,19 +25,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/companies")
 public class CompanyController {
     private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
-    @Inject
-    private CompanyRepository companyRepository;
+
     @Inject
     private CompanyService companyService;
 
     @RequestMapping(method = RequestMethod.GET)
     public void getCompanies(ModelMap map) {
-        map.put("companies", companyRepository.findAll());
+        map.put("companies", companyService.findAll());
     }
 
     @RequestMapping(value = "/{company}", method = RequestMethod.GET)
     public void getCompany(@PathVariable("company") Company company, ModelMap map) {
-        logger.debug("Company : {}", company);
         map.put("company", company);
     }
 
@@ -52,7 +49,7 @@ public class CompanyController {
     public void createCompany(@RequestBody CompanyForm form, ModelMap map) {
         logger.debug("CompanyForm : {}", form);
         Company company = form.createCompany();
-        companyRepository.save(company);
+        companyService.save(company);
         logger.debug("Created Company : {}", company);
         map.put("company", company);
     }
