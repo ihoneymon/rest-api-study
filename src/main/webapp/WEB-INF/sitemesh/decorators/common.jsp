@@ -6,11 +6,11 @@
 
 <html>
 <head>
-    <title>REST API Test page</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- stylesheet -->
-    <link href="<spring:url value="/resources/libs/jquery-ui/css/redmond/jquery-ui-1.10.3.custom.min.css" />" rel="stylesheet">
-    <link href="<spring:url value="/resources/libs/bootstrap/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<spring:url value="/resources/libs/jquery-ui/css/redmond/jquery-ui-1.10.3.custom.min.css" />" rel="stylesheet"/>
+    <link href="<spring:url value="/resources/libs/bootstrap/css/bootstrap.min.css" />" rel="stylesheet"/>
+    <link href="<spring:url value="/resources/css/common.css"/>" rel="stylesheet"/>
 
     <!-- javascript -->
     <script src="<spring:url value="/resources/libs/jquery/jquery-1.10.2.min.js" />"></script>
@@ -19,17 +19,18 @@
 
     <decorator:head/>
 </head>
+
 <body>
 <header>
-    <h3>REST API STUDY</h3>
+    <h3><a href="<spring:url value="/view/"/>"><spring:message code="view.common.restAPIStudy"/></a></h3>
 </header>
 
 <nav>
     <div class="col-2">
         <ul class="nav nav-pills nav-stacked">
-            <li id="companyNav"><a href="<spring:url value="/view/companies"/>">Company 관련 API</a></li>
-            <li id="departmentNav"><a href="<spring:url value="/view/departments" />">Department 관련 API</a></li>
-            <li id="employeeNav"><a href="<spring:url value="/view/employees" />">Employee 관련 API</a></li>
+            <li id="companyNav"><a href="<spring:url value="/view/companies"/>"><spring:message code="view.common.companyAPI"/></a></li>
+            <li id="departmentNav"><a href="<spring:url value="/view/departments" />"><spring:message code="view.common.departmentAPI"/></a></li>
+            <li id="employeeNav"><a href="<spring:url value="/view/employees" />" ><spring:message code="view.common.employeeAPI"/></a></li>
         </ul>
     </div>
 </nav>
@@ -38,7 +39,7 @@
     <div class="col-10">
         <div class="panel">
             <div class="panel-heading">
-                <h3 class="panel-title">About REST API</h3>
+                <h3 class="panel-title"><spring:message code="view.common.aboutRestAPI"/></h3>
             </div>
             <decorator:body/>
         </div>

@@ -9,7 +9,6 @@
     <title>REST API STUDY Page</title>
     <meta name="decorator" content="common">
     <!-- stylesheet -->
-    <%--<link href="<spring:url value="/resources/css" />" rel="stylesheet">--%>
 
     <!-- javascript -->
     <script src="<spring:url value="/resources/js/index.js" />"></script>
