@@ -2,6 +2,7 @@ package net.slipp.rest.controller.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,4 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/departments")
 public class DepartmentController {
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String departments() {
+        return "departments";
+    }
 }

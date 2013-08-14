@@ -6,7 +6,7 @@
 
 <html>
 <head>
-    <title>RestAPI Test Index Page</title>
+    <title>REST API STUDY Page</title>
     <meta name="decorator" content="common">
     <!-- stylesheet -->
     <%--<link href="<spring:url value="/resources/css" />" rel="stylesheet">--%>
