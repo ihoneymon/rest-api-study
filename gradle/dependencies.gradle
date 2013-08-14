@@ -65,10 +65,6 @@ dependencies {
     compile "com.mysema.querydsl:querydsl-jpa:${versions.querydsl}"
     querydslapt "com.mysema.querydsl:querydsl-apt:${versions.querydsl}"
 
-    //compile  : http://www.thymeleaf.org/
-    compile "org.thymeleaf:thymeleaf:${versions.thymeleaf}"
-    compile "org.thymeleaf:thymeleaf-spring3:${versions.thymeleaf}"
-
     compile "org.apache.commons:commons-lang3:3.1"
 
     //BoneCP : http://jolbox.com/

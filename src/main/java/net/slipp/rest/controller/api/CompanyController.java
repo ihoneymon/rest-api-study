@@ -8,6 +8,7 @@ import net.slipp.rest.service.CompanyService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,8 @@ public class CompanyController {
 
     @Inject
     private CompanyService companyService;
+    @Inject
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(method = RequestMethod.GET)
     public void getCompanies(ModelMap map) {
@@ -52,5 +55,11 @@ public class CompanyController {
         companyService.save(company);
         logger.debug("Created Company : {}", company);
         map.put("company", company);
+    }
+
+    @RequestMapping(value="/password-encoder/{targetKeyword}", method = RequestMethod.GET)
+    public void testEncrypt(@PathVariable("targetKeyword")String targetKeyword, ModelMap map) {
+        String encodedTargetKeyword = passwordEncoder.encode(targetKeyword);
+        map.put("result", encodedTargetKeyword);
     }
 }
