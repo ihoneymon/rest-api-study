@@ -164,8 +164,28 @@ REST API
 	* 규칙 : 경로 부분 중 변하는 부분은 유일한 값으로 대체한다.
 	* 규칙 : CRUD 기능을 나타내는 것은 URI에 사용하지 않는다.
 
-### 요청메서드(GET/POST/PUT/DELETE)
+### 요청메소드(GET/POST/PUT/DELETE)
+* 메소드별 용도
+	* GET : 리소스 상태의 표현을 얻을 때 사용
+	* POST : 컬렉션에 새로운 리소스를 만들거나 컨트롤러를 실행할 때 사용
+	* PUT : 새로운 리소스를 스토어에 추가하거나 기존 리소스를 갱신할 때 사용
+	* DELETE : 리소스 제거
+	* HEAD
+	* OPTIONS
+* 팁
+	* jQuery를 통해서 ajax통신을 할때, PUT이나 DELETE 메소드로 요청을 날려도 POST로 처리되는 경우
+		1. web.xml hiddenMethodFilter 추가
+		2. ```<form></form>``` 내에 ```<input type="hidden" name="_method" value="PUT/DELETE"/>``` 추가
+			- Spring taglib를 사용하여 폼 생성시에는 ```<form:form method="PUT"/>```을 사용시 자동으로 추가해줌
+		3. json 형태로 요청시에는 form 객체 내에 '_method': 'put/delete' 추가 하면 됨
 
+### 응답상태코드
+* 응답상태코드
+	* 1xx : 전송 프로토콜 수준의 정보 교환
+	* 2xx : 클라어인트 요청이 성공적으로 수행됨
+	* 3xx : 클라이언트는 요청을 완료하기 위해 추가적인 행동을 취해야 함
+	* 4xx : 클라이언트의 잘못된 요청
+	* 5xx : 서버쪽 오류로 인한 상태코드
 ***** 
 
 ### OAuth2(할 수 있을까...?)
@@ -182,6 +202,7 @@ REST API
 
 ### 참고사항
 * Gradle : [http://www.gradle.org/](http://www.gradle.org/)
+	* Groovy : [http://groovy.codehaus.org/](http://groovy.codehaus.org/) [KO](http://groovy.codehaus.org/Korean+Beginners+Tutorial)
 * Java Config : [http://www.springsource.org/javaconfig](http://www.springsource.org/javaconfig)
 * REST API
     * [REST](http://ko.wikipedia.org/wiki/REST) - Wikipedia
