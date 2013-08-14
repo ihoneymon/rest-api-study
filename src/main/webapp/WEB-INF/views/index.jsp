@@ -36,31 +36,31 @@
             <li><p>API 어렵지 않아요.</p>
                 <ul>
                     <li>우리는 이미 API를 사용하고 있다.</li>
-                    <li><p>Java 다른 클래스의 메소드를 사용하는 것도 API를 이용하는 것이다.</p> <pre>
-									<code>public class Calculator {
-                                        public int add(int a, int b) {
-                                        return a + b;
-                                        }
-                                        }
+                    <li><p>Java 다른 클래스의 메소드를 사용하는 것도 API를 이용하는 것이다.</p>
+                        <pre><code>
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+}
 
-                                        public class TestCalculator {
+public class TestCalculator {
 
-                                        private Calculator calculator;
+    private Calculator calculator;
 
-                                        @Befor
-                                        public void setUp() {
-                                        calculator = new Calculator();
-                                        }
+    @Befor
+    public void setUp() {
+        calculator = new Calculator();
+    }
 
-                                        @Test
-                                        public voic testAdd() {
-                                        int a = 5;
-                                        int b = 10;
-                                        assertThat(calculator.add(a, b), is(5));
-                                        }
-                                        }
-                                    </code>
-								</pre>
+    @Test
+    public voic testAdd() {
+        int a = 5;
+        int b = 10;
+        assertThat(calculator.add(a, b), is(5));
+    }
+}
+                        </code></pre>
                         <blockquote>
                             <p>데이터와 기능의 집합을 제공하여 컴퓨터 프로그램간 상호작용을 촉진하며, 서로 정보를 교환가능 하도록
                                 한다.</p>

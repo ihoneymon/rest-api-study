@@ -141,7 +141,7 @@ REST API
 	* JSON에 포함된 하이퍼링크는 어떻게 구조화 하는가?
 
 ### URI(Uniform Resource Identifier) 식별자 설계
-> 식발져라고 할 수 있는 유일한 일은 대상을 나타내는 것이다. 역참조를 할 때가 아니라면 다른 정보를 얻기 위해서 URI의 내용을 들여다보지 말아야 한다.
+> 식별자라고 할 수 있는 유일한 일은 대상을 나타내는 것이다. 역참조를 할 때가 아니라면 다른 정보를 얻기 위해서 URI의 내용을 들여다보지 말아야 한다.
 * URI를 만들때부터 REST API 리소스 모델을 클라이언트 모델에 전달할 수 있어야 한다.
 
 * URI 형태
@@ -175,15 +175,16 @@ REST API
 
 *****
 
-### 사용모듈
-* [build.gradle](https://github.com/ihoneymon/rest-api-study/blob/master/build.gradle) 참조 
+### 사용 라이브러리
+* [dependencies.gradle](https://github.com/ihoneymon/rest-api-study/blob/master/gradle/dependencies.gradle) 참조
 
 *****
 
 ### 참고사항
-* Thymeleaf : [http://www.thymeleaf.org/](http://www.thymeleaf.org/)
 * Gradle : [http://www.gradle.org/](http://www.gradle.org/)
 * Java Config : [http://www.springsource.org/javaconfig](http://www.springsource.org/javaconfig)
 * REST API
     * [REST](http://ko.wikipedia.org/wiki/REST) - Wikipedia
     * [Web API Design : 개발자에게 사랑받는 API 만들기](http://www.mimul.com/pebble/default/2012/08/07/1344315512542.html) - Mimuls
+* Sitemesh : [https://github.com/sitemesh](https://github.com/sitemesh)
+    > 화면구성 중 일부만 변경하여 사용하는 경우에 적합한 템플릿엔진
