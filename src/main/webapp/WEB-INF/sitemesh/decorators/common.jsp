@@ -27,9 +27,9 @@
 <nav>
     <div class="col-2">
         <ul class="nav nav-pills nav-stacked">
-            <li id="companyNav"><a href="<spring:url value="/companies"/>">Company 관련 API</a></li>
-            <li id="departmentNav"><a href="<spring:url value="/departments" />">Department 관련 API</a></li>
-            <li id="employeeNav"><a href="<spring:url value="/employees" />">Employee 관련 API</a></li>
+            <li id="companyNav"><a href="<spring:url value="/view/companies"/>">Company 관련 API</a></li>
+            <li id="departmentNav"><a href="<spring:url value="/view/departments" />">Department 관련 API</a></li>
+            <li id="employeeNav"><a href="<spring:url value="/view/employees" />">Employee 관련 API</a></li>
         </ul>
     </div>
 </nav>
