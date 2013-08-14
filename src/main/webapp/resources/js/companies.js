@@ -35,9 +35,12 @@ var modalCompany = function(method, $target) {
 
 };
 
+/**
+ * 기업정보 가져오기
+ */
 var getCompanies = function() {
     $.get(url.companies, function(data) {
-        console.log(data.companies.content);
+        console.log(data.companies);
         renderTemplate($("#companyTable").find("tbody"), "#companyTemplate", data.companies.content, true);
     });
 };

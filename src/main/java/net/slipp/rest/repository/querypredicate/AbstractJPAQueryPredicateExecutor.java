@@ -24,6 +24,8 @@ import com.mysema.query.types.path.PathBuilder;
 
 /**
  * QueryDSL의 JPQLQuery 실행기<br/>
+ * JPQLQuery를 실행하기 위해 Repsository에 JPQLQUeryPredicateExecutor를 구현implements하여<br/>
+ * createQuery()로 만들어진 JQPLQuery를 작성한다.<br/>
  * JPQLQuery를 실행하게 될 Repository 에 대한 구현체에서 확장
  *
  * @author: ihoneymon
