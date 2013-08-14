@@ -37,7 +37,7 @@ var modalCompany = function(method, $target) {
 
 var getCompanies = function() {
     $.get(url.companies, function(data) {
-        console.log(data.companies);
-        renderTemplate($("#companyTable").find("tbody"), "#companyTemplate", data.companies, true);
+        console.log(data.companies.content);
+        renderTemplate($("#companyTable").find("tbody"), "#companyTemplate", data.companies.content, true);
     });
 };

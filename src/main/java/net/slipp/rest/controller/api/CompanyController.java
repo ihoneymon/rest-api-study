@@ -4,10 +4,15 @@ import javax.inject.Inject;
 
 import net.slipp.rest.controller.form.CompanyForm;
 import net.slipp.rest.domain.Company;
+import net.slipp.rest.domain.condition.CompanyCondition;
 import net.slipp.rest.service.CompanyService;
 
+import net.slipp.rest.support.common.Pagination;
+import net.slipp.rest.support.common.Paginations;
+import net.slipp.rest.support.view.PageStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,8 +38,12 @@ public class CompanyController {
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping(method = RequestMethod.GET)
-    public void getCompanies(ModelMap map) {
-        map.put("companies", companyService.findAll());
+    public void getCompanies(CompanyCondition condition, PageStatus pageStatus, ModelMap map) {
+        /**
+         * 페이지로 반환된 기업정보를 화면에서 페이징처리할 수 있도록 {@link Pagination}으로 변환하여 화면에 전달
+         */
+        Pagination<Company> page = Paginations.pagination(companyService.findAll(condition, pageStatus));
+        map.put("companies", page);
     }
 
     @RequestMapping(value = "/{company}", method = RequestMethod.GET)
@@ -55,11 +64,5 @@ public class CompanyController {
         companyService.save(company);
         logger.debug("Created Company : {}", company);
         map.put("company", company);
-    }
-
-    @RequestMapping(value="/password-encoder/{targetKeyword}", method = RequestMethod.GET)
-    public void testEncrypt(@PathVariable("targetKeyword")String targetKeyword, ModelMap map) {
-        String encodedTargetKeyword = passwordEncoder.encode(targetKeyword);
-        map.put("result", encodedTargetKeyword);
     }
 }

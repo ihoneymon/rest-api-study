@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
  * Date: 13. 7. 22
  */
 @Repository
-public interface DepartmentRepository extends JpaRepository<Department, Long>, QueryDslPredicateExecutor<Department>, JPQLQueryPredicateExecutor<Department> {
+public interface DepartmentRepository extends JpaRepository<Department, Long>, QueryDslPredicateExecutor<Department> {
 }

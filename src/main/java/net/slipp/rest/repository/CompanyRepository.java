@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * Date: 13. 7. 22
  */
 @Repository
-public interface CompanyRepository extends JpaRepository<Company, Long>, QueryDslPredicateExecutor<Company>, JPQLQueryPredicateExecutor<Company> {
+public interface CompanyRepository extends JpaRepository<Company, Long>, QueryDslPredicateExecutor<Company> {
     Company findCompanyById(Long companyId);
 }

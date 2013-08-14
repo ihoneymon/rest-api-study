@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * Date: 13. 7. 22
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>, QueryDslPredicateExecutor<User>, JPQLQueryPredicateExecutor<User> {
+public interface UserRepository extends JpaRepository<User, Long>, QueryDslPredicateExecutor<User> {
     User findUserByUsername(String username);
 }

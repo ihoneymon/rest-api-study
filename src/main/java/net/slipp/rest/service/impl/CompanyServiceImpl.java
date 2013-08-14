@@ -2,13 +2,17 @@ package net.slipp.rest.service.impl;
 
 import javax.inject.Inject;
 
+import com.mysema.query.BooleanBuilder;
 import net.slipp.rest.domain.Company;
+import net.slipp.rest.domain.QCompany;
+import net.slipp.rest.domain.condition.CompanyCondition;
 import net.slipp.rest.repository.CompanyRepository;
 import net.slipp.rest.service.CompanyService;
 
+import net.slipp.rest.support.view.PageStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.util.StringUtils;
 
 /**
  * Company Service
@@ -23,8 +27,23 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyRepository companyRepository;
 
     @Override
-    public List<Company> findAll() {
-        return companyRepository.findAll();
+    public Page<Company> findAll(CompanyCondition condition, PageStatus pageStatus) {
+        BooleanBuilder builder = new BooleanBuilder();
+        QCompany qCompany = QCompany.company;
+
+        if(StringUtils.hasText(condition.getName())) {
+            builder.and(qCompany.name.contains(condition.getName()));
+        }
+
+        if(StringUtils.hasText(condition.getTel())) {
+            builder.and(qCompany.tel.contains(condition.getTel()));
+        }
+
+        if(StringUtils.hasText(condition.getAddress())) {
+            builder.and(qCompany.address.contains(condition.getAddress()));
+        }
+
+        return companyRepository.findAll(builder, pageStatus);
     }
 
     @Override
