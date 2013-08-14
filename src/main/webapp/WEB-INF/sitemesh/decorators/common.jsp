@@ -16,6 +16,7 @@
     <script src="<spring:url value="/resources/libs/jquery/jquery-1.10.2.min.js" />"></script>
     <script src="<spring:url value="/resources/libs/jquery-ui/js/jquery-ui-1.10.3.custom.min.js" />"></script>
     <script src="<spring:url value="/resources/libs/bootstrap/js/bootstrap.min.js" />"></script>
+    <script src="<spring:url value="/resources/js/common.js" />"></script>
 
     <decorator:head/>
 </head>
