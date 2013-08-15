@@ -5,26 +5,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+import com.google.common.collect.ImmutableSet;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import net.slipp.rest.support.exception.SlippException;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.util.Assert;
 
 import com.google.common.collect.Sets;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 부서 도메인
@@ -55,9 +51,10 @@ public class Department implements Serializable {
 
     @Getter
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    private Set<Department> subDepartment = Sets.newHashSet();
+    private Set<Department> subDepartments = Sets.newHashSet();
 
     @Getter
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, updatable = false)
     private Date createdDate = Calendar.getInstance().getTime();
 
@@ -74,5 +71,51 @@ public class Department implements Serializable {
         Assert.hasText(name, "${department.has.name}");
         this.name = name;
         return this;
+    }
+
+    public boolean hasSubDepartments() {
+        return !CollectionUtils.isEmpty(subDepartments);
+    }
+
+    @JsonIgnore
+    public ImmutableSet<Department> getAllSubDepartments() {
+        ImmutableSet.Builder<Department> builder = ImmutableSet.builder();
+
+        for (Department department : getSubDepartments()) {
+            builder.add(department);
+
+            if (department.hasSubDepartments()) {
+                builder.addAll(department.getAllSubDepartments());
+            }
+        }
+
+        ImmutableSet<Department> result = builder.build();
+
+        return result;
+    }
+
+    public boolean isRootDepartment() {
+        return this.getParent() == null;
+    }
+
+    public Department addSubDepartment(final String departmentName, String description) {
+        Department subDepartment = new Department(this, departmentName, description);
+
+        if (subDepartments.contains(subDepartment)) {
+            throw new SlippException(departmentName + "은(는) 이미 하위부서로 등록된 부서입니다.");
+        }
+
+        subDepartments.add(subDepartment);
+        return subDepartment;
+    }
+
+    public void removeSubDepartment(String departmentName, String description) {
+        Department subDepartment = new Department(this, departmentName, description);
+        subDepartments.remove(subDepartment);
+    }
+
+    @JsonIgnore
+    public ImmutableSet<Department> getSubDepartments() {
+        return ImmutableSet.copyOf(subDepartments);
     }
 }

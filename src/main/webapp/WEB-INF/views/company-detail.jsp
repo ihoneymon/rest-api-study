@@ -27,28 +27,26 @@
 </head>
 <body>
     <div class="col-12">
-        ${companyId}
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="name" class="col-lg-2 control-label"><spring:message code="view.company.name"/></label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="name" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tel" class="col-lg-2 control-label"><spring:message code="view.company.tel"/></label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="tel" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address" class="col-lg-2 control-label"><spring:message code="view.company.address"/></label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="address">
+                </div>
+            </div>
+        </form>
     </div>
-
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <label for="name" class="col-lg-2 control-label"><spring:message code="view.company.name"/></label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="name" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="tel" class="col-lg-2 control-label"><spring:message code="view.company.tel"/></label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="tel" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="address" class="col-lg-2 control-label"><spring:message code="view.company.address"/></label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="address">
-            </div>
-        </div>
-    </form>
 </body>
 </html>
