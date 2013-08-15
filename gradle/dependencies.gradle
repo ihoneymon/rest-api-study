@@ -2,7 +2,9 @@ configurations {
     querydslapt
 }
 
-//version
+/**
+ * Dependencies Libraries Versions
+ */
 def versions = [
         spring: "3.2.2.RELEASE",
         hibernate: "4.2.0.Final",
@@ -11,7 +13,6 @@ def versions = [
         springSecurity: "3.1.4.RELEASE",
         slf4j: "1.6.6",
         logBack: "1.0.13",
-        thymeleaf: "2.0.16",
         lombok: "0.12.0",
         boneCP: "0.8.0-rc1",
         googleGuava: "14.0.1",
@@ -48,20 +49,39 @@ dependencies {
     //annotation
     compile "javax.inject:javax.inject:1"
 
+    /**
+     * SpringFramework: http://www.springsource.org/spring-framework
+     */
     springframework.collect {
         compile(it)
     }
 
-    //spring-data-jpa
+    /**
+     * Spring Data JPA: http://www.springsource.org/spring-data/jpa
+     */
     compile("org.springframework.data:spring-data-jpa:${versions.springDataJpa}") {
         exclude group: "org.aspectj"
     }
 
-    //Spring Security
+    /**
+     * Spring Security: http://www.springsource.org/spring-security
+     */
     compile "org.springframework.security:spring-security-core:${versions.springSecurity}"
     compile "org.springframework.security:spring-security-web:${versions.springSecurity}"
 
-    //QueryDsl : http://www.querydsl.com/
+    /**
+     * Hibernate: http://www.hibernate.org/
+     * cglib 모듈 제외
+     */
+    hibernate.collect {
+        compile(it) {
+            exclude(group: "cglib", module: "cglib")
+        }
+    }
+
+    /**
+     * QueryDSL: http://www.querydsl.com/
+     */
     compile "com.mysema.querydsl:querydsl-apt:${versions.querydsl}"
     compile "com.mysema.querydsl:querydsl-jpa:${versions.querydsl}"
     querydslapt "com.mysema.querydsl:querydsl-apt:${versions.querydsl}"
@@ -71,47 +91,70 @@ dependencies {
     //BoneCP : http://jolbox.com/
     compile "com.jolbox:bonecp:${versions.boneCP}"
 
+    /**
+     * SLF4j & Logback
+     * SLF4j: http://www.slf4j.org/
+     * Logback: http://logback.qos.ch/
+     */
     compile "org.slf4j:slf4j-api:${versions.slf4j}"
     runtime "org.slf4j:jcl-over-slf4j:${versions.slf4j}"
     runtime "org.slf4j:log4j-over-slf4j:${versions.slf4j}"
     compile "ch.qos.logback:logback-classic:${versions.logBack}"
 
-    // Google Guava(Collection Utils) : http://code.google.com/p/guava-libraries/
+    /**
+     * Google Guava(Collecton Utils): http://code.google.com/p/guava-libraries/
+     */
     compile "com.google.guava:guava:${versions.googleGuava}"
-    // Joda Time(Java date and time API) : http://joda-time.sourceforge.net/
+
+    /**
+     * Joda Time(Java date and time API): http://joda-time.sourceforge.net/
+     */
     compile "joda-time:joda-time:${versions.jodaTime}"
 
+    /**
+     * Jackson(High-performance JSON Processor): http://jackson.codehaus.org/
+     */
     compile "org.codehaus.jackson:jackson-core-asl:${versions.jackson}"
     compile "org.codehaus.jackson:jackson-mapper-asl:${versions.jackson}"
-    // FasterXML/jackson-module-hibernate : https://github.com/FasterXML/jackson-module-hibernate
+
+    /**
+     * FasterXML/jackson-module-hibernate: https://github.com/FasterXML/jackson-module-hibernate
+     */
     compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate4:2.2.2"
 
+    /**
+     * H2Database: http://www.h2database.com/html/main.html
+     */
     compile "com.h2database:h2:${versions.h2database}"
+
+    /**
+     * Lombok: http://projectlombok.org/
+     */
+    compile "org.projectlombok:lombok:${versions.lombok}"
+
+    /**
+     * ModelMapper: http://modelmapper.org
+     */
+    compile "org.modelmapper:modelmapper:${versions.modelmapper}"
+
+    /**
+     * SiteMesh: https://github.com/sitemesh
+     */
+    compile "opensymphony:sitemesh:${versions.sitemesh}"
+
 
     compile "javax.servlet:jstl:1.2"
 
-    compile "org.projectlombok:lombok:${versions.lombok}"
-    //ModelMapper : http://modelmapper.org/
-    compile "org.modelmapper:modelmapper:${versions.modelmapper}"
-
-    compile "opensymphony:sitemesh:${versions.sitemesh}"
-
-    //hibernate 라이브러리를 가져오면서 cglib 모듈은 제외
-    hibernate.collect {
-        compile(it) {
-            exclude(group: "cglib", module: "cglib")
-        }
-    }
-
-    // logback(slf4j)를 사용하기 때문에 모든 의존성에서 commons-logging는 제외
+    /**
+     * Logback을 사용하기 때문에 모든 의존성 라이브러리에서 common-logging는 제외
+     */
     [configurations.runtime, configurations.default]*.exclude(module: 'commons-logging')
 
-    // JAVA 컴파일시 인코딩 설정
+    /**
+     * Java Compile Encoding: UTF-8
+     */
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
     testCompile group: "junit", name: "junit", version: "4.+"
-
     providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
-
     runtime "javax.servlet:jstl:1.2"
 }
