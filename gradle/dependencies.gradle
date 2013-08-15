@@ -139,6 +139,7 @@ dependencies {
 
     /**
      * SiteMesh: https://github.com/sitemesh
+     * - reference: http://www.javajigi.net/display/OSS/SiteMesh
      */
     compile "opensymphony:sitemesh:${versions.sitemesh}"
 
