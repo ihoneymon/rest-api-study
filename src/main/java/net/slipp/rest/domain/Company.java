@@ -13,6 +13,7 @@ import javax.persistence.OrderBy;
 
 import lombok.Data;
 import lombok.ToString;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * 회사 도메인
@@ -23,6 +24,7 @@ import lombok.ToString;
 @Data
 @Entity
 @ToString(exclude = {"department"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Company implements Serializable {
     private static final long serialVersionUID = 2555196948716599267L;
 

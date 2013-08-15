@@ -1,0 +1,7 @@
+#companyTable > tbody > tr > td > label {
+    margin: 5px 0 0 5px;
+}
+
+.modal-title > label {
+    margin-right: 5px;
+}

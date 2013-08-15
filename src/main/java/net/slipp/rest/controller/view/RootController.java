@@ -3,6 +3,8 @@ package net.slipp.rest.controller.view;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,6 +28,12 @@ public class RootController {
     @RequestMapping(value="/companies", method = RequestMethod.GET)
     public String viewCompanies() {
         return "companies";
+    }
+
+    @RequestMapping(value="/companies/{companyId}", method=RequestMethod.GET)
+    public String viewCompanyDetail(@PathVariable("companyId") Long companyId, ModelMap map) {
+        map.put("companyId", companyId);
+        return "company-detail";
     }
 
     @RequestMapping(value="/departments", method = RequestMethod.GET)

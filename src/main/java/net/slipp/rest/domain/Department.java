@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.util.Assert;
 
 import com.google.common.collect.Sets;
@@ -33,6 +34,7 @@ import com.google.common.collect.Sets;
  */
 @Entity
 @ToString(exclude = {"parent"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @EqualsAndHashCode
 public class Department implements Serializable {
     private static final long serialVersionUID = 1091151988674342774L;
@@ -48,8 +50,9 @@ public class Department implements Serializable {
     private String description;
     @Getter
     @Setter
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private Department parent;
+
     @Getter
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private Set<Department> subDepartment = Sets.newHashSet();

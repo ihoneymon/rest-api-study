@@ -15,10 +15,10 @@ public class HibernateAwareObjectMapper extends ObjectMapper {
     private static final long serialVersionUID = -8599747631645197523L;
 
     public HibernateAwareObjectMapper() {
-        configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
+        configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
         Hibernate4Module hibernateModule = new Hibernate4Module();
-        hibernateModule.enable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
+        hibernateModule.disable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
         registerModule(hibernateModule);
     }
 }

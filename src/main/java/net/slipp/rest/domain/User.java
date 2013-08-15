@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -28,9 +29,10 @@ import org.springframework.security.core.userdetails.UserDetails;
  * Date: 13. 7. 22
  */
 @Entity
-@ToString
+@ToString(exclude = {"employee"})
 @EqualsAndHashCode
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements UserDetails, Serializable {
     private static final long serialVersionUID = -1830782295321224536L;
 

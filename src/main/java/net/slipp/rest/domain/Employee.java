@@ -4,17 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * 직원 도메인
@@ -23,8 +20,9 @@ import lombok.ToString;
  * Date: 13. 7. 22
  */
 @Entity
-@ToString
+@ToString(exclude = {"company", "departments"})
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Employee implements Serializable {
     private static final long serialVersionUID = 890213302538150678L;
 
@@ -44,6 +42,10 @@ public class Employee implements Serializable {
     @Getter
     @Setter(AccessLevel.PRIVATE)
     private String nickName;
+
+    @OneToOne
+    @Getter
+    private Company company;
 
     @OneToMany
     @Getter

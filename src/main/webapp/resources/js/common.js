@@ -11,7 +11,7 @@ var renderTemplate = function ($target, templateId, data, isClear) {
         $target.empty();
     }
 
-    var targetTemplate = $.templates("templateId");
+    var targetTemplate = $.templates(templateId);
     var templateOutput = targetTemplate.render(data);
     $target.append(templateOutput);
 };

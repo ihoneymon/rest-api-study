@@ -13,25 +13,31 @@
 <head>
     <title>Companies REST API Page</title>
     <meta name="decorator" content="common">
+    <link href="<spring:url value="/resources/css/companies.css"/>" rel="stylesheet"/>
 
     <script src="<spring:url value="/resources/libs/jsrender/jsrender.min.js"/>"></script>
     <script src="<spring:url value="/resources/js/companies.js" />"></script>
     <script id="companyTemplate" type="text/x-jsrender">
-        <tr id="{{:id}}">
-            <td>{{:id}}</td>
-            <td>{{:name}}</td>
-            <td>{{:tel}}</td>
-            <td>{{:address}}</td>
+        <tr id="company-{{:id}}">
+            <td><label>{{:id}}</label></td>
+            <td><label><a href="<spring:url value="/view/companies/"/>{{:id}}">{{:name}}</a></label></td>
+            <td><label>{{:tel}}</label></td>
+            <td><label>{{:address}}</label></td>
             <td>
                 <button class="btn btn-modify-company" data-id="{{:id}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
-                <button class="btn btn-remove-company" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.remove"/></button>
+                <button class="btn btn-delete-company" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.delete"/></button>
             </td>
         </tr>
     </script>
     <script>
         var url = {
             companies: "<spring:url value="/api/companies"/>"
-        }
+        };
+        var labels = {
+            add: "<spring:message code="view.common.label.add"/>",
+            modify: "<spring:message code="view.common.label.modify"/>",
+            delete: "<spring:message code="view.common.label.delete"/>"
+        };
     </script>
 </head>
 <body>
@@ -73,23 +79,39 @@
     </section>
 
     <section>
-        <!-- Button trigger modal -->
-        <a data-toggle="modal" href="#modalCompany" class="btn btn-primary btn-lg">Launch demo modal</a>
-
         <!-- Modal -->
-        <div class="modal fade" id="modalCompany" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="companyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Modal title</h4>
+                        <h4 class="modal-title"><label><spring:message code="view.company.label"/></label><label id="modalTypeLabel"></label></h4>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="name" class="col-lg-2 control-label"><spring:message code="view.company.name"/></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="name" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tel" class="col-lg-2 control-label"><spring:message code="view.company.tel"/></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="tel" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="address" class="col-lg-2 control-label"><spring:message code="view.company.address"/></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="address">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="view.btn.close"/></button>
+                        <button type="button" class="btn btn-primary"><label id="modalButtonLabel"></label></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

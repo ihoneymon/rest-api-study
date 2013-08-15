@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -20,6 +21,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Entity
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class RoleAuthority implements GrantedAuthority {
     private static final long serialVersionUID = 4882929396458778017L;
 

@@ -44,19 +44,19 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/api/companies/**"/>
-            <mvc:mapping path="/api/departments/**"/>
-            <mvc:mapping path="/api/employees/**"/>
-            <mvc:mapping path="/api/users/**"/>
+            <mvc:mapping path="/companies/**"/>
+            <mvc:mapping path="/departments/**"/>
+            <mvc:mapping path="/employees/**"/>
+            <mvc:mapping path="/users/**"/>
             <beans:bean class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
                 <beans:property name="entityManagerFactory" ref="entityManagerFactory"/>
             </beans:bean>
         </mvc:interceptor>
         <mvc:interceptor>
-            <mvc:mapping path="/api/companies/**"/>
-            <mvc:mapping path="/api/departments/**"/>
-            <mvc:mapping path="/api/employees/**"/>
-            <mvc:mapping path="/api/users/**"/>
+            <mvc:mapping path="/companies/**"/>
+            <mvc:mapping path="/departments/**"/>
+            <mvc:mapping path="/employees/**"/>
+            <mvc:mapping path="/users/**"/>
             <beans:bean class="net.slipp.rest.support.interceptor.PageStatusAutoPersistenceInterceptor"/>
         </mvc:interceptor>
         <beans:bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
