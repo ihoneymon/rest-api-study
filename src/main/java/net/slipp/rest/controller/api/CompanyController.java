@@ -6,9 +6,12 @@ import net.slipp.rest.domain.condition.CompanyCondition;
 import net.slipp.rest.service.CompanyService;
 import net.slipp.rest.support.common.Pagination;
 import net.slipp.rest.support.common.Paginations;
+import net.slipp.rest.support.exception.SlippException;
 import net.slipp.rest.support.view.PageStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,6 +34,8 @@ public class CompanyController {
     private CompanyService companyService;
     @Inject
     private PasswordEncoder passwordEncoder;
+    @Inject
+    private MessageSourceAccessor messageSourceAccessor;
 
     @RequestMapping(method = RequestMethod.GET)
     public void getCompanies(CompanyCondition condition, PageStatus pageStatus, ModelMap map) {
@@ -55,26 +60,48 @@ public class CompanyController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public void createCompany(@RequestBody CompanyForm form, ModelMap map) {
-        logger.debug("CompanyForm : {}", form);
-        Company company = form.createCompany();
-        companyService.save(company);
-        logger.debug("Created Company : {}", company);
-        map.put("companyId", company);
+        try {
+            Company company = form.createCompany();
+            companyService.save(company);
+            map.put("company", company);
+            map.put("code", HttpStatus.OK);
+        } catch (SlippException e) {
+            map.put("code", e.getHttpStatus());
+            map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
+        }
     }
 
+    /**
+     * 기업정보 수정
+     * @param company 기존기업정보 {@link Company}
+     * @param form 기업정보 수정사항 {@link CompanyForm}
+     * @param map
+     */
     @RequestMapping(value="/{company}", method=RequestMethod.PUT)
     public void modifyCompany(@PathVariable Company company, @RequestBody CompanyForm form, ModelMap map) {
-        companyService.save(form.bind(company));
-        map.put("company", company);
+        try {
+            companyService.save(form.bind(company));
+            map.put("company", company);
+            map.put("code", HttpStatus.OK);
+        } catch (SlippException e) {
+            map.put("code", e.getHttpStatus());
+            map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
+        }
     }
 
+    /**
+     * 기업정보 삭제
+     * @param company 삭제 기업정보 {@link Company}
+     * @param map
+     */
     @RequestMapping(value="/{company}", method=RequestMethod.DELETE)
     public void deleteCompany(@PathVariable Company company, ModelMap map) {
         try {
             companyService.delete(company);
-        } catch(Exception e) {
-
+            map.put("code", HttpStatus.OK);
+        } catch(SlippException e) {
+            map.put("code", e.getHttpStatus());
+            map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
         }
-
     }
 }

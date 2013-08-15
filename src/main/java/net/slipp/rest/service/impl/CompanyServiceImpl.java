@@ -53,11 +53,15 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void save(Company company) {
+        //TODO Exception
         companyRepository.save(company);
     }
 
     @Override
     public void delete(Company company) {
+        //TODO Exception
+        // 부서정보가 있다면 삭제 불가!
+        // 직원정보가 있다면 삭제 불가!
         companyRepository.delete(company);
     }
 

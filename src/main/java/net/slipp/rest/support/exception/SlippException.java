@@ -1,19 +1,31 @@
 package net.slipp.rest.support.exception;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.ClassUtils;
 
 import java.beans.Introspector;
 
 /**
- * Created with IntelliJ IDEA.
+ * REST API STUDY 프로젝트에서 사용하는 대표 Exception
  * User: ihoneymon
  * Date: 13. 8. 15.
  * Time: 오후 6:10
- * To change this template use File | Settings | File Templates.
  */
 public class SlippException extends RuntimeException {
+
+    @Getter @Setter(AccessLevel.PRIVATE)
+    private HttpStatus httpStatus;
+
     public SlippException(String msg) {
         super(msg);
+    }
+
+    public SlippException(HttpStatus httpStatus, String msg) {
+        super(msg);
+        this.httpStatus = httpStatus;
     }
 
     public SlippException(Class<?> domainClass, String msg) {
