@@ -6,7 +6,6 @@ import net.slipp.rest.domain.condition.CompanyCondition;
 import net.slipp.rest.service.CompanyService;
 import net.slipp.rest.support.common.Pagination;
 import net.slipp.rest.support.common.Paginations;
-import net.slipp.rest.support.mapper.ExtensibleModelMapper;
 import net.slipp.rest.support.view.PageStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,5 +62,19 @@ public class CompanyController {
         map.put("companyId", company);
     }
 
+    @RequestMapping(value="/{company}", method=RequestMethod.PUT)
+    public void modifyCompany(@PathVariable Company company, @RequestBody CompanyForm form, ModelMap map) {
+        companyService.save(form.bind(company));
+        map.put("company", company);
+    }
 
+    @RequestMapping(value="/{company}", method=RequestMethod.DELETE)
+    public void deleteCompany(@PathVariable Company company, ModelMap map) {
+        try {
+            companyService.delete(company);
+        } catch(Exception e) {
+
+        }
+
+    }
 }

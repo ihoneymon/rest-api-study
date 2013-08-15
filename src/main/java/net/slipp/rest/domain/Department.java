@@ -49,7 +49,6 @@ public class Department implements Serializable {
     @OneToOne(fetch = FetchType.EAGER)
     private Department parent;
 
-    @Getter
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private Set<Department> subDepartments = Sets.newHashSet();
 

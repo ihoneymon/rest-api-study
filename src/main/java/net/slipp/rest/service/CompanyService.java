@@ -33,4 +33,5 @@ public interface CompanyService {
 
     void save(Company company);
 
+    void delete(Company company);
 }

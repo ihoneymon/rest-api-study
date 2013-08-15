@@ -43,8 +43,8 @@ public class Employee implements Serializable {
     @Setter(AccessLevel.PRIVATE)
     private String nickName;
 
-    @OneToOne
     @Getter
+    @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
     @OneToMany

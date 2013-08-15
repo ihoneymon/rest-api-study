@@ -21,4 +21,9 @@ public class CompanyForm {
         BeanUtils.copyProperties(this, target, new String[]{"id"});
         return target;
     }
+
+    public Company bind(Company target) {
+        BeanUtils.copyProperties(this, target, new String[] {"id"});
+        return target;
+    }
 }
