@@ -79,8 +79,8 @@
     </section>
 
     <section>
-        <!-- Modal -->
-        <div class="modal fade" id="companyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- Add/Modify Confirm Modal -->
+        <div class="modal fade" id="companyModal" tabindex="-1" role="dialog" aria-labelledby="companyModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -111,7 +111,28 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="view.btn.close"/></button>
-                        <button type="button" class="btn btn-primary"><label id="modalButtonLabel"></label></button>
+                        <button type="button" class="btn btn-primary btn-confirm"><label id="modalButtonLabel"></label></button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!-- Remove Company Modal -->
+        <div class="modal fade" id="deleteCompanyModal" tabindex="-1" role="dialog" aria-labelledby="deleteCompanyModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><label><spring:message code="view.company.label.remove"/></label></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <p><spring:message code="view.company.msg.remove"/></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="view.btn.close"/></button>
+                        <button type="button" class="btn btn-primary btn-delete-company-confirm"><spring:message code="view.btn.delete"/></button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

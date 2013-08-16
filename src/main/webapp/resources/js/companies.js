@@ -2,8 +2,10 @@ $(function () {
     console.log("companies!");
     $("#companyNav").addClass("active");
     bindBtnAddCompany();
-    bindBtnModifyCompany();
-    bindBtnRemoveCompany();
+    bindBtnUpdateCompany();
+    bindBtnDeleteCompany();
+    bindBtnConfirm();
+    bindBtnDeleteCompanyConfirm();
 
     getCompanies();
 });
@@ -14,15 +16,17 @@ var bindBtnAddCompany = function () {
     });
 };
 
-var bindBtnModifyCompany = function () {
+var bindBtnUpdateCompany = function () {
     $(document).on("click", ".btn-modify-company", function (event) {
         modalCompany("put", $(event.target).data("id"));
     });
 };
 
-var bindBtnRemoveCompany = function () {
-    $(document).on("click", ".btn-remove-company", function (event) {
-        modalCompany("delete", $(event.target).data("id"));
+var bindBtnDeleteCompany = function () {
+    $(document).on("click", ".btn-delete-company", function (event) {
+        console.log($(event.target).data("id"));
+        $("#deleteCompanyModal").data("id", $(event.target).data("id"));
+        $("#deleteCompanyModal").modal("show");
     });
 };
 
@@ -52,6 +56,33 @@ var getCompanies = function () {
         if (data.companies.content) {
             renderTemplate($("#companyTable").find("tbody"), "#companyTemplate", data.companies.content, true);
             $("#companyTable").find("tfoot").hide();
+        }
+    });
+};
+
+var bindBtnConfirm = function() {
+    $(document).on("click", ".btn-confirm", function() {
+        var method = $("#companyModal").data("method");
+        if(method === "post") {
+
+        }
+    });
+};
+
+var bindBtnDeleteCompanyConfirm = function() {
+    $(document).on("click", ".btn-delete-company-confirm", function() {
+        var companyId = $("#deleteCompanyModal").data("id");
+        deleteCompany(companyId);
+    });
+};
+
+var deleteCompany = function(companyId) {
+    $.ajax({
+        url: url.companies + "/" + companyId,
+        method: "delete",
+        type: "json",
+        success: function() {
+            $("#deleteCompanyModal").modal("hide");
         }
     });
 };
