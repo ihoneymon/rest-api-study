@@ -24,7 +24,7 @@
             <td><label>{{:nickName}}</label></td>
             <td><label>{{:email}}</label></td>
             <td>
-                <button class="btn btn-update-employee" data-id="{{:id}}" data-name={{:name}} data-description="{{:description}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
+                <button class="btn btn-update-employee" data-id="{{:id}}" data-name={{:name}} data-email="{{:email}}" data-nickName="{{:nickName}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
                 <button class="btn btn-delete-employee" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.delete"/></button>
             </td>
         </tr>
@@ -125,7 +125,7 @@
     </div><!-- /.modal -->
 
     <!-- Remove Company Modal -->
-    <div class="modal fade" id="deleteemployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteemployeeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
