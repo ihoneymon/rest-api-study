@@ -11,6 +11,7 @@ import net.slipp.rest.service.CompanyService;
 
 import net.slipp.rest.support.view.PageStatus;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -41,6 +42,10 @@ public class CompanyServiceImpl implements CompanyService {
 
         if(StringUtils.hasText(condition.getAddress())) {
             builder.and(qCompany.address.contains(condition.getAddress()));
+        }
+
+        if(pageStatus.getSort() == null) {
+            pageStatus.addSort(new Sort(Sort.Direction.ASC, "name"));
         }
 
         return companyRepository.findAll(builder, pageStatus);

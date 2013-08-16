@@ -9,6 +9,7 @@ import net.slipp.rest.repository.DepartmentRepository;
 import net.slipp.rest.service.DepartmentService;
 import net.slipp.rest.support.view.PageStatus;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -36,6 +37,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         if(StringUtils.hasText(condition.getDescription())) {
             builder.and(qDepartment.description.contains(condition.getDescription()));
+        }
+
+        if(pageStatus.getSort() == null) {
+            pageStatus.addSort(new Sort(Sort.Direction.ASC, "name"));
         }
 
         builder.and(qDepartment.parent.eq(company.getDepartment()));
