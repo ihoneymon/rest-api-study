@@ -24,7 +24,7 @@
             <td><label>{{:tel}}</label></td>
             <td><label>{{:address}}</label></td>
             <td>
-                <button class="btn btn-modify-company" data-id="{{:id}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
+                <button class="btn btn-modify-company" data-id="{{:id}}" data-name={{:name}} data-tel="{{:tel}}" data-address="{{:address}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
                 <button class="btn btn-delete-company" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.delete"/></button>
             </td>
         </tr>
@@ -90,20 +90,20 @@
                     <div class="modal-body">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label for="name" class="col-lg-2 control-label"><spring:message code="view.company.name"/></label>
-                                <div class="col-lg-10">
+                                <label for="name" class="col-lg-3 control-label"><spring:message code="view.company.name"/></label>
+                                <div class="col-lg-9">
                                     <input type="text" class="form-control" id="name" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="tel" class="col-lg-2 control-label"><spring:message code="view.company.tel"/></label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="tel" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
+                                <label for="tel" class="col-lg-3 control-label"><spring:message code="view.company.tel"/></label>
+                                <div class="col-lg-9">
+                                    <input type="tel" class="form-control" id="tel" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="address" class="col-lg-2 control-label"><spring:message code="view.company.address"/></label>
-                                <div class="col-lg-10">
+                                <label for="address" class="col-lg-3 control-label"><spring:message code="view.company.address"/></label>
+                                <div class="col-lg-9">
                                     <input type="text" class="form-control" id="address">
                                 </div>
                             </div>

@@ -5,3 +5,11 @@
 .modal-title > label {
     margin-right: 5px;
 }
+
+.btn-add-company {
+    margin-bottom: 5px;
+}
+
+#modalButtonLabel {
+    margin: 0px;
+}
