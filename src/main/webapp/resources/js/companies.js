@@ -1,6 +1,9 @@
 $(function () {
     console.log("companies!");
     $("#companyNav").addClass("active");
+    $("#departmentNav").hide();
+    $("#employeeNav").hide();
+
     bindBtnAddCompany();
     bindBtnUpdateCompany();
     bindBtnDeleteCompany();
@@ -39,8 +42,6 @@ var modalCompany = function (method, companyId) {
         methodLabel = labels.add;
     } else if (method === "put") {
         methodLabel = labels.modify;
-    } else if (method === "delete") {
-        methodLabel = labels.delete;
     }
     $("#modalTypeLabel").text(methodLabel);
     $("#modalButtonLabel").text(methodLabel);

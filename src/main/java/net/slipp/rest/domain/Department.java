@@ -29,27 +29,32 @@ import org.springframework.util.CollectionUtils;
  * Date: 13. 7. 22
  */
 @Entity
-@ToString(exclude = {"parent"})
+@ToString(exclude = {"parent", "subDepartments"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@EqualsAndHashCode
+@EqualsAndHashCode(of={"parent", "name"})
 public class Department implements Serializable {
     private static final long serialVersionUID = 1091151988674342774L;
 
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(updatable = false)
     private Long id;
+
     @Getter
     private String name;
-    @Getter
-    @Setter(AccessLevel.PRIVATE)
-    private String description;
+
     @Getter
     @Setter
-    @OneToOne(fetch = FetchType.EAGER)
+    private String description;
+
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    @OneToOne(fetch = FetchType.LAZY)
     private Department parent;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("name asc")
     private Set<Department> subDepartments = Sets.newHashSet();
 
     @Getter
@@ -97,11 +102,11 @@ public class Department implements Serializable {
         return this.getParent() == null;
     }
 
-    public Department addSubDepartment(final String departmentName, String description) {
-        Department subDepartment = new Department(this, departmentName, description);
+    public Department addSubDepartment(final String name, String description) {
+        Department subDepartment = new Department(this, name, description);
 
         if (subDepartments.contains(subDepartment)) {
-            throw new SlippException(departmentName + "은(는) 이미 하위부서로 등록된 부서입니다.");
+            throw new SlippException(name + "은(는) 이미 하위부서로 등록된 부서입니다.");
         }
 
         subDepartments.add(subDepartment);
@@ -116,5 +121,9 @@ public class Department implements Serializable {
     @JsonIgnore
     public ImmutableSet<Department> getSubDepartments() {
         return ImmutableSet.copyOf(subDepartments);
+    }
+
+    public int countSubDepartments() {
+        return subDepartments.size();
     }
 }

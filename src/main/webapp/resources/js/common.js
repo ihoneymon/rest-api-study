@@ -6,7 +6,7 @@
  * @param isClear 랜더링 대상에 대한 처리
  */
 var renderTemplate = function ($target, templateId, data, isClear) {
-    console.log("renderTemplate : {ID : " + $target.prop("id") + ", Template ID : " + templateId + ", Data size: " + data.size + ", isClear : " + isClear + "}");
+    console.log("renderTemplate : {Target : "+ $target.prevObject.selector +", Template ID : " + templateId + ", Data size: " + data.length + ", isClear : " + isClear + "}");
     if (isClear) {
         $target.empty();
     }

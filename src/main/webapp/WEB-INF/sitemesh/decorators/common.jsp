@@ -30,8 +30,8 @@
     <div class="col-2">
         <ul class="nav nav-pills nav-stacked">
             <li id="companyNav"><a href="<spring:url value="/view/companies"/>"><spring:message code="view.common.companyAPI"/></a></li>
-            <li id="departmentNav"><a href="<spring:url value="/view/departments" />"><spring:message code="view.common.departmentAPI"/></a></li>
-            <li id="employeeNav"><a href="<spring:url value="/view/employees" />" ><spring:message code="view.common.employeeAPI"/></a></li>
+            <li id="departmentNav"><a href="#"><spring:message code="view.common.departmentAPI"/></a></li>
+            <li id="employeeNav"><a href="#" ><spring:message code="view.common.employeeAPI"/></a></li>
         </ul>
     </div>
 </nav>

@@ -36,13 +36,27 @@ public class RootController {
         return "company-detail";
     }
 
-    @RequestMapping(value="/departments", method = RequestMethod.GET)
-    public String viewDepartments() {
+    @RequestMapping(value={"/companies/{companyId}/departments"}, method = RequestMethod.GET)
+    public String viewDepartments(@PathVariable("companyId") Long companyId, ModelMap map) {
+        map.put("companyId", companyId);
         return "departments";
     }
 
     @RequestMapping(value="/employees", method = RequestMethod.GET)
     public String viewEmployees() {
+        return "employees";
+    }
+
+    @RequestMapping(value="/companies/{companyId}/departments/{departmentId}/employees", method = RequestMethod.GET)
+    public String viewEmployeesOfDepartment(@PathVariable Long companyId, @PathVariable Long departmentId, ModelMap map) {
+        map.put("companyId", companyId);
+        map.put("departmentId", departmentId);
+        return "employees";
+    }
+
+    @RequestMapping(value={"/companies/{companyId}/employees"}, method = RequestMethod.GET)
+    public String viewEmployeesOfCompany(@PathVariable Long companyId, ModelMap map) {
+        map.put("companyId", companyId);
         return "employees";
     }
 }

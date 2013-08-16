@@ -23,6 +23,7 @@
             <td><label><a href="<spring:url value="/view/companies/"/>{{:id}}">{{:name}}</a></label></td>
             <td><label>{{:tel}}</label></td>
             <td><label>{{:address}}</label></td>
+            <td><a class="btn" href="<spring:url value="/view/companies/"/>{{:id}}/departments"><spring:message code="view.department.label"/></a></td>
             <td>
                 <button class="btn btn-modify-company" data-id="{{:id}}" data-name={{:name}} data-tel="{{:tel}}" data-address="{{:address}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
                 <button class="btn btn-delete-company" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.delete"/></button>
@@ -41,42 +42,47 @@
     </script>
 </head>
 <body>
-    <div class="col-12">
+<section>
+    <article>
         <div class="col-12 mb10">
-            <button class="btn btn-add-company pull-right"><i class="ui-icon-pencil"></i><spring:message code="view.btn.add"/></button>
-        </div>
-        <table id="companyTable" class="table table-bordered table-hover">
-            <colgroup>
-                <col>
-                <col>
-                <col>
-                <col>
-                <col>
-            </colgroup>
-            <thead>
-                <tr>
-                    <th><spring:message code="view.company.id"/></th>
-                    <th><spring:message code="view.company.name"/></th>
-                    <th><spring:message code="view.company.tel"/></th>
-                    <th><spring:message code="view.company.address"/></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
+            <div class="col-12 mb10">
+                <button class="btn btn-add-company pull-right"><i class="ui-icon-pencil"></i><spring:message code="view.btn.add"/></button>
+            </div>
+            <table id="companyTable" class="table table-bordered table-hover">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <co>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th><spring:message code="view.company.id"/></th>
+                        <th><spring:message code="view.company.name"/></th>
+                        <th><spring:message code="view.company.tel"/></th>
+                        <th><spring:message code="view.company.address"/></th>
+                        <th><spring:message code="view.company.departments"/></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="5"><label><spring:message code="view.company.emptyData"/></label></td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5"><label><spring:message code="view.common.emptyData"/></label></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </article>
+</section>
 
     <section>
-        <header><label>Company REST API 설명</label></header>
+        <header><h3>Company REST API 설명</h3></header>
         <article>
-            <h3>Company REST API 설명</h3>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -84,7 +90,7 @@
                     <th>URL</th>
                     <th>Description</th>
                 </tr>
-                </thad>
+                </thead>
                 <tbody>
                 <tr>
                     <td>GET</td>
