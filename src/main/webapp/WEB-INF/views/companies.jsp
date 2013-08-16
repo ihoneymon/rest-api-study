@@ -75,7 +75,128 @@
 
     <section>
         <header><label>Company REST API 설명</label></header>
-        <article></article>
+        <article>
+            <h3>Company REST API 설명</h3>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>METHOD</th>
+                    <th>URL</th>
+                    <th>Description</th>
+                </tr>
+                </thad>
+                <tbody>
+                <tr>
+                    <td>GET</td>
+                    <td><code>/api/companies</code></td>
+                    <td>기업목록 반환</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td><code>/api/companies/{companyId}</code></td>
+                    <td>companyId는 고유식별 ID<br/>기업 상세정보</td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td><code>/api/companies</code></td>
+                    <td>
+<pre><code>var form = {
+    name: “”,
+    tel: “”,
+    address: “”
+    }</code></pre>
+                        결과확인 : data.code = 200(OK), 500(Server error)
+<pre><code>var updateCompany = function() {
+    getCompanies();
+
+    var companyId = $("#companyModal").data("id");
+    var form = {
+        name: $("#name").val(),
+        tel: $("#tel").val(),
+        address: $("#address").val()
+    };
+
+    $.ajax({
+        url: url.companies + "/" + companyId,
+        method: "post",
+        type: "json",
+        contentType: "application/json",
+        data: JSON.stringify(form),
+        success: function() {
+        $("#companyModal").modal("hide");
+            getCompanies();
+        }
+    });
+};
+</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>PUT</td>
+                    <td><code>/api/companies/{companyId}</code></td>
+                    <td>
+<pre><code>var form = {
+    name: “”,
+    tel: “”,
+    address: “”
+}</code></pre>
+                        결과확인 : data.code = 200(OK), 500(Server error)
+                        data.code = 500인 경우, msg 확인
+<pre><code>var updateCompany = function() {
+    getCompanies();
+
+    var companyId = $("#companyModal").data("id");
+    var form = {
+        name: $("#name").val(),
+        tel: $("#tel").val(),
+        address: $("#address").val()
+    };
+
+    $.ajax({
+        url: url.companies + "/" + companyId,
+        method: "put",
+        type: "json",
+        contentType: "application/json",
+        data: JSON.stringify(form),
+        success: function() {
+        $("#companyModal").modal("hide");
+            getCompanies();
+        }
+    });
+};
+</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>DELETE</td>
+                    <td><code>/api/companies/{companyId}</code></td>
+                    <td>
+<pre><code>var form = {
+    name: “”,
+    tel: “”,
+    address: “”
+}</code></pre>
+                        결과확인 : data.code = 200(OK), 500(Server error)
+                        data.code = 500인 경우, msg 확인
+<pre><code>var deleteCompany = function (companyId) {
+    getCompanies();
+
+    $.ajax({
+        url: url.companies + "/" + companyId,
+        method: "delete",
+        type: "json",
+        success: function () {
+        $("#deleteCompanyModal").modal("hide");
+            getCompanies();
+        }
+    });
+};
+</code></pre>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </article>
     </section>
 
     <section>

@@ -98,7 +98,6 @@ var saveCompany = function() {
 };
 
 var updateCompany = function() {
-    console.log("updateCompany");
     getCompanies();
 
     var companyId = $("#companyModal").data("id");
