@@ -49,7 +49,7 @@ public class Employee implements Serializable {
 
     @OneToMany
     @Getter
-    @Setter(AccessLevel.PRIVATE)
+    @Setter
     private Set<Department> departments = Sets.newHashSet();
 
     @Getter

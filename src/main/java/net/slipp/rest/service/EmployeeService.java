@@ -1,5 +1,6 @@
 package net.slipp.rest.service;
 
+import net.slipp.rest.domain.Company;
 import net.slipp.rest.domain.Employee;
 import net.slipp.rest.domain.condition.EmployeeCondition;
 import net.slipp.rest.support.view.PageStatus;
@@ -29,4 +30,13 @@ public interface EmployeeService {
      * @return
      */
     Employee save(Employee employee);
+
+    /**
+     * 기업의 직원목록 가져오기
+     * @param company {@link Company}
+     * @param condition {@link EmployeeCondition}
+     * @param pageStatus {@link PageStatus}
+     * @return
+     */
+    Page<Employee> getEmployeesOfCompany(Company company, EmployeeCondition condition, PageStatus pageStatus);
 }
