@@ -7,9 +7,17 @@ apply from: "gradle/dependencies.gradle"
 //프로젝트 사용 태스크 정리
 apply from: "gradle/tasks.gradle"
 
+ext {
+    javaVersion='1.7'
+}
+
 version = '0.1.0'
-sourceCompatibility = '1.7'
 compileJava.options.encoding = "UTF-8"
+
+buildDir = 'build' // 원래 기본값
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
 
 /**
  *  repository Configuration

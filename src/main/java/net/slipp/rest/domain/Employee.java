@@ -6,12 +6,14 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.google.common.collect.Sets;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.springframework.util.Assert;
 
 /**
  * 직원 도메인
@@ -32,15 +34,13 @@ public class Employee implements Serializable {
     private Long id;
 
     @Getter
-    @Setter(AccessLevel.PRIVATE)
     private String name;
 
     @Getter
-    @Setter(AccessLevel.PRIVATE)
     private String email;
 
     @Getter
-    @Setter(AccessLevel.PRIVATE)
+    @Setter
     private String nickName;
 
     @Getter
@@ -49,11 +49,56 @@ public class Employee implements Serializable {
 
     @OneToMany
     @Getter
-    @Setter(AccessLevel.PRIVATE)
-    private Set<Department> departments;
+    @Setter
+    private Set<Department> departments = Sets.newHashSet();
 
     @Getter
     @Setter(AccessLevel.PRIVATE)
     private Date createdDate;
 
+    public Employee(Company company, String name, String email) {
+        this.company = company;
+        setName(name);
+        setEmail(email);
+    }
+
+    public Employee() {
+    }
+
+
+    /**
+     * 부서 추가
+     * @param department
+     * @return
+     */
+    public Employee addDepartment(Department department) {
+        if(!getDepartments().contains(department)) {
+            getDepartments().add(department);
+        }
+
+        return this;
+    }
+
+    /**
+     * 부서 제거
+     * @param department
+     * @return
+     */
+    public Employee removeDepartment(Department department) {
+        if(!getDepartments().contains(department)) {
+            getDepartments().remove(department);
+        }
+
+        return this;
+    }
+
+    public void setName(String name) {
+        Assert.hasText(name, "system.exception.requiredValue.name");
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        Assert.hasText(email, "system.exception.requiredValue.email");
+        this.email = email;
+    }
 }
