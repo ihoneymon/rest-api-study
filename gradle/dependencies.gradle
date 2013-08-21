@@ -52,9 +52,7 @@ dependencies {
     /**
      * SpringFramework: http://www.springsource.org/spring-framework
      */
-    springframework.collect {
-        compile(it)
-    }
+    compile springframework
 
     /**
      * Spring Data JPA: http://www.springsource.org/spring-data/jpa
