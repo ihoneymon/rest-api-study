@@ -80,7 +80,7 @@ public class EmployeeController {
      * @param employee
      * @param map
      */
-    @RequestMapping(value = "/companies/{company}/departments/{department}/employees/{employee}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/companies/{company}/departments/{department}/employees/{employee}", method = RequestMethod.DELETE)
     public void removeEmployeeOfDepartment(@PathVariable Company company, @PathVariable Department department, @PathVariable Employee employee, ModelMap map) {
         try {
             if(!employee.getCompany().equals(company)) {
