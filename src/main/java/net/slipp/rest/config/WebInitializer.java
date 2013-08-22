@@ -16,7 +16,8 @@ import javax.servlet.ServletRegistration;
 
 
 /**
- * Created with IntelliJ IDEA.
+ * web.xml 대체<br/>
+ * 완벽히 대체하기는 어려운건가? ㅡ_-)?
  *
  * @author: ihoneymon
  * Date: 13. 8. 22
@@ -27,6 +28,7 @@ import javax.servlet.ServletRegistration;
  * </ul>
  */
 public class WebInitializer implements WebApplicationInitializer {
+
     @Override
     public void onStartup(ServletContext container) throws ServletException {
         /**
@@ -39,11 +41,6 @@ public class WebInitializer implements WebApplicationInitializer {
         /**
          * appApiServlet 생성
          */
-        //appApiServlet
-//        AnnotationConfigWebApplicationContext appApiServletContext = new AnnotationConfigWebApplicationContext();
-//        appApiServletContext.register(WebApplicationApiConfig.class);
-//
-//        ServletRegistration.Dynamic appApiServlet = container.addServlet("appApiServlet", new DispatcherServlet(appApiServletContext));
         ServletRegistration.Dynamic appApiServlet = container.addServlet("appApiServlet", DispatcherServlet.class);
         appApiServlet.setInitParameter("contextConfigLocation", "/WEB-INF/spring/webApplication-api-context.xml");
         appApiServlet.addMapping("/api/*");
@@ -52,10 +49,6 @@ public class WebInitializer implements WebApplicationInitializer {
         /**
          * appViewServlet 생성
          */
-//        AnnotationConfigWebApplicationContext appViewServletContext = new AnnotationConfigWebApplicationContext();
-//        appViewServletContext.register(WebApplicationViewConfig.class);
-//
-//        ServletRegistration.Dynamic appViewServlet = container.addServlet("appViewServlet", new DispatcherServlet(appViewServletContext));
         ServletRegistration.Dynamic appViewServlet = container.addServlet("appViewServlet", DispatcherServlet.class);
         appViewServlet.setInitParameter("contextConfigLocation", "/WEB-INF/spring/webApplication-view-context.xml");
         appViewServlet.addMapping("/view/*");
