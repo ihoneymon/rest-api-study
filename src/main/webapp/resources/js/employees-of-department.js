@@ -2,10 +2,9 @@ $(function() {
     console.log("employees!");
     $("#employeeNav").addClass("active");
 
-    bindBtnAddemployee();
-    bindBtnUpdateEmployee();
-    bindBtnDeleteEmployee();
-    bindBtnDeleteEmployeeConfirm();
+    bindBtnAddEmployeeOfDepartment();
+    bindBtnDeleteEmployeeOfDepartment();
+    bindBtnDeleteEmployeeOfDepartmentConfirm();
     bindBtnConfirm();
 
     getEmployees();
@@ -20,7 +19,7 @@ var getEmployees = function() {
     });
 };
 
-var bindBtnAddemployee = function() {
+var bindBtnAddEmployeeOfDepartment = function() {
     $(document).on("click", ".btn-add-employee", function() {
         employeeModal("post");
         $("#employeeModal").modal("show");
@@ -54,20 +53,11 @@ var bindBtnConfirm = function() {
     });
 };
 
-var saveEmployee = function() {
-    console.log("saveEmployee");
+var saveEmployee = function(employeeId) {
     getEmployees();
 
-    var form = {
-        name: $("#name").val(),
-        email: $("#email").val(),
-        nickName: $("#nickName").val()
-    };
-
-    console.log(form);
-
     $.ajax({
-        url: url.employees,
+        url: url.employees + "/" + employeeId,
         method: "post",
         type: "json",
         contentType: "application/json",
@@ -79,47 +69,15 @@ var saveEmployee = function() {
     });
 };
 
-var updateEmployee = function() {
-    var employeeId = $("#employeeModal").data("id");
-    getEmployees();
-
-    var form = {
-        name: $("#name").val(),
-        description: $("#description").val()
-    };
-
-    $.ajax({
-        url: url.employees + "/" + employeeId,
-        method: "put",
-        type: "json",
-        contentType: "application/json",
-        data: JSON.stringify(form),
-        success: function(data) {
-            $("#employeeModal").modal("hide");
-            getEmployees();
-        }
-    });
-};
-
-var bindBtnUpdateEmployee = function() {
-    $(document).on("click", ".btn-update-employee", function(event) {
-        $target = $(event.target);
-        employeeModal("put", $target.data("id"));
-        $("#name").val($target.data("name"));
-        $("#description").val($target.data("description"));
-        $("#employeeModal").modal("show");
-    });
-};
-
-var bindBtnDeleteEmployee = function() {
-    $(document).on("click", ".btn-delete-employee", function(event) {
+var bindBtnDeleteEmployeeOfDepartment = function() {
+    $(document).on("click", ".btn-delete-employee-from-department", function(event) {
         $("#deleteEmployeeModal").data("id", $(event.target).data("id"));
         $("#deleteEmployeeModal").modal("show");
     });
 };
 
-var bindBtnDeleteEmployeeConfirm = function() {
-    $(document).on("click", ".btn-delete-employee-confirm", function() {
+var bindBtnDeleteEmployeeOfDepartmentConfirm = function() {
+    $(document).on("click", ".btn-delete-employee-of-department-confirm", function() {
         getEmployees();
         var employeeId = $("#deleteEmployeeModal").data("id");
 

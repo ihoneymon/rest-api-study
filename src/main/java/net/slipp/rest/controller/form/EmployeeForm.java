@@ -18,12 +18,8 @@ import java.util.Set;
 @Data
 public class EmployeeForm {
     private String name;
-
     private String email;
-
     private String nickName;
-
-    private Set<Department> departmentSet = Sets.newHashSet();
 
     public Employee createEmployee(Company company) {
         Employee employee = new Employee(company, name, email);

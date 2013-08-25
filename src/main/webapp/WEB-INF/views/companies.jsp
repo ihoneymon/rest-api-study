@@ -24,6 +24,7 @@
             <td><label>{{:tel}}</label></td>
             <td><label>{{:address}}</label></td>
             <td><a class="btn" href="<spring:url value="/view/companies/"/>{{:id}}/departments"><spring:message code="view.department.label"/></a></td>
+            <td><a class="btn" href="<spring:url value="/view/companies/"/>{{:id}}/employees"><spring:message code="view.employee.label"/></a></td>
             <td>
                 <button class="btn btn-modify-company" data-id="{{:id}}" data-name={{:name}} data-tel="{{:tel}}" data-address="{{:address}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
                 <button class="btn btn-delete-company" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.delete"/></button>
@@ -64,6 +65,7 @@
                         <th><spring:message code="view.company.tel"/></th>
                         <th><spring:message code="view.company.address"/></th>
                         <th><spring:message code="view.company.departments"/></th>
+                        <th><spring:message code="view.company.employees"/></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -72,7 +74,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="5"><label><spring:message code="view.common.emptyData"/></label></td>
+                        <td colspan="7"><label><spring:message code="view.common.emptyData"/></label></td>
                     </tr>
                 </tfoot>
             </table>
@@ -112,7 +114,7 @@
     address: “”
     }</code></pre>
                         결과확인 : data.code = 200(OK), 500(Server error)
-<pre><code>var updateCompany = function() {
+<pre><code>var saveCompany = function() {
     getCompanies();
 
     var companyId = $("#companyModal").data("id");
@@ -177,13 +179,6 @@
                     <td>DELETE</td>
                     <td><code>/api/companies/{companyId}</code></td>
                     <td>
-<pre><code>var form = {
-    name: “”,
-    tel: “”,
-    address: “”
-}</code></pre>
-                        결과확인 : data.code = 200(OK), 500(Server error)
-                        data.code = 500인 경우, msg 확인
 <pre><code>var deleteCompany = function (companyId) {
     getCompanies();
 

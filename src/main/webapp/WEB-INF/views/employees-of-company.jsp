@@ -16,7 +16,7 @@
     <link href="<spring:url value="/resources/css/employees.css"/>" rel="stylesheet"/>
 
     <script src="<spring:url value="/resources/libs/jsrender/jsrender.min.js"/>"></script>
-    <script src="<spring:url value="/resources/js/employees.js" />"></script>
+    <script src="<spring:url value="/resources/js/employees-of-company.js" />"></script>
     <script id="employeeTemplate" type="text/x-jsrender">
         <tr id="employee-{{:id}}">
             <td><label>{{:id}}</label></td>
@@ -24,7 +24,7 @@
             <td><label>{{:nickName}}</label></td>
             <td><label>{{:email}}</label></td>
             <td>
-                <button class="btn btn-update-employee" data-id="{{:id}}" data-name={{:name}} data-email="{{:email}}" data-nickName="{{:nickName}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
+                <button class="btn btn-update-employee" data-id="{{:id}}" data-name={{:name}} data-email="{{:email}}" data-nick-name="{{:nickName}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
                 <button class="btn btn-delete-employee" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.delete"/></button>
             </td>
         </tr>
@@ -32,8 +32,7 @@
     <script>
         var url = {
             companies: "<spring:url value="/api/companies"/>",
-            departments: "<spring:url value="/api/companies/${companyId}/departments"/>",
-            employees: "<spring:url value="/api/companies/${companyId}/departments/${departmentId}/employees"/>"
+            employees: "<spring:url value="/api/companies/${companyId}/employees"/>"
         };
         var labels = {
             add: "<spring:message code="view.common.label.add"/>",
@@ -70,7 +69,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="4"><spring:message code="view.common.emptyData"/></td>
+                    <td colspan="5"><spring:message code="view.common.emptyData"/></td>
                 </tr>
                 </tfoot>
             </table>
@@ -81,7 +80,44 @@
 <section>
     <header><h3>employee REST API 설명</h3></header>
     <article>
-
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>METHOD</th>
+                <th>URL</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>GET</td>
+                <td><code>/api/companies/{companyId}/employees</code></td>
+                <td>기업의 직원목록</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td><code>/api/companies/{companyId}/employees/{employeeId}</code></td>
+                <td>직원의 상세정보</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td><code>/api/companies/{companyId}/employees</code></td>
+                <td>기업의 직원추가</td>
+            </tr>
+            <tr>
+                <td>PUT</td>
+                <td><code>/api/companies/{companyId}/employees/{employeeId}</code></td>
+                <td>직원정보 수정<br/>
+                </td>
+            </tr>
+            <tr>
+                <td>DELETE</td>
+                <td><code>/api/companies/{companyId}/employees/{employeeId}</code></td>
+                <td>직원삭제<br/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </article>
 </section>
 
@@ -134,7 +170,7 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        <p><spring:message code="view.company.msg.remove"/></p>
+                        <p><spring:message code="view.employee.msg.removeFromCompany"/></p>
                     </div>
                 </div>
                 <div class="modal-footer">

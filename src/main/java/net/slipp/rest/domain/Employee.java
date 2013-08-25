@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -47,9 +51,9 @@ public class Employee implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
-    @OneToMany
     @Getter
     @Setter
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Department> departments = Sets.newHashSet();
 
     @Getter
@@ -85,11 +89,20 @@ public class Employee implements Serializable {
      * @return
      */
     public Employee removeDepartment(Department department) {
-        if(!getDepartments().contains(department)) {
+        if(getDepartments().contains(department)) {
             getDepartments().remove(department);
         }
 
         return this;
+    }
+
+    public boolean hasDepartment(final Department department) {
+        return Iterables.any(departments, new Predicate<Department>() {
+            @Override
+            public boolean apply(@Nullable Department input) {
+                return input.equals(department);
+            }
+        });
     }
 
     public void setName(String name) {

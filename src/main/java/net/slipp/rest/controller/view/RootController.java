@@ -51,12 +51,12 @@ public class RootController {
     public String viewEmployeesOfDepartment(@PathVariable Long companyId, @PathVariable Long departmentId, ModelMap map) {
         map.put("companyId", companyId);
         map.put("departmentId", departmentId);
-        return "employees";
+        return "employees-of-department";
     }
 
     @RequestMapping(value={"/companies/{companyId}/employees"}, method = RequestMethod.GET)
     public String viewEmployeesOfCompany(@PathVariable Long companyId, ModelMap map) {
         map.put("companyId", companyId);
-        return "employees";
+        return "employees-of-company";
     }
 }

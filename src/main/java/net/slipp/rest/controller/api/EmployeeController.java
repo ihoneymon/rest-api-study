@@ -46,7 +46,7 @@ public class EmployeeController {
      */
     @RequestMapping(value = "/companies/{company}/departments/{department}/employees", method = RequestMethod.GET)
     public void getEmployeesOfDepartment(@PathVariable Company company, @PathVariable Department department, EmployeeCondition condition, PageStatus pageStatus, ModelMap map) {
-        Pagination<Employee> page = Paginations.pagination(employeeService.getEmployee(condition, pageStatus));
+        Pagination<Employee> page = Paginations.pagination(employeeService.getEmployeeOfDepartment(company, department, condition, pageStatus));
         map.put("employees", page);
     }
 
@@ -57,7 +57,7 @@ public class EmployeeController {
      * @param employee {@link Employee}
      * @param map
      */
-    @RequestMapping(value = "/companies/{company}/departments/{department}/employees/{employee}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/companies/{company}/departments/{department}/employees/{employee}", method = RequestMethod.POST)
     public void addEmployeeOfDepartment(@PathVariable Company company, @PathVariable Department department, @PathVariable Employee employee, ModelMap map) {
         try {
             if(!employee.getCompany().equals(company)) {
@@ -67,6 +67,7 @@ public class EmployeeController {
             employee.addDepartment(department);
             employeeService.save(employee);
             map.put("code", HttpStatus.OK);
+            map.put("employee", employee);
         } catch (SlippException e) {
             map.put("code", HttpStatus.INTERNAL_SERVER_ERROR);
             map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
@@ -74,7 +75,7 @@ public class EmployeeController {
     }
 
     /**
-     * 직원에게 부서 추가
+     * 직원에게 부서 제거
      * @param company
      * @param department
      * @param employee
@@ -84,12 +85,13 @@ public class EmployeeController {
     public void removeEmployeeOfDepartment(@PathVariable Company company, @PathVariable Department department, @PathVariable Employee employee, ModelMap map) {
         try {
             if(!employee.getCompany().equals(company)) {
-                throw new SlippException("system.exception.user.company");
+                throw new SlippException("system.exception.not.user.of.company");
             }
 
             employee.removeDepartment(department);
             employeeService.save(employee);
             map.put("code", HttpStatus.OK);
+            map.put("employee", employee);
         } catch (SlippException e) {
             map.put("code", HttpStatus.INTERNAL_SERVER_ERROR);
             map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
@@ -120,8 +122,8 @@ public class EmployeeController {
         try {
             Employee employee = form.createEmployee(company);
             employeeService.save(employee);
-
             map.put("code", HttpStatus.OK);
+            map.put("employee", employee);
         } catch (SlippException e) {
             map.put("code", HttpStatus.INTERNAL_SERVER_ERROR);
             map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
@@ -140,6 +142,7 @@ public class EmployeeController {
         try {
             employeeService.save(form.bind(employee));
             map.put("code", HttpStatus.OK);
+            map.put("employee", employee);
         } catch (SlippException e) {
             map.put("code", HttpStatus.INTERNAL_SERVER_ERROR);
             map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
@@ -161,6 +164,20 @@ public class EmployeeController {
             map.put("code", HttpStatus.OK);
         } catch (SlippException e) {
             map.put("code", HttpStatus.INTERNAL_SERVER_ERROR);
+            map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value="/companies/{company}/employees/{employee}", method=RequestMethod.GET)
+    public void getEmployeeOfCompany(@PathVariable Company company, @PathVariable Employee employee, ModelMap map) {
+        try {
+            if(!employee.getCompany().equals(company)) {
+                throw new SlippException("system.exception.not.user.of.company");
+            }
+            map.put("employee", employee);
+            map.put("code", HttpStatus.OK);
+        } catch (SlippException e) {
+            map.put("code", HttpStatus.BAD_REQUEST);
             map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
         }
     }

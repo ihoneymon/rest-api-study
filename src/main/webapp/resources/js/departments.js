@@ -56,8 +56,6 @@ var bindBtnConfirm = function() {
 };
 
 var saveDepartment = function() {
-    console.log("saveDepartment");
-    getDepartments();
 
     var form = {
         name: $("#name").val(),
@@ -79,7 +77,6 @@ var saveDepartment = function() {
 
 var updateDepartment = function() {
     var departmentId = $("#departmentModal").data("id");
-    getDepartments();
 
     var form = {
         name: $("#name").val(),
@@ -118,17 +115,20 @@ var bindBtnDeleteDepartment = function() {
 
 var bindBtnDeleteDepartmentConfirm = function() {
     $(document).on("click", ".btn-delete-department-confirm", function() {
-        getDepartments();
-        var departmentId = $("#deleteDepartmentModal").data("id");
-
-        $.ajax({
-            url: url.departments + "/" + departmentId,
-            method: "delete",
-            type: "json",
-            success: function(data) {
-                $("#deleteDepartmentModal").modal("hide");
-                getDepartments();
-            }
-        });
+        deleteDepartment();
     });
 };
+
+var deleteDepartment = function() {
+    var departmentId = $("#deleteDepartmentModal").data("id");
+
+    $.ajax({
+        url: url.departments + "/" + departmentId,
+        method: "delete",
+        type: "json",
+        success: function(data) {
+            $("#deleteDepartmentModal").modal("hide");
+            getDepartments();
+        }
+    });
+}

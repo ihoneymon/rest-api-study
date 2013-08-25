@@ -11,28 +11,28 @@
 <%@ page session="false" %>
 <html>
 <head>
-    <title>Departments REST API Page</title>
+    <title>Employees REST API Page</title>
     <meta name="decorator" content="common">
-    <link href="<spring:url value="/resources/css/departments.css"/>" rel="stylesheet"/>
+    <link href="<spring:url value="/resources/css/employees.css"/>" rel="stylesheet"/>
 
     <script src="<spring:url value="/resources/libs/jsrender/jsrender.min.js"/>"></script>
-    <script src="<spring:url value="/resources/js/departments.js" />"></script>
-    <script id="departmentTemplate" type="text/x-jsrender">
-        <tr id="department-{{:id}}">
+    <script src="<spring:url value="/resources/js/employees-of-department.js" />"></script>
+    <script id="employeeTemplate" type="text/x-jsrender">
+        <tr id="employee-{{:id}}">
             <td><label>{{:id}}</label></td>
             <td><label>{{:name}}</label></td>
-            <td><label>{{:description}}</label></td>
-            <td><a class="btn" href="<spring:url value="/view/companies/${companyId}/departments/"/>{{:id}}/employees"><spring:message code="view.employee.label"/></a></td>
+            <td><label>{{:nickName}}</label></td>
+            <td><label>{{:email}}</label></td>
             <td>
-                <button class="btn btn-update-department" data-id="{{:id}}" data-name={{:name}} data-description="{{:description}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
-                <button class="btn btn-delete-department" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.delete"/></button>
+                <button class="btn btn-delete-employee-from-department" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.delete"/></button>
             </td>
         </tr>
     </script>
     <script>
         var url = {
             companies: "<spring:url value="/api/companies"/>",
-            departments: "<spring:url value="/api/companies/${companyId}/departments"/>"
+            departments: "<spring:url value="/api/companies/${companyId}/departments"/>",
+            employees: "<spring:url value="/api/companies/${companyId}/departments/${departmentId}/employees"/>"
         };
         var labels = {
             add: "<spring:message code="view.common.label.add"/>",
@@ -46,9 +46,9 @@
     <article>
         <div class="col-12 mb10">
             <div class="col-12 mb10">
-                <button class="btn btn-add-department pull-right"><i class="ui-icon-pencil"></i><spring:message code="view.btn.add"/></button>
+                <button class="btn btn-add-employee pull-right"><i class="ui-icon-pencil"></i><spring:message code="view.btn.add"/></button>
             </div>
-            <table id="departmentTable" class="table table-bordered table-hover">
+            <table id="employeeTable" class="table table-bordered table-hover">
                 <colgroup>
                     <col>
                     <col>
@@ -57,10 +57,10 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th><spring:message code="view.department.id"/></th>
-                    <th><spring:message code="view.department.name"/></th>
-                    <th><spring:message code="view.department.description"/></th>
-                    <th><spring:message code="view.department.employees"/></th>
+                    <th><spring:message code="view.employee.id"/></th>
+                    <th><spring:message code="view.employee.name"/></th>
+                    <th><spring:message code="view.employee.nickName"/></th>
+                    <th><spring:message code="view.employee.email"/></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -78,7 +78,7 @@
 </section>
 
 <section>
-    <header><h3>Department REST API 설명</h3></header>
+    <header><h3>employee REST API 설명</h3></header>
     <article>
         <table class="table table-bordered">
             <thead>
@@ -91,78 +91,26 @@
             <tbody>
             <tr>
                 <td>GET</td>
-                <td><code>/api/companies/{companyId}/departments</code></td>
-                <td>기업의 부서목록 반환</td>
+                <td><code>/api/companies/{companyId}/departments/{departmentId}/employees</code></td>
+                <td>부서에 소속된 직원정보를 열람</td>
             </tr>
             <tr>
-                <td>GET</td>
-                <td><code>/api/companies/{companyId}/departments/{departmentId}</code></td>
-                <td>부서의 상세정보</td>
-            <tr>
-            </tr>
-            <td>POST</td>
-            <td><code>/api/companies/{companyId}/departments</code></td>
-            <td>
+                <td>POST</td>
+                <td><code>/api/companies/{companyId}/departments/{departmentId}/employees/{employeeId}</code></td>
+                <td>
 <pre><code>
-var form = {
-    name: “”,
-    description: “”
-}
-</code></pre>
-                결과확인 : data.code = 200(OK), 500(Server error)
-<pre><code>
-var saveDepartment = function() {
-    getDepartments();
-
-    var form = {
-        name: $(“#name”).val(),
-        description: $(“#description”).val()
-    };
+var saveEmployee = function(employeeId) {
+    getEmployees();
 
     $.ajax({
-        url: url.departments,
+        url: url.employees + “/” + employeeId,
         method: “post”,
         type: “json”,
         contentType: “application/json”,
         data: JSON.stringify(form),
         success: function(data) {
-        $(“#departmentModal”).modal(“hide”);
-            getDepartments();
-        }
-    });
-};
-</code></pre>
-            </td>
-            </tr>
-            <tr>
-                <td>PUT</td>
-                <td><code>/api/companies/{companyId}/departments/{departmentId}</code></td>
-                <td>
-<pre><code>
-var form = {
-    name: “”,
-    description: “”
-}
-</code></pre>
-                    결과확인 : data.code = 200(OK), 500(Server error)
-<pre><code>
-var updateDepartment = function() {
-    getDepartments();
-
-    var form = {
-        name: $(“#name”).val(),
-        description: $(“#description”).val()
-    };
-
-    $.ajax({
-        url: url.departments,
-        method: “update”,
-        type: “json”,
-        contentType: “application/json”,
-        data: JSON.stringify(form),
-        success: function(data) {
-            $(“#departmentModal”).modal(“hide”);
-            getDepartments();
+        $(“#employeeModal”).modal(“hide”);
+            getEmployees();
         }
     });
 };
@@ -171,26 +119,24 @@ var updateDepartment = function() {
             </tr>
             <tr>
                 <td>DELETE</td>
-                <td><code>/api/companies/{companyId}/departments/{departmentId}</code></td>
+                <td><code>/api/companies/{companyId}/departments/{departmentId}/employees/{employeeId}</code></td>
                 <td>
 <pre><code>
-var deleteDepartment = function() {
-    getDepartments();
-    var departmentId = $(“#deleteDepartmentModal”).data(“id”);
+var removeDepartmentFromEmployee = function(employeeId) {
+    getEmployees();
 
     $.ajax({
-        url: url.departments + “/” + departmentId,
+        url: url.employees + “/” + employeeId,
         method: “delete”,
         type: “json”,
         success: function(data) {
-        $(“#deleteDepartmentModal”).modal(“hide”);
-            getDepartments();
+            getEmployees();
         }
     });
-}
+};
 </code></pre>
                 </td>
-            <tr>
+            </tr>
             </tbody>
         </table>
     </article>
@@ -198,25 +144,31 @@ var deleteDepartment = function() {
 
 <section>
     <!-- Add/Modify Confirm Modal -->
-    <div class="modal fade" id="departmentModal" tabindex="-1" role="dialog" aria-labelledby="departmentModalLabel" aria-hidden="true">
+    <div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="employeeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><label><spring:message code="view.department.label"/></label><label id="modalTypeLabel"></label></h4>
+                    <h4 class="modal-title"><label><spring:message code="view.employee.label"/></label><label id="modalTypeLabel"></label></h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label for="name" class="col-lg-3 control-label"><spring:message code="view.department.name"/></label>
+                            <label for="name" class="col-lg-3 control-label"><spring:message code="view.employee.name"/></label>
                             <div class="col-lg-9">
                                 <input type="text" class="form-control" id="name" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="description" class="col-lg-3 control-label"><spring:message code="view.department.description"/></label>
+                            <label for="email" class="col-lg-3 control-label"><spring:message code="view.employee.email"/></label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" id="description" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
+                                <input type="text" class="form-control" id="email" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nickName" class="col-lg-3 control-label"><spring:message code="view.employee.nickName"/></label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" id="nickName" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
                             </div>
                         </div>
                     </form>
@@ -230,7 +182,7 @@ var deleteDepartment = function() {
     </div><!-- /.modal -->
 
     <!-- Remove Company Modal -->
-    <div class="modal fade" id="deleteDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="deletedepartmentModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -239,12 +191,12 @@ var deleteDepartment = function() {
                 </div>
                 <div class="modal-body">
                     <div>
-                        <p><spring:message code="view.company.msg.remove"/></p>
+                        <p><spring:message code="view.employee.msg.removeFromDepartment"/></p>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="view.btn.close"/></button>
-                    <button type="button" class="btn btn-primary btn-delete-department-confirm"><spring:message code="view.btn.delete"/></button>
+                    <button type="button" class="btn btn-primary btn-delete-employee-of-department-confirm"><spring:message code="view.btn.delete"/></button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

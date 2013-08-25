@@ -75,15 +75,11 @@ var bindBtnConfirm = function () {
 };
 
 var saveCompany = function() {
-    console.log("saveCompany");
     var form = {
         name: $("#name").val(),
         tel: $("#tel").val(),
         address: $("#address").val()
     }
-
-    console.log(form);
-    getCompanies();
 
     $.ajax({
         url: url.companies,
@@ -99,8 +95,6 @@ var saveCompany = function() {
 };
 
 var updateCompany = function() {
-    getCompanies();
-
     var companyId = $("#companyModal").data("id");
     var form = {
         name: $("#name").val(),
@@ -129,8 +123,6 @@ var bindBtnDeleteCompanyConfirm = function () {
 };
 
 var deleteCompany = function (companyId) {
-    getCompanies();
-
     $.ajax({
         url: url.companies + "/" + companyId,
         method: "delete",

@@ -48,6 +48,7 @@ public class WebInitializer implements WebApplicationInitializer {
 
         /**
          * appViewServlet 생성
+         * {@link org.springframework.web.servlet.config.annotation.EnableWebMvc} 이 녀석을 사용하면 하나로 합쳐지는건지...
          */
         ServletRegistration.Dynamic appViewServlet = container.addServlet("appViewServlet", DispatcherServlet.class);
         appViewServlet.setInitParameter("contextConfigLocation", "/WEB-INF/spring/webApplication-view-context.xml");
