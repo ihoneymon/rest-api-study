@@ -10,10 +10,8 @@
     <logger name="net.slipp.rest" level="DEBUG"/>
     <logger name="net.slipp.rest.support.conversion" level="trace"/>
 
-    <logger name="org.springframework" level="INFO"/>
-    <logger name="org.springframework.web" level="DEBUG"/>
-    
-    <logger name="org.hibernate" level="INFO"/>
+    <logger name="org.springframework" level="DEBUG"/>
+    <logger name="org.hibernate" level="DEBUG"/>
     
     <root level="debug">
         <appender-ref ref="STDOUT" />
