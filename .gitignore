@@ -15,5 +15,5 @@ target
 classes
 
 ## ignoreQueryDSL
-src/querydsl
+src/main/querydsl
 /build
