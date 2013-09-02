@@ -1,12 +1,22 @@
 package net.slipp.rest.domain.security;
 
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.util.Assert;
-
-import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.util.Assert;
 
 /**
  * 사용자 권한

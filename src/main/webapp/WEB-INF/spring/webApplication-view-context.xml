@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+             xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <annotation-driven />
+    <resources mapping="/resources/**" location="/resources/" cache-period="0"/>
+
+    <beans:bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="0">
+        <beans:property name="contentNegotiationManager">
+            <beans:bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean"/>
+        </beans:property>
+
+        <beans:property name="viewResolvers">
+            <beans:list>
+                <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+                            p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>
+            </beans:list>
+        </beans:property>
+
+        <beans:property name="defaultViews">
+            <beans:list>
+                <beans:bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <interceptors>
+        <beans:bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor"
+                    p:cacheSeconds="0" p:useExpiresHeader="true"
+                    p:useCacheControlHeader="true" p:useCacheControlNoStore="true"/>
+        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang"/>
+    </interceptors>
+    <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"
+                p:defaultLocale="en"/>
+
+    <context:component-scan base-package="net.slipp.rest.controller.view"/>
+    <aop:aspectj-autoproxy/>
+</beans:beans>

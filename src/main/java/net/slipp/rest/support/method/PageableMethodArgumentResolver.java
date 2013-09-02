@@ -1,5 +1,10 @@
 package net.slipp.rest.support.method;
 
+import java.beans.PropertyEditorSupport;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyValue;
@@ -17,10 +22,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.servlet.support.RequestContextUtils;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import java.beans.PropertyEditorSupport;
 
 public class PageableMethodArgumentResolver implements HandlerMethodArgumentResolver {
 

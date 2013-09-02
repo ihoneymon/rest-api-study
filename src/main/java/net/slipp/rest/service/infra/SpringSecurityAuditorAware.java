@@ -2,6 +2,7 @@ package net.slipp.rest.service.infra;
 
 import net.slipp.rest.domain.Employee;
 import net.slipp.rest.domain.User;
+
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,14 +1,16 @@
 package net.slipp.rest.support.conversion;
 
-import com.google.common.collect.Sets;
+import java.util.Set;
+
 import net.slipp.rest.domain.Company;
 import net.slipp.rest.domain.Department;
 import net.slipp.rest.domain.Employee;
 import net.slipp.rest.domain.User;
+
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.util.NumberUtils;
 
-import java.util.Set;
+import com.google.common.collect.Sets;
 
 /**
  * Entity(Id : Long type) Converter

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:mvc="http://www.springframework.org/schema/mvc"
+             xmlns:aop="http://www.springframework.org/schema/aop"
+             xmlns:p="http://www.springframework.org/schema/p"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd"
+             xmlns:beans="http://www.springframework.org/schema/beans">
+
+    <beans:bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="0">
+        <beans:property name="contentNegotiationManager">
+            <beans:bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean" />
+        </beans:property>
+
+        <beans:property name="viewResolvers">
+            <beans:list>
+                <beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+            </beans:list>
+        </beans:property>
+
+        <beans:property name="defaultViews">
+            <beans:list>
+                <beans:bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <mvc:annotation-driven conversion-service="conversionService">
+        <mvc:argument-resolvers>
+            <beans:bean class="net.slipp.rest.support.method.UserMethodArgumentResolver"/>
+            <beans:bean class="net.slipp.rest.support.method.PageStatusMethodArgumentResolver"/>
+            <beans:bean class="net.slipp.rest.support.method.PageStatusMethodArgumentResolver"/>
+        </mvc:argument-resolvers>
+        <mvc:message-converters>
+            <beans:bean class="net.slipp.rest.support.conversion.MappingJackson2HttpMessageConverter">
+                <beans:property name="objectMapper" ref="objectMapper"/>
+            </beans:bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/companies/**"/>
+            <mvc:mapping path="/departments/**"/>
+            <mvc:mapping path="/employees/**"/>
+            <mvc:mapping path="/users/**"/>
+            <beans:bean class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
+                <beans:property name="entityManagerFactory" ref="entityManagerFactory"/>
+            </beans:bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/companies/**"/>
+            <mvc:mapping path="/departments/**"/>
+            <mvc:mapping path="/employees/**"/>
+            <mvc:mapping path="/users/**"/>
+            <beans:bean class="net.slipp.rest.support.interceptor.PageStatusAutoPersistenceInterceptor"/>
+        </mvc:interceptor>
+        <beans:bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+            <beans:property name="cacheSeconds" value="0"/>
+        </beans:bean>
+    </mvc:interceptors>
+
+    <beans:bean id="objectMapper" class="net.slipp.rest.support.mapper.HibernateAwareObjectMapper"/>
+
+    <beans:bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <beans:property name="converters">
+            <beans:set>
+                <beans:bean class="net.slipp.rest.support.conversion.LongIdTypeToEntityConverter"/>
+                <beans:bean class="net.slipp.rest.support.conversion.StringIdTypeToEntityConverter"/>
+            </beans:set>
+        </beans:property>
+    </beans:bean>
+
+    <interceptors>
+        <beans:bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor" p:cacheSeconds="0" p:useExpiresHeader="true"
+                    p:useCacheControlHeader="true" p:useCacheControlNoStore="true" />
+        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang" />
+    </interceptors>
+    <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="en" />
+
+    <context:component-scan base-package="net.slipp.rest.controller.api"/>
+    <aop:aspectj-autoproxy />
+
+</beans:beans>

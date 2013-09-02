@@ -20,7 +20,7 @@
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="res-api-test"/>
+        <property name="persistenceUnitName" value="res-api-study"/>
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="net.slipp.rest.domain"/>
         <property name="mappingResources">
@@ -43,7 +43,7 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
     <jpa:repositories base-package="net.slipp.rest.repository"
                       entity-manager-factory-ref="entityManagerFactory"
@@ -51,10 +51,4 @@
 
     <bean id="auditorAware" class="net.slipp.rest.service.infra.SpringSecurityAuditorAware"/>
     <jpa:auditing auditor-aware-ref="auditorAware"/>
-
-    <!-- JdbcDataRegister 사용 -->
-    <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg name="dataSource" ref="dataSource"/>
-    </bean>
-
 </beans>

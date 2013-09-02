@@ -15,7 +15,7 @@ sourceSets {
     }
     querydsl {
         java {
-            srcDir "src/querydsl/java"
+            srcDirs =  ["src/main/querydsl"]
         }
     }
 }
@@ -50,7 +50,6 @@ task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates
     destinationDir = sourceSets.querydsl.java.srcDirs.iterator().next()
     dependencyCacheDir = compileJava.dependencyCacheDir
 }
-compileJava.dependsOn generateQueryDSL
 //-- QueryDSL
 
 compileJava {

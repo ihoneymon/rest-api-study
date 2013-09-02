@@ -1,10 +1,19 @@
 package net.slipp.rest.domain;
 
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+
 import lombok.Data;
 import lombok.ToString;
-
-import javax.persistence.*;
-import java.io.Serializable;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * 회사 도메인
@@ -15,6 +24,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @ToString(exclude = {"department"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Company implements Serializable {
     private static final long serialVersionUID = 2555196948716599267L;
 
@@ -29,7 +39,7 @@ public class Company implements Serializable {
     @OrderBy("name asc")
     private Department department = new Department(null, name + "_root", "Root Department");
 
-    Company() {
+    public Company() {
     }
 
     public Company(String name) {

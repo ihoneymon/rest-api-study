@@ -1,11 +1,23 @@
 package net.slipp.rest.domain;
 
-import lombok.*;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+
+import javax.annotation.Nullable;
+import javax.persistence.*;
+
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.springframework.util.Assert;
 
 /**
  * 직원 도메인
@@ -14,8 +26,9 @@ import java.util.Set;
  * Date: 13. 7. 22
  */
 @Entity
-@ToString
+@ToString(exclude = {"company", "departments"})
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Employee implements Serializable {
     private static final long serialVersionUID = 890213302538150678L;
 
@@ -25,24 +38,80 @@ public class Employee implements Serializable {
     private Long id;
 
     @Getter
-    @Setter(AccessLevel.PRIVATE)
     private String name;
 
     @Getter
-    @Setter(AccessLevel.PRIVATE)
     private String email;
 
     @Getter
-    @Setter(AccessLevel.PRIVATE)
+    @Setter
     private String nickName;
 
-    @OneToMany
     @Getter
-    @Setter(AccessLevel.PRIVATE)
-    private Set<Department> departments;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Company company;
+
+    @Getter
+    @Setter
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH}, orphanRemoval = true)
+    private Set<Department> departments = Sets.newHashSet();
 
     @Getter
     @Setter(AccessLevel.PRIVATE)
     private Date createdDate;
 
+    public Employee(Company company, String name, String email) {
+        this.company = company;
+        setName(name);
+        setEmail(email);
+    }
+
+    public Employee() {
+    }
+
+
+    /**
+     * 부서 추가
+     * @param department
+     * @return
+     */
+    public Employee addDepartment(Department department) {
+        if(!getDepartments().contains(department)) {
+            getDepartments().add(department);
+        }
+
+        return this;
+    }
+
+    /**
+     * 부서 제거
+     * @param department
+     * @return
+     */
+    public Employee removeDepartment(Department department) {
+        if(getDepartments().contains(department)) {
+            getDepartments().remove(department);
+        }
+
+        return this;
+    }
+
+    public boolean hasDepartment(final Department department) {
+        return Iterables.any(departments, new Predicate<Department>() {
+            @Override
+            public boolean apply(@Nullable Department input) {
+                return input.equals(department);
+            }
+        });
+    }
+
+    public void setName(String name) {
+        Assert.hasText(name, "system.exception.requiredValue.name");
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        Assert.hasText(email, "system.exception.requiredValue.email");
+        this.email = email;
+    }
 }
