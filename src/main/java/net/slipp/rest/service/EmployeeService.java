@@ -50,4 +50,10 @@ public interface EmployeeService {
      * @return
      */
     Page<Employee> getEmployeeOfDepartment(Company company, Department department, EmployeeCondition condition, PageStatus pageStatus);
+
+    /**
+     * 직원 삭제
+     * @param employee
+     */
+    void delete(Employee employee);
 }

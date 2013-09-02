@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -125,5 +126,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         return employeeRepository.findAll(builder, pageStatus);
+    }
+
+    @Override
+    public void delete(Employee employee) {
+        Set<Department> departments = employee.getDepartments();
+        for(Department department : departments) {
+            employee.removeDepartment(department);
+        }
+        employeeRepository.delete(employee);
     }
 }

@@ -15,10 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 
@@ -57,8 +54,8 @@ public class EmployeeController {
      * @param employee {@link Employee}
      * @param map
      */
-    @RequestMapping(value = "/companies/{company}/departments/{department}/employees/{employee}", method = RequestMethod.POST)
-    public void addEmployeeOfDepartment(@PathVariable Company company, @PathVariable Department department, @PathVariable Employee employee, ModelMap map) {
+    @RequestMapping(value = "/companies/{company}/departments/{department}/employees", method = RequestMethod.POST)
+    public void addEmployeeOfDepartment(@PathVariable Company company, @PathVariable Department department, @RequestParam Employee employee, ModelMap map) {
         try {
             if(!employee.getCompany().equals(company)) {
                 throw new SlippException("system.exception.user.company");
@@ -150,24 +147,11 @@ public class EmployeeController {
     }
 
     /**
-     * 직원 삭제
+     * 직원 상세정보
      * @param company
-     * @param form
+     * @param employee
      * @param map
      */
-    @RequestMapping(value="/companies/{company}/employees", method=RequestMethod.DELETE)
-    public void deleteEmployee(@PathVariable Company company, @RequestBody EmployeeForm form, ModelMap map) {
-        try {
-            Employee employee = form.createEmployee(company);
-            employeeService.save(employee);
-
-            map.put("code", HttpStatus.OK);
-        } catch (SlippException e) {
-            map.put("code", HttpStatus.INTERNAL_SERVER_ERROR);
-            map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
-        }
-    }
-
     @RequestMapping(value="/companies/{company}/employees/{employee}", method=RequestMethod.GET)
     public void getEmployeeOfCompany(@PathVariable Company company, @PathVariable Employee employee, ModelMap map) {
         try {
@@ -178,6 +162,23 @@ public class EmployeeController {
             map.put("code", HttpStatus.OK);
         } catch (SlippException e) {
             map.put("code", HttpStatus.BAD_REQUEST);
+            map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
+        }
+    }
+
+    /**
+     * 직원 삭제
+     * @param company {@link Company}
+     * @param employee {@link Employee}
+     * @param map
+     */
+    @RequestMapping(value="/companies/{company}/employees/{employee}", method=RequestMethod.DELETE)
+    public void deleteEmployee(@PathVariable Company company, @PathVariable Employee employee, ModelMap map) {
+        try {
+            employeeService.delete(employee);
+            map.put("code", HttpStatus.OK);
+        } catch (SlippException e) {
+            map.put("code", HttpStatus.INTERNAL_SERVER_ERROR);
             map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
         }
     }

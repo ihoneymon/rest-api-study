@@ -53,7 +53,7 @@ public class Employee implements Serializable {
 
     @Getter
     @Setter
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH}, orphanRemoval = true)
     private Set<Department> departments = Sets.newHashSet();
 
     @Getter

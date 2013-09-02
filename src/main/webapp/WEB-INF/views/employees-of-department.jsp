@@ -17,6 +17,17 @@
 
     <script src="<spring:url value="/resources/libs/jsrender/jsrender.min.js"/>"></script>
     <script src="<spring:url value="/resources/js/employees-of-department.js" />"></script>
+
+    <script id="employeeOfDepartmentTemplate" type="text/x-jsrender">
+        <tr id="employee-of-department-{{:id}}">
+            <td><label>{{:id}}</label></td>
+            <td><label>{{:name}}</label></td>
+            <td>
+                <button class="btn btn-add-employee-to-department" data-id="{{:id}}"><i class="ui-icon-plus"></i><spring:message code="view.btn.add"/></button>
+            </td>
+        </tr>
+    </script>
+
     <script id="employeeTemplate" type="text/x-jsrender">
         <tr id="employee-{{:id}}">
             <td><label>{{:id}}</label></td>
@@ -28,11 +39,13 @@
             </td>
         </tr>
     </script>
+
     <script>
         var url = {
             companies: "<spring:url value="/api/companies"/>",
+            employeesOfCompany: "<spring:url value="/api/companies/${companyId}/employees"/>",
             departments: "<spring:url value="/api/companies/${companyId}/departments"/>",
-            employees: "<spring:url value="/api/companies/${companyId}/departments/${departmentId}/employees"/>"
+            employeesOfDepartment: "<spring:url value="/api/companies/${companyId}/departments/${departmentId}/employees"/>"
         };
         var labels = {
             add: "<spring:message code="view.common.label.add"/>",
@@ -152,30 +165,21 @@ var removeDepartmentFromEmployee = function(employeeId) {
                     <h4 class="modal-title"><label><spring:message code="view.employee.label"/></label><label id="modalTypeLabel"></label></h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label for="name" class="col-lg-3 control-label"><spring:message code="view.employee.name"/></label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" id="name" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="col-lg-3 control-label"><spring:message code="view.employee.email"/></label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" id="email" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="nickName" class="col-lg-3 control-label"><spring:message code="view.employee.nickName"/></label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" id="nickName" placeholder="<spring:message code="view.common.requiredOptionValue"/>">
-                            </div>
-                        </div>
-                    </form>
+                    <table class="table table-bordered" id="employeesTable">
+                        <thead>
+                        <tr>
+                            <th><spring:message code="view.employee.id"/></th>
+                            <th><spring:message code="view.employee.name"/></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="view.btn.close"/></button>
-                    <button type="button" class="btn btn-primary btn-confirm"><label id="modalButtonLabel"></label></button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

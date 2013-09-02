@@ -11,7 +11,7 @@
     <logger name="net.slipp.rest.support.conversion" level="trace"/>
 
     <logger name="org.springframework" level="DEBUG"/>
-    <logger name="org.hibernate" level="DEBUG"/>
+    <logger name="org.hibernate" level="INFO"/>
     
     <root level="debug">
         <appender-ref ref="STDOUT" />
