@@ -23,8 +23,8 @@
             <td><label><a href="<spring:url value="/view/companies/"/>{{:id}}">{{:name}}</a></label></td>
             <td><label>{{:tel}}</label></td>
             <td><label>{{:address}}</label></td>
-            <td><a class="btn" href="<spring:url value="/view/companies/"/>{{:id}}/departments"><spring:message code="view.department.label"/></a></td>
-            <td><a class="btn" href="<spring:url value="/view/companies/"/>{{:id}}/employees"><spring:message code="view.employee.label"/></a></td>
+            <td><a class="btn btn-primary" href="<spring:url value="/view/companies/"/>{{:id}}/departments"><spring:message code="view.department.label"/></a></td>
+            <td><a class="btn btn-primary" href="<spring:url value="/view/companies/"/>{{:id}}/employees"><spring:message code="view.employee.label"/></a></td>
             <td>
                 <button class="btn btn-modify-company" data-id="{{:id}}" data-name={{:name}} data-tel="{{:tel}}" data-address="{{:address}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
                 <button class="btn btn-delete-company" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.delete"/></button>

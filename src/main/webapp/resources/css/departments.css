@@ -1,3 +1,7 @@
 #modalButtonLabel {
     margin: 0px;
 }
+
+#departmentTable > tbody > tr > td > label {
+    margin: 5px 0 0 5px;
+}

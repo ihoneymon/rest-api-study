@@ -22,7 +22,7 @@
             <td><label>{{:id}}</label></td>
             <td><label>{{:name}}</label></td>
             <td><label>{{:description}}</label></td>
-            <td><a class="btn" href="<spring:url value="/view/companies/${companyId}/departments/"/>{{:id}}/employees"><spring:message code="view.employee.label"/></a></td>
+            <td><a class="btn btn-primary" href="<spring:url value="/view/companies/${companyId}/departments/"/>{{:id}}/employees"><spring:message code="view.employee.label"/></a></td>
             <td>
                 <button class="btn btn-update-department" data-id="{{:id}}" data-name={{:name}} data-description="{{:description}}"><i class="ui-icon-pencil"></i><spring:message code="view.btn.modify"/></button>
                 <button class="btn btn-delete-department" data-id="{{:id}}"><i class="ui-icon-remove"></i><spring:message code="view.btn.delete"/></button>
