@@ -41,6 +41,7 @@ public class Employee implements Serializable {
     private String name;
 
     @Getter
+    @Column(unique = true)
     private String email;
 
     @Getter
