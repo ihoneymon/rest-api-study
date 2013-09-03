@@ -7,7 +7,6 @@ $(function () {
 
 var getCompany = function() {
     $.get(url.company, function(data) {
-        console.log(data.company);
         $("#name").text(data.company.name);
         $("#tel").val(data.company.tel);
         $("#address").val(data.company.address);

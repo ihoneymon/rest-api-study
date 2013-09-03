@@ -59,6 +59,9 @@ var getCompanies = function () {
         if (data.companies.content.length) {
             renderTemplate($("#companyTable").find("tbody"), "#companyTemplate", data.companies.content, true);
             $("#companyTable").find("tfoot").hide();
+        } else {
+            $("#companyTable").find("tbody").empty();
+            $("#companyTable").find("tfoot").show();
         }
     });
 };
@@ -88,8 +91,8 @@ var saveCompany = function() {
         contentType: "application/json",
         data: JSON.stringify(form),
         success: function() {
-            $("#companyModal").modal("hide");
             getCompanies();
+            $("#companyModal").modal("hide");
         }
     });
 };
@@ -109,8 +112,8 @@ var updateCompany = function() {
         contentType: "application/json",
         data: JSON.stringify(form),
         success: function() {
-            $("#companyModal").modal("hide");
             getCompanies();
+            $("#companyModal").modal("hide");
         }
     });
 };
@@ -128,8 +131,8 @@ var deleteCompany = function (companyId) {
         method: "delete",
         type: "json",
         success: function () {
-            $("#deleteCompanyModal").modal("hide");
             getCompanies();
+            $("#deleteCompanyModal").modal("hide");
         }
     });
 };

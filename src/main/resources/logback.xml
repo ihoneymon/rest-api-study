@@ -7,11 +7,11 @@
         </layout>
     </appender>
    
-    <logger name="net.slipp.rest" level="DEBUG"/>
+    <logger name="net.slipp.rest" level="debug"/>
     <logger name="net.slipp.rest.support.conversion" level="trace"/>
 
     <logger name="org.springframework" level="DEBUG"/>
-    <logger name="org.hibernate" level="INFO"/>
+    <logger name="org.hibernate" level="DEBUG"/>
     
     <root level="debug">
         <appender-ref ref="STDOUT" />

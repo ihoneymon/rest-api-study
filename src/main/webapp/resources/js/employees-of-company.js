@@ -17,6 +17,9 @@ var getEmployees = function() {
         if(data.employees.content.length) {
             renderTemplate($("#employeeTable").find("tbody"), "#employeeTemplate", data.employees.content, true);
             $("#employeeTable").find("tfoot").hide();
+        } else {
+            $("#employeeTable").find("tbody").empty();
+            $("#employeeTable").find("tfoot").show();
         }
     });
 };
@@ -56,16 +59,11 @@ var bindBtnConfirm = function() {
 };
 
 var saveEmployee = function() {
-    console.log("saveEmployee");
-    getEmployees();
-
     var form = {
         name: $("#name").val(),
         email: $("#email").val(),
         nickName: $("#nickName").val()
     };
-
-    console.log(form);
 
     $.ajax({
         url: url.employees,
@@ -74,15 +72,14 @@ var saveEmployee = function() {
         contentType: "application/json",
         data: JSON.stringify(form),
         success: function(data) {
-            $("#employeeModal").modal("hide");
             getEmployees();
+            $("#employeeModal").modal("hide");
         }
     });
 };
 
 var updateEmployee = function() {
     var employeeId = $("#employeeModal").data("id");
-    getEmployees();
 
     var form = {
         name: $("#name").val(),
@@ -97,8 +94,8 @@ var updateEmployee = function() {
         contentType: "application/json",
         data: JSON.stringify(form),
         success: function(data) {
-            $("#employeeModal").modal("hide");
             getEmployees();
+            $("#employeeModal").modal("hide");
         }
     });
 };
@@ -123,16 +120,15 @@ var bindBtnDeleteEmployee = function() {
 
 var bindBtnDeleteEmployeeConfirm = function() {
     $(document).on("click", ".btn-delete-employee-confirm", function() {
-        getEmployees();
         var employeeId = $("#deleteEmployeeModal").data("id");
 
         $.ajax({
             url: url.employees + "/" + employeeId,
             method: "delete",
             type: "json",
-            success: function(data) {
-                $("#deleteEmployeeModal").modal("hide");
+            success: function() {
                 getEmployees();
+                $("#deleteEmployeeModal").modal("hide");
             }
         });
     });

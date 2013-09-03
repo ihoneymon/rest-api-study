@@ -17,6 +17,9 @@ var getDepartments = function() {
         if(data.departments.content.length) {
             renderTemplate($("#departmentTable").find("tbody"), "#departmentTemplate", data.departments.content, true);
             $("#departmentTable").find("tfoot").hide();
+        } else {
+            $("#departmentTable").find("tbody").empty();
+            $("#departmentTable").find("tfoot").show();
         }
     });
 };
@@ -69,8 +72,8 @@ var saveDepartment = function() {
         contentType: "application/json",
         data: JSON.stringify(form),
         success: function(data) {
-            $("#departmentModal").modal("hide");
             getDepartments();
+            $("#departmentModal").modal("hide");
         }
     });
 };
@@ -90,8 +93,8 @@ var updateDepartment = function() {
         contentType: "application/json",
         data: JSON.stringify(form),
         success: function(data) {
-            $("#departmentModal").modal("hide");
             getDepartments();
+            $("#departmentModal").modal("hide");
         }
     });
 };
@@ -127,8 +130,8 @@ var deleteDepartment = function() {
         method: "delete",
         type: "json",
         success: function(data) {
-            $("#deleteDepartmentModal").modal("hide");
             getDepartments();
+            $("#deleteDepartmentModal").modal("hide");
         }
     });
 }

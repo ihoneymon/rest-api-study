@@ -16,6 +16,9 @@ var getEmployeesOfDepartment = function() {
         if(data.employees.content.length) {
             renderTemplate($("#employeeTable").find("tbody"), "#employeeTemplate", data.employees.content, true);
             $("#employeeTable").find("tfoot").hide();
+        } else {
+            $("#employeeTable").find("tbody").empty();
+            $("#employeeTable").find("tfoot").show();
         }
     });
 };
@@ -65,8 +68,6 @@ var bindBtnConfirm = function() {
 };
 
 var saveEmployee = function(employeeId) {
-    getEmployeesOfDepartment();
-
     $.ajax({
         url: url.employees + "/" + employeeId,
         method: "post",
@@ -74,8 +75,8 @@ var saveEmployee = function(employeeId) {
         contentType: "application/json",
         data: JSON.stringify(form),
         success: function(data) {
-            $("#employeeModal").modal("hide");
             getEmployeesOfDepartment();
+            $("#employeeModal").modal("hide");
         }
     });
 };
@@ -89,7 +90,6 @@ var bindBtnDeleteEmployeeOfDepartment = function() {
 
 var bindBtnDeleteEmployeeOfDepartmentConfirm = function() {
     $(document).on("click", ".btn-delete-employee-of-department-confirm", function() {
-        getEmployeesOfDepartment();
         var employeeId = $("#deleteEmployeeModal").data("id");
 
         $.ajax({
@@ -110,7 +110,6 @@ var getEmployeesOfCompany = function() {
         method: "get",
         type: "json",
         success: function(data) {
-            console.log(data);
             renderTemplate($("#employeesTable").find("tbody"), "#employeeOfDepartmentTemplate", data.employees.content, true);
         }
     });
