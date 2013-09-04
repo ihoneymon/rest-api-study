@@ -27,7 +27,7 @@ import javax.servlet.ServletRegistration;
  *     <li><a href="http://zeroturnaround.com/rebellabs/your-next-java-web-app-less-xml-no-long-restarts-fewer-hassles-part-1/">Your Next Java Web App: Less XML, No Long Restarts, Fewer Hassles (Part 1)</a></li>
  * </ul>
  */
-public class WebInitializer implements WebApplicationInitializer {
+public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext container) throws ServletException {
