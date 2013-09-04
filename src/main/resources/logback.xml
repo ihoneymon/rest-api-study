@@ -6,14 +6,14 @@
             <Pattern>%d{HH:mm:ss} %-5level %logger{36} - %msg%n</Pattern>
         </layout>
     </appender>
-   
-    <logger name="net.slipp.rest" level="debug"/>
-    <logger name="net.slipp.rest.support.conversion" level="trace"/>
 
-    <logger name="org.springframework" level="DEBUG"/>
-    <logger name="org.hibernate" level="DEBUG"/>
+    <logger name="net.slipp.rest.support.conversion" level="trace"/>
+    <logger name="net.slipp.rest" level="debug"/>
+
+    <logger name="org.springframework" level="info"/>
+    <logger name="org.hibernate" level="info"/>
     
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
   
