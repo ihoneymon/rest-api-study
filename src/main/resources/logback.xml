@@ -11,6 +11,9 @@
     <logger name="net.slipp.rest" level="debug"/>
 
     <logger name="org.springframework" level="info"/>
+    <logger name="org.springframework.core" level="info"/>
+    <logger name="org.springframework.beans" level="info"/>
+    <logger name="org.springframework.web" level="info"/>
     <logger name="org.hibernate" level="info"/>
     
     <root level="info">

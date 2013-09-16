@@ -10,6 +10,14 @@
 
     <annotation-driven />
     <resources mapping="/resources/**" location="/resources/" cache-period="0"/>
+    <context:component-scan base-package="net.slipp.rest.controller.view"/>
+
+    <interceptors>
+        <beans:bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor"
+                    p:cacheSeconds="0" p:useExpiresHeader="true"
+                    p:useCacheControlHeader="true" p:useCacheControlNoStore="true"/>
+        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang"/>
+    </interceptors>
 
     <beans:bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="0">
         <beans:property name="contentNegotiationManager">
@@ -30,15 +38,8 @@
         </beans:property>
     </beans:bean>
 
-    <interceptors>
-        <beans:bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor"
-                    p:cacheSeconds="0" p:useExpiresHeader="true"
-                    p:useCacheControlHeader="true" p:useCacheControlNoStore="true"/>
-        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang"/>
-    </interceptors>
     <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"
                 p:defaultLocale="en"/>
 
-    <context:component-scan base-package="net.slipp.rest.controller.view"/>
     <aop:aspectj-autoproxy/>
 </beans:beans>

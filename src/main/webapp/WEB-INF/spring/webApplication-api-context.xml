@@ -11,23 +11,13 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd"
              xmlns:beans="http://www.springframework.org/schema/beans">
 
-    <beans:bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="0">
-        <beans:property name="contentNegotiationManager">
-            <beans:bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean" />
-        </beans:property>
+    <context:component-scan base-package="net.slipp.rest.controller.api"/>
 
-        <beans:property name="viewResolvers">
-            <beans:list>
-                <beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
-            </beans:list>
-        </beans:property>
-
-        <beans:property name="defaultViews">
-            <beans:list>
-                <beans:bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-            </beans:list>
-        </beans:property>
-    </beans:bean>
+    <interceptors>
+        <beans:bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor" p:cacheSeconds="0" p:useExpiresHeader="true"
+                    p:useCacheControlHeader="true" p:useCacheControlNoStore="true" />
+        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang" />
+    </interceptors>
 
     <mvc:annotation-driven conversion-service="conversionService">
         <mvc:argument-resolvers>
@@ -64,6 +54,24 @@
         </beans:bean>
     </mvc:interceptors>
 
+    <beans:bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="0">
+        <beans:property name="contentNegotiationManager">
+            <beans:bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean" />
+        </beans:property>
+
+        <beans:property name="viewResolvers">
+            <beans:list>
+                <beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+            </beans:list>
+        </beans:property>
+
+        <beans:property name="defaultViews">
+            <beans:list>
+                <beans:bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
     <beans:bean id="objectMapper" class="net.slipp.rest.support.mapper.HibernateAwareObjectMapper"/>
 
     <beans:bean id="conversionService"
@@ -75,15 +83,8 @@
             </beans:set>
         </beans:property>
     </beans:bean>
-
-    <interceptors>
-        <beans:bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor" p:cacheSeconds="0" p:useExpiresHeader="true"
-                    p:useCacheControlHeader="true" p:useCacheControlNoStore="true" />
-        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang" />
-    </interceptors>
     <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="en" />
 
-    <context:component-scan base-package="net.slipp.rest.controller.api"/>
     <aop:aspectj-autoproxy />
 
 </beans:beans>
