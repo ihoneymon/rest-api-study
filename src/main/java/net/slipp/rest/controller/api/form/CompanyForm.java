@@ -1,4 +1,4 @@
-package net.slipp.rest.controller.form;
+package net.slipp.rest.controller.api.form;
 
 import lombok.Data;
 import net.slipp.rest.domain.Company;

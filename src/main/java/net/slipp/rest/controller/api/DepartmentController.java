@@ -1,9 +1,8 @@
 package net.slipp.rest.controller.api;
 
-import net.slipp.rest.controller.form.DepartmentForm;
+import net.slipp.rest.controller.api.form.DepartmentForm;
 import net.slipp.rest.domain.Company;
 import net.slipp.rest.domain.Department;
-import net.slipp.rest.domain.QDepartment;
 import net.slipp.rest.domain.condition.DepartmentCondition;
 import net.slipp.rest.service.DepartmentService;
 import net.slipp.rest.support.common.Pagination;

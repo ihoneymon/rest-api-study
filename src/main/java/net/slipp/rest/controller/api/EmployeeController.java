@@ -1,6 +1,6 @@
 package net.slipp.rest.controller.api;
 
-import net.slipp.rest.controller.form.EmployeeForm;
+import net.slipp.rest.controller.api.form.EmployeeForm;
 import net.slipp.rest.domain.Company;
 import net.slipp.rest.domain.Department;
 import net.slipp.rest.domain.Employee;

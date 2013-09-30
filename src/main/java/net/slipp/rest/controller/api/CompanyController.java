@@ -1,6 +1,7 @@
 package net.slipp.rest.controller.api;
 
-import net.slipp.rest.controller.form.CompanyForm;
+import net.slipp.rest.controller.api.form.CompanyForm;
+import net.slipp.rest.controller.api.form.TestForm;
 import net.slipp.rest.domain.Company;
 import net.slipp.rest.domain.condition.CompanyCondition;
 import net.slipp.rest.service.CompanyService;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -103,5 +105,12 @@ public class CompanyController {
             map.put("code", e.getHttpStatus());
             map.put("msg", messageSourceAccessor.getMessage(e.getMessage()));
         }
+    }
+
+    @RequestMapping(value="/test-array", method=RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity testJson(TestForm form) {
+        logger.debug("TestForm : {}", form);
+        return new ResponseEntity<Object>("", HttpStatus.OK);
     }
 }

@@ -1,13 +1,9 @@
-package net.slipp.rest.controller.form;
+package net.slipp.rest.controller.api.form;
 
-import com.google.common.collect.Sets;
 import lombok.Data;
 import net.slipp.rest.domain.Company;
-import net.slipp.rest.domain.Department;
 import net.slipp.rest.domain.Employee;
 import org.springframework.beans.BeanUtils;
-
-import java.util.Set;
 
 /**
  * 직원정보 입력폼

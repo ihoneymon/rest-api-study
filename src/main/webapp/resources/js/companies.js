@@ -77,7 +77,7 @@ var bindBtnConfirm = function () {
     });
 };
 
-var saveCompany = function() {
+var saveCompany = function () {
     var form = {
         name: $("#name").val(),
         tel: $("#tel").val(),
@@ -90,14 +90,14 @@ var saveCompany = function() {
         type: "json",
         contentType: "application/json",
         data: JSON.stringify(form),
-        success: function() {
+        success: function () {
             getCompanies();
             $("#companyModal").modal("hide");
         }
     });
 };
 
-var updateCompany = function() {
+var updateCompany = function () {
     var companyId = $("#companyModal").data("id");
     var form = {
         name: $("#name").val(),
@@ -111,7 +111,7 @@ var updateCompany = function() {
         type: "json",
         contentType: "application/json",
         data: JSON.stringify(form),
-        success: function() {
+        success: function () {
             getCompanies();
             $("#companyModal").modal("hide");
         }
